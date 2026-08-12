@@ -249,8 +249,10 @@ def create_manifest(
     }
 
 
-def _write_manifest(manifest: dict[str, Any]) -> Path:
-    path = Path(__file__).resolve().parents[4] / "data" / "phase15" / "experiment_manifest.json"
+def _write_manifest(manifest: dict[str, Any], path: Path | None = None) -> Path:
+    path = path or (
+        Path(__file__).resolve().parents[4] / "data" / "phase15" / "experiment_manifest.json"
+    )
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(manifest, indent=2, sort_keys=True), encoding="utf-8")
     return path
@@ -357,6 +359,7 @@ async def run_phase15_experiment(
     configuration: Phase15Configuration,
     settings: Settings,
     name: str = "AgentSEO Phase 1.5 interface validation",
+    manifest_path: Path | None = None,
 ) -> Experiment:
     configuration.validate()
     if not projects:
@@ -408,7 +411,7 @@ async def run_phase15_experiment(
         session.commit()
         experiment.manifest = create_manifest(experiment, tasks, [])
         session.commit()
-        _write_manifest(experiment.manifest)
+        _write_manifest(experiment.manifest, manifest_path)
         return experiment
 
     experiment.status = ExperimentStatus.RUNNING.value
@@ -480,7 +483,7 @@ async def run_phase15_experiment(
     experiment.interface_versions = [item.id for item in all_interfaces]
     experiment.manifest = create_manifest(experiment, tasks, all_interfaces)
     session.commit()
-    _write_manifest(experiment.manifest)
+    _write_manifest(experiment.manifest, manifest_path)
 
     matrix_cells: list[ExperimentCell] = []
     for split_name in ("development", "hidden"):
@@ -533,7 +536,7 @@ async def run_phase15_experiment(
     final_manifest["failed_cells"] = failures
     experiment.manifest = final_manifest
     session.commit()
-    _write_manifest(final_manifest)
+    _write_manifest(final_manifest, manifest_path)
     return experiment
 
 

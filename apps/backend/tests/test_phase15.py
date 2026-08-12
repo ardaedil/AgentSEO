@@ -172,12 +172,7 @@ def test_configuration_split_cost_and_paired_statistics():
     assert mcnemar_exact([False, True], [True, True])["discordant_pairs"] == 1
 
 
-def test_repeated_trials_manifest_dataset_and_report(monkeypatch, tmp_path: Path):
-    import agentseo.experiments as experiment_module
-
-    monkeypatch.setattr(
-        experiment_module, "_write_manifest", lambda manifest: tmp_path / "manifest.json"
-    )
+def test_repeated_trials_manifest_dataset_and_report(tmp_path: Path):
     with SessionLocal() as session:
         project, _, _ = make_project(session, task_count=3)
         configuration = Phase15Configuration(
@@ -188,8 +183,15 @@ def test_repeated_trials_manifest_dataset_and_report(monkeypatch, tmp_path: Path
             bootstrap_samples=200,
         )
         experiment = asyncio.run(
-            run_phase15_experiment(session, [project], configuration, get_settings())
+            run_phase15_experiment(
+                session,
+                [project],
+                configuration,
+                get_settings(),
+                manifest_path=tmp_path / "manifest.json",
+            )
         )
+        assert (tmp_path / "manifest.json").exists()
         assert experiment.status == ExperimentStatus.COMPLETED.value
         assert experiment.actual_cost == 0
         task_run_count = session.scalar(
@@ -226,12 +228,7 @@ def test_repeated_trials_manifest_dataset_and_report(monkeypatch, tmp_path: Path
         assert all(path.exists() for path in charts)
 
 
-def test_cost_guard_blocks_before_provider_calls(monkeypatch, tmp_path: Path):
-    import agentseo.experiments as experiment_module
-
-    monkeypatch.setattr(
-        experiment_module, "_write_manifest", lambda manifest: tmp_path / "manifest.json"
-    )
+def test_cost_guard_blocks_before_provider_calls(tmp_path: Path):
     with SessionLocal() as session:
         project, _, _ = make_project(session, task_count=2)
         configuration = Phase15Configuration(
@@ -241,8 +238,15 @@ def test_cost_guard_blocks_before_provider_calls(monkeypatch, tmp_path: Path):
             max_cost_usd=0,
         )
         experiment = asyncio.run(
-            run_phase15_experiment(session, [project], configuration, get_settings())
+            run_phase15_experiment(
+                session,
+                [project],
+                configuration,
+                get_settings(),
+                manifest_path=tmp_path / "manifest.json",
+            )
         )
+        assert (tmp_path / "manifest.json").exists()
         assert experiment.status == ExperimentStatus.BLOCKED_COST.value
         assert (
             session.scalar(

@@ -299,7 +299,8 @@ class GeminiProvider(HTTPProvider):
         task_context: dict[str, Any],
     ) -> AgentAction:
         response = await self.client.post(
-            f"https://generativelanguage.googleapis.com/v1beta/models/{self.model}:generateContent?key={self.api_key}",
+            f"https://generativelanguage.googleapis.com/v1beta/models/{self.model}:generateContent",
+            headers={"x-goog-api-key": self.api_key},
             json={
                 "contents": [
                     {
