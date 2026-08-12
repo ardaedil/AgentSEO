@@ -111,9 +111,13 @@ def test_interface_mutation_variant_and_canonical_mapping():
         )
         assert {mutation.mutation_type for mutation in mutations} >= {
             "TOOL_RENAME",
+            "DESCRIPTION_REDUCTION",
             "DESCRIPTION_OVERLAP",
+            "NEGATIVE_INSTRUCTION_REMOVAL",
             "PARAMETER_RENAME",
+            "PARAMETER_DESCRIPTION_REMOVAL",
             "EXAMPLE_REMOVAL",
+            "TOOL_OVERLAP",
         }
 
 
@@ -210,6 +214,8 @@ def test_repeated_trials_manifest_dataset_and_report(monkeypatch, tmp_path: Path
         analysis = analyze_experiment(session, experiment, bootstrap_samples=200)
         assert analysis["decision"] == "DO NOT PROCEED YET"
         assert analysis["real_observation_count"] == 0
+        assert "cross_model_variance" in analysis
+        assert "mutation_failure_analysis" in analysis
         jsonl, csv_path = export_experiment_dataset(session, experiment, tmp_path / "data")
         assert len(jsonl.read_text(encoding="utf-8").splitlines()) == 27
         assert csv_path.read_text(encoding="utf-8").startswith("experiment_id,")

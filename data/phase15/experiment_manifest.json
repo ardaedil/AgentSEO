@@ -1,0 +1,864 @@
+{
+  "actual_cost_usd": 0.0,
+  "completed_at": "2026-08-12T21:54:23.111815+00:00",
+  "configuration": {
+    "cost_estimate": {
+      "estimated_input_tokens_per_task": 1500,
+      "estimated_output_tokens_per_task": 300,
+      "expected_agent_tasks": 2385,
+      "expected_provider_calls": 9540,
+      "guarded_estimate_usd": 0.0,
+      "model_costs": {
+        "mock:reliable": 0.0
+      },
+      "models": 1,
+      "repetitions": 3,
+      "safety_buffer": 0.25,
+      "subtotal_usd": 0.0,
+      "task_count": 53,
+      "variants": 15
+    },
+    "development_failure_review": {},
+    "manual_optimization_protocol": "development failures inspected before V2 freeze",
+    "max_concurrency": 2,
+    "provider_seed": null,
+    "task_split": {
+      "0029a475-a07c-42df-8bce-a5cf25d02f34": "hidden",
+      "01025f7c-768a-4133-ab8c-245fef5dfe7e": "development",
+      "05840afc-cac5-4113-aa8d-c8fb44bb7264": "development",
+      "0b3f0ea3-6465-4f9e-a583-3f1ad497ab89": "development",
+      "11ef5a65-e388-4b67-a085-6c2ca9d18f28": "development",
+      "12bd7ec4-bbc5-4cd8-bf65-63147192fe49": "development",
+      "13f29b67-ef8d-43a2-91f2-6813df0f0b45": "development",
+      "144c1f32-7092-4742-bb97-96b46fc4423b": "hidden",
+      "23cb0185-a1ad-4bb6-8a98-1fd948a1ea1b": "development",
+      "24f22483-b631-486e-9b27-b25e39ae1e7b": "development",
+      "2c3811ee-3d73-41c0-a9f9-3e1f1eb1431c": "development",
+      "2db8a30e-2196-4d7b-8291-25889f2132eb": "hidden",
+      "2fc73205-47a6-48d7-8678-97144a2f4c6d": "development",
+      "34680c04-32ef-4980-a956-f143ced089bf": "development",
+      "347abd71-0a33-430f-82b1-23ea0f28f087": "hidden",
+      "3f64e1d7-0ed9-4ce8-9bb7-e5918ff37c3e": "development",
+      "404e32f3-0c45-4be6-89ec-fbaacebf5358": "development",
+      "40590e27-1b1d-43ea-b1a8-62dbf1a7cf29": "development",
+      "41bf7f68-ef4e-4820-ba88-96fc1497e3bf": "hidden",
+      "44ca01e7-e276-49d8-a013-124e19b6b47f": "development",
+      "48a0335a-e74f-4876-ad4b-3005c755f637": "development",
+      "4bec9c1a-d8d9-42c9-9001-044656bfb655": "development",
+      "4ca82c8f-9e88-4f48-a64e-08bdd0b1f215": "hidden",
+      "4ef7e388-aea4-4334-9e6d-b5bfdb879108": "hidden",
+      "4fe9139c-a401-4e8d-a765-fbb665493f47": "development",
+      "52bf2edb-d73d-4788-ab62-ac4765daae12": "development",
+      "57d81f3c-c7a3-4553-b7ef-917f0d4ef4fe": "development",
+      "61091e6f-7f26-4b9d-adea-a67158973f76": "development",
+      "6966f508-b5ce-48fc-9077-008919a39361": "development",
+      "73fb625a-c4e8-4607-9b0e-0ea216f1308a": "development",
+      "7a7be487-e7d4-494e-af54-5ed5f24e69cc": "development",
+      "89438494-bb1a-464a-9c1d-f9d57469eb2d": "development",
+      "8ccee4d2-f039-4156-be4a-3edd8f2cc546": "development",
+      "907de6f7-21ff-4bca-b25b-32a29749b354": "development",
+      "a4a4ab95-45c9-476e-a73c-494c0a68b7a3": "development",
+      "a53643c1-3954-445a-9376-9c0e68af57b4": "hidden",
+      "a5d3e4dc-4f6c-4172-8ff0-75fed97c812d": "hidden",
+      "a79e2bcf-f0f3-4adf-a8dd-658463997914": "development",
+      "a7cba41a-19d3-4fd4-8834-b47953b3f818": "development",
+      "b55856c1-6a78-440c-a0dd-32fe41414238": "development",
+      "b6096fc8-6768-4250-8c8f-934102f1e467": "development",
+      "b7f51990-6069-4d22-a148-6353bf1d8972": "development",
+      "ba42c130-f285-4bec-9f79-77dff66c9664": "development",
+      "bab0b901-b834-4d74-9232-1f726255295f": "hidden",
+      "bb21881e-cf7f-4f83-93bb-bf576b76cc80": "hidden",
+      "beb0bb6a-92d9-4d41-9c94-4382bee086e5": "hidden",
+      "c4ab4dfd-f206-4a47-9697-f8dc299d0a37": "hidden",
+      "c88da122-d883-4f73-8dcb-d3ebb0414400": "development",
+      "cb6e3815-2c9b-4283-a5dc-a84faafb810b": "development",
+      "d9b95a58-3d41-4c7f-b8cd-226fd67b0fa5": "development",
+      "f47d3342-76f9-46b7-82e7-a6ab7a36e4c4": "hidden",
+      "f5aaeaec-c6ff-4e35-82f9-109274f957a5": "development",
+      "fef8e92d-25c1-40a5-acee-fd344b3871a5": "hidden"
+    },
+    "temperature": 0.0,
+    "unavailable_providers": [
+      "openai (API key unavailable)",
+      "anthropic (API key unavailable)",
+      "google (API key unavailable)"
+    ],
+    "v2_frozen_at": "2026-08-12T21:54:14.544100+00:00",
+    "variants": [
+      "baseline",
+      "degraded",
+      "optimized",
+      "concise",
+      "verbose",
+      "negative",
+      "examples",
+      "reduced",
+      "isolated_tool_rename",
+      "isolated_description_reduction",
+      "isolated_parameter_rename",
+      "isolated_negative_removal",
+      "toolset_10",
+      "toolset_25",
+      "toolset_50"
+    ]
+  },
+  "experiment_id": "f67c4e98-9d5b-4046-bed3-2ed5889a5bbb",
+  "failed_cells": [],
+  "git_commit": "665fb6d4d8d70f319d145f5085b65fcd56dea818",
+  "interface_versions": [
+    {
+      "frozen": true,
+      "id": "9d907a35-6161-41a1-a808-e2a3857b938c",
+      "project_id": "48f1ba41-cbc5-420a-b2d3-4c8d6b162d06",
+      "variant": "baseline",
+      "version": 1
+    },
+    {
+      "frozen": true,
+      "id": "67728a71-4a11-47c9-abfe-5de81e628af6",
+      "project_id": "48f1ba41-cbc5-420a-b2d3-4c8d6b162d06",
+      "variant": "degraded",
+      "version": 2
+    },
+    {
+      "frozen": true,
+      "id": "e3fd143a-1d2c-4289-a93d-d5628c709563",
+      "project_id": "48f1ba41-cbc5-420a-b2d3-4c8d6b162d06",
+      "variant": "optimized",
+      "version": 3
+    },
+    {
+      "frozen": true,
+      "id": "a58c9944-43fb-4d4f-80da-123958209d2e",
+      "project_id": "48f1ba41-cbc5-420a-b2d3-4c8d6b162d06",
+      "variant": "concise",
+      "version": 4
+    },
+    {
+      "frozen": true,
+      "id": "12a84481-3ce9-43ab-838c-a195bb72be97",
+      "project_id": "48f1ba41-cbc5-420a-b2d3-4c8d6b162d06",
+      "variant": "verbose",
+      "version": 5
+    },
+    {
+      "frozen": true,
+      "id": "0ee56f1e-57ce-4b34-8702-ccb05b49899e",
+      "project_id": "48f1ba41-cbc5-420a-b2d3-4c8d6b162d06",
+      "variant": "negative",
+      "version": 6
+    },
+    {
+      "frozen": true,
+      "id": "ea7f4c9c-fca8-4ec9-ba04-d1514d7c57ae",
+      "project_id": "48f1ba41-cbc5-420a-b2d3-4c8d6b162d06",
+      "variant": "examples",
+      "version": 7
+    },
+    {
+      "frozen": true,
+      "id": "078180e2-7fcb-4d1c-b5d7-a2802f257631",
+      "project_id": "48f1ba41-cbc5-420a-b2d3-4c8d6b162d06",
+      "variant": "reduced",
+      "version": 8
+    },
+    {
+      "frozen": true,
+      "id": "57223dd7-4fcf-49ea-8e33-8a681a0af6c9",
+      "project_id": "48f1ba41-cbc5-420a-b2d3-4c8d6b162d06",
+      "variant": "isolated_tool_rename",
+      "version": 9
+    },
+    {
+      "frozen": true,
+      "id": "8f564fa8-704e-4525-8b12-d84bfeab7180",
+      "project_id": "48f1ba41-cbc5-420a-b2d3-4c8d6b162d06",
+      "variant": "isolated_description_reduction",
+      "version": 10
+    },
+    {
+      "frozen": true,
+      "id": "ced8b07b-af23-4956-b3fb-efe550fa7729",
+      "project_id": "48f1ba41-cbc5-420a-b2d3-4c8d6b162d06",
+      "variant": "isolated_parameter_rename",
+      "version": 11
+    },
+    {
+      "frozen": true,
+      "id": "a6a8cba7-3251-4833-a30b-ce49376a05f2",
+      "project_id": "48f1ba41-cbc5-420a-b2d3-4c8d6b162d06",
+      "variant": "isolated_negative_removal",
+      "version": 12
+    },
+    {
+      "frozen": true,
+      "id": "e82e61f4-5ba5-4558-9560-f4ed7dc1fe69",
+      "project_id": "48f1ba41-cbc5-420a-b2d3-4c8d6b162d06",
+      "variant": "toolset_10",
+      "version": 13
+    },
+    {
+      "frozen": true,
+      "id": "0bfce512-31b0-46cc-be10-52ed0c86a3d6",
+      "project_id": "48f1ba41-cbc5-420a-b2d3-4c8d6b162d06",
+      "variant": "toolset_25",
+      "version": 14
+    },
+    {
+      "frozen": true,
+      "id": "78394eba-1c07-4f2f-acf4-6fabe009a1ce",
+      "project_id": "48f1ba41-cbc5-420a-b2d3-4c8d6b162d06",
+      "variant": "toolset_50",
+      "version": 15
+    },
+    {
+      "frozen": true,
+      "id": "f90f75ef-8909-40e2-a324-72139be21760",
+      "project_id": "3f70cba4-dcba-43ec-a0e1-4296be3ff997",
+      "variant": "baseline",
+      "version": 1
+    },
+    {
+      "frozen": true,
+      "id": "2e318aaa-2fc0-4942-ac6a-713fa9e38277",
+      "project_id": "3f70cba4-dcba-43ec-a0e1-4296be3ff997",
+      "variant": "degraded",
+      "version": 2
+    },
+    {
+      "frozen": true,
+      "id": "75139dda-c93e-49e6-981e-606c0d8fad9d",
+      "project_id": "3f70cba4-dcba-43ec-a0e1-4296be3ff997",
+      "variant": "optimized",
+      "version": 3
+    },
+    {
+      "frozen": true,
+      "id": "21a008bd-9d7b-4c03-ba02-8f8b529be6c9",
+      "project_id": "3f70cba4-dcba-43ec-a0e1-4296be3ff997",
+      "variant": "concise",
+      "version": 4
+    },
+    {
+      "frozen": true,
+      "id": "636bb062-72c2-456c-8e22-93b7ae09d048",
+      "project_id": "3f70cba4-dcba-43ec-a0e1-4296be3ff997",
+      "variant": "verbose",
+      "version": 5
+    },
+    {
+      "frozen": true,
+      "id": "dcf51126-5e41-4dde-b892-943a123fde1a",
+      "project_id": "3f70cba4-dcba-43ec-a0e1-4296be3ff997",
+      "variant": "negative",
+      "version": 6
+    },
+    {
+      "frozen": true,
+      "id": "63ac8a56-585a-4e03-97a0-f7f8e02286b1",
+      "project_id": "3f70cba4-dcba-43ec-a0e1-4296be3ff997",
+      "variant": "examples",
+      "version": 7
+    },
+    {
+      "frozen": true,
+      "id": "2acb06a4-ec46-41c9-a3ed-dddb3cf373f2",
+      "project_id": "3f70cba4-dcba-43ec-a0e1-4296be3ff997",
+      "variant": "reduced",
+      "version": 8
+    },
+    {
+      "frozen": true,
+      "id": "e9d7c8a4-d751-451e-b043-00a0d3f906d8",
+      "project_id": "3f70cba4-dcba-43ec-a0e1-4296be3ff997",
+      "variant": "isolated_tool_rename",
+      "version": 9
+    },
+    {
+      "frozen": true,
+      "id": "2591bfec-ce3e-44bf-8249-efed019bfef9",
+      "project_id": "3f70cba4-dcba-43ec-a0e1-4296be3ff997",
+      "variant": "isolated_description_reduction",
+      "version": 10
+    },
+    {
+      "frozen": true,
+      "id": "6c8e1e51-5f68-4d83-8192-11e3af63d591",
+      "project_id": "3f70cba4-dcba-43ec-a0e1-4296be3ff997",
+      "variant": "isolated_parameter_rename",
+      "version": 11
+    },
+    {
+      "frozen": true,
+      "id": "07356b25-92e0-4fa6-80fc-b90c1bf2d336",
+      "project_id": "3f70cba4-dcba-43ec-a0e1-4296be3ff997",
+      "variant": "isolated_negative_removal",
+      "version": 12
+    },
+    {
+      "frozen": true,
+      "id": "939fa9ab-b59d-4a78-ae11-05257b6636ed",
+      "project_id": "3f70cba4-dcba-43ec-a0e1-4296be3ff997",
+      "variant": "toolset_10",
+      "version": 13
+    },
+    {
+      "frozen": true,
+      "id": "0f025e59-ddde-4f37-8d62-1db60d2eb4eb",
+      "project_id": "3f70cba4-dcba-43ec-a0e1-4296be3ff997",
+      "variant": "toolset_25",
+      "version": 14
+    },
+    {
+      "frozen": true,
+      "id": "843a29e5-8c40-4e22-8b55-585759a270f0",
+      "project_id": "3f70cba4-dcba-43ec-a0e1-4296be3ff997",
+      "variant": "toolset_50",
+      "version": 15
+    },
+    {
+      "frozen": true,
+      "id": "bd9f650f-468e-4ab0-8469-8cd6a994487a",
+      "project_id": "aba47567-5333-42ad-8608-fcded15ff2f1",
+      "variant": "baseline",
+      "version": 1
+    },
+    {
+      "frozen": true,
+      "id": "430deeb2-5ffd-48c0-b27c-553b5f782edf",
+      "project_id": "aba47567-5333-42ad-8608-fcded15ff2f1",
+      "variant": "degraded",
+      "version": 2
+    },
+    {
+      "frozen": true,
+      "id": "acdead4d-5c17-41af-b4f5-1ef500e517c6",
+      "project_id": "aba47567-5333-42ad-8608-fcded15ff2f1",
+      "variant": "optimized",
+      "version": 3
+    },
+    {
+      "frozen": true,
+      "id": "351e946d-61d1-4ce2-9781-79d9704eea0c",
+      "project_id": "aba47567-5333-42ad-8608-fcded15ff2f1",
+      "variant": "concise",
+      "version": 4
+    },
+    {
+      "frozen": true,
+      "id": "dc546db7-e64d-4c7c-83de-9188c1486da3",
+      "project_id": "aba47567-5333-42ad-8608-fcded15ff2f1",
+      "variant": "verbose",
+      "version": 5
+    },
+    {
+      "frozen": true,
+      "id": "2276ff58-b020-4216-b63b-784c17ce75e2",
+      "project_id": "aba47567-5333-42ad-8608-fcded15ff2f1",
+      "variant": "negative",
+      "version": 6
+    },
+    {
+      "frozen": true,
+      "id": "288c5007-8335-443e-b623-5782c2fa3b43",
+      "project_id": "aba47567-5333-42ad-8608-fcded15ff2f1",
+      "variant": "examples",
+      "version": 7
+    },
+    {
+      "frozen": true,
+      "id": "dac7bae9-bd1d-4d96-923b-d9156204ebf8",
+      "project_id": "aba47567-5333-42ad-8608-fcded15ff2f1",
+      "variant": "reduced",
+      "version": 8
+    },
+    {
+      "frozen": true,
+      "id": "646298e1-8414-47b1-b240-4b47b1c71146",
+      "project_id": "aba47567-5333-42ad-8608-fcded15ff2f1",
+      "variant": "isolated_tool_rename",
+      "version": 9
+    },
+    {
+      "frozen": true,
+      "id": "f51ac39f-07a3-4c13-bcaa-ea454d7d3534",
+      "project_id": "aba47567-5333-42ad-8608-fcded15ff2f1",
+      "variant": "isolated_description_reduction",
+      "version": 10
+    },
+    {
+      "frozen": true,
+      "id": "d753c286-b980-4006-8c53-85fa28c84bb4",
+      "project_id": "aba47567-5333-42ad-8608-fcded15ff2f1",
+      "variant": "isolated_parameter_rename",
+      "version": 11
+    },
+    {
+      "frozen": true,
+      "id": "af8ac331-64a6-4d2f-a2e1-33242b52340e",
+      "project_id": "aba47567-5333-42ad-8608-fcded15ff2f1",
+      "variant": "isolated_negative_removal",
+      "version": 12
+    },
+    {
+      "frozen": true,
+      "id": "58f615b0-ca60-4be4-b06e-eefe59175860",
+      "project_id": "aba47567-5333-42ad-8608-fcded15ff2f1",
+      "variant": "toolset_10",
+      "version": 13
+    },
+    {
+      "frozen": true,
+      "id": "2cb02d40-8495-4dc5-acad-de56434bdfdb",
+      "project_id": "aba47567-5333-42ad-8608-fcded15ff2f1",
+      "variant": "toolset_25",
+      "version": 14
+    },
+    {
+      "frozen": true,
+      "id": "f89f31b2-bc27-450f-bdb5-35edbf4dc3b4",
+      "project_id": "aba47567-5333-42ad-8608-fcded15ff2f1",
+      "variant": "toolset_50",
+      "version": 15
+    }
+  ],
+  "model_ids": [
+    "mock:reliable"
+  ],
+  "provider_seeds": {
+    "mock:reliable": null
+  },
+  "repetitions": 3,
+  "software_version": "0.1.0-phase15",
+  "started_at": "2026-08-12T21:54:14.190855+00:00",
+  "task_ids": [
+    {
+      "id": "c88da122-d883-4f73-8dcb-d3ebb0414400",
+      "project_id": "48f1ba41-cbc5-420a-b2d3-4c8d6b162d06",
+      "split": "development",
+      "stable_key": "58eb0de0425a72c3",
+      "title": "Cancel John's subscription safely",
+      "version": 1
+    },
+    {
+      "id": "bab0b901-b834-4d74-9232-1f726255295f",
+      "project_id": "48f1ba41-cbc5-420a-b2d3-4c8d6b162d06",
+      "split": "hidden",
+      "stable_key": "b507db092f25751a",
+      "title": "Find unpaid invoice",
+      "version": 1
+    },
+    {
+      "id": "52bf2edb-d73d-4788-ab62-ac4765daae12",
+      "project_id": "48f1ba41-cbc5-420a-b2d3-4c8d6b162d06",
+      "split": "development",
+      "stable_key": "9aa56762905fcc56",
+      "title": "Ambiguous subscription cancellation",
+      "version": 1
+    },
+    {
+      "id": "144c1f32-7092-4742-bb97-96b46fc4423b",
+      "project_id": "48f1ba41-cbc5-420a-b2d3-4c8d6b162d06",
+      "split": "hidden",
+      "stable_key": "abc30a0846e224ee",
+      "title": "Locate a billing customer by email",
+      "version": 1
+    },
+    {
+      "id": "b55856c1-6a78-440c-a0dd-32fe41414238",
+      "project_id": "48f1ba41-cbc5-420a-b2d3-4c8d6b162d06",
+      "split": "development",
+      "stable_key": "495f2f18559d5df3",
+      "title": "Respect semantic boundaries: locate a billing customer by email",
+      "version": 1
+    },
+    {
+      "id": "48a0335a-e74f-4876-ad4b-3005c755f637",
+      "project_id": "48f1ba41-cbc5-420a-b2d3-4c8d6b162d06",
+      "split": "development",
+      "stable_key": "5c41bb681ff232e8",
+      "title": "Find a billing customer by name",
+      "version": 1
+    },
+    {
+      "id": "f5aaeaec-c6ff-4e35-82f9-109274f957a5",
+      "project_id": "48f1ba41-cbc5-420a-b2d3-4c8d6b162d06",
+      "split": "development",
+      "stable_key": "1250ec6a74188642",
+      "title": "Respect semantic boundaries: find a billing customer by name",
+      "version": 1
+    },
+    {
+      "id": "2fc73205-47a6-48d7-8678-97144a2f4c6d",
+      "project_id": "48f1ba41-cbc5-420a-b2d3-4c8d6b162d06",
+      "split": "development",
+      "stable_key": "bffd4c504adfef08",
+      "title": "Retrieve one billing customer by identifier",
+      "version": 1
+    },
+    {
+      "id": "c4ab4dfd-f206-4a47-9697-f8dc299d0a37",
+      "project_id": "48f1ba41-cbc5-420a-b2d3-4c8d6b162d06",
+      "split": "hidden",
+      "stable_key": "03ba251b25248b60",
+      "title": "Recover from an invalid identifier: retrieve one billing customer by identifier",
+      "version": 1
+    },
+    {
+      "id": "4ca82c8f-9e88-4f48-a64e-08bdd0b1f215",
+      "project_id": "48f1ba41-cbc5-420a-b2d3-4c8d6b162d06",
+      "split": "hidden",
+      "stable_key": "ae7e498fa27cfc00",
+      "title": "Delete a confirmed billing customer",
+      "version": 1
+    },
+    {
+      "id": "2c3811ee-3d73-41c0-a9f9-3e1f1eb1431c",
+      "project_id": "48f1ba41-cbc5-420a-b2d3-4c8d6b162d06",
+      "split": "development",
+      "stable_key": "6f49ee819218130e",
+      "title": "Recover from an invalid identifier: delete a confirmed billing customer",
+      "version": 1
+    },
+    {
+      "id": "13f29b67-ef8d-43a2-91f2-6813df0f0b45",
+      "project_id": "48f1ba41-cbc5-420a-b2d3-4c8d6b162d06",
+      "split": "development",
+      "stable_key": "3e268055f55bf536",
+      "title": "List subscriptions for one customer",
+      "version": 1
+    },
+    {
+      "id": "0b3f0ea3-6465-4f9e-a583-3f1ad497ab89",
+      "project_id": "48f1ba41-cbc5-420a-b2d3-4c8d6b162d06",
+      "split": "development",
+      "stable_key": "41b4104e26425144",
+      "title": "Respect semantic boundaries: list subscriptions for one customer",
+      "version": 1
+    },
+    {
+      "id": "ba42c130-f285-4bec-9f79-77dff66c9664",
+      "project_id": "48f1ba41-cbc5-420a-b2d3-4c8d6b162d06",
+      "split": "development",
+      "stable_key": "5ae3085d924c03c3",
+      "title": "Schedule a subscription cancellation",
+      "version": 1
+    },
+    {
+      "id": "404e32f3-0c45-4be6-89ec-fbaacebf5358",
+      "project_id": "48f1ba41-cbc5-420a-b2d3-4c8d6b162d06",
+      "split": "development",
+      "stable_key": "e514075dc4527b7f",
+      "title": "Recover from an invalid identifier: schedule a subscription cancellation",
+      "version": 1
+    },
+    {
+      "id": "40590e27-1b1d-43ea-b1a8-62dbf1a7cf29",
+      "project_id": "48f1ba41-cbc5-420a-b2d3-4c8d6b162d06",
+      "split": "development",
+      "stable_key": "0d5242b6b30b8f03",
+      "title": "Terminate a confirmed billing account",
+      "version": 1
+    },
+    {
+      "id": "23cb0185-a1ad-4bb6-8a98-1fd948a1ea1b",
+      "project_id": "48f1ba41-cbc5-420a-b2d3-4c8d6b162d06",
+      "split": "development",
+      "stable_key": "06a6ef20b15d3c55",
+      "title": "Recover from an invalid identifier: terminate a confirmed billing account",
+      "version": 1
+    },
+    {
+      "id": "a7cba41a-19d3-4fd4-8834-b47953b3f818",
+      "project_id": "48f1ba41-cbc5-420a-b2d3-4c8d6b162d06",
+      "split": "development",
+      "stable_key": "feca81eb8e8c5ce5",
+      "title": "List a customer's open invoices",
+      "version": 1
+    },
+    {
+      "id": "7a7be487-e7d4-494e-af54-5ed5f24e69cc",
+      "project_id": "48f1ba41-cbc5-420a-b2d3-4c8d6b162d06",
+      "split": "development",
+      "stable_key": "161800ca780de8a9",
+      "title": "Respect semantic boundaries: list a customer's open invoices",
+      "version": 1
+    },
+    {
+      "id": "b7f51990-6069-4d22-a148-6353bf1d8972",
+      "project_id": "48f1ba41-cbc5-420a-b2d3-4c8d6b162d06",
+      "split": "development",
+      "stable_key": "1fe53dd4848f75fa",
+      "title": "Refund a confirmed paid invoice",
+      "version": 1
+    },
+    {
+      "id": "44ca01e7-e276-49d8-a013-124e19b6b47f",
+      "project_id": "48f1ba41-cbc5-420a-b2d3-4c8d6b162d06",
+      "split": "development",
+      "stable_key": "950dc393b2ec4782",
+      "title": "Recover from an invalid identifier: refund a confirmed paid invoice",
+      "version": 1
+    },
+    {
+      "id": "a79e2bcf-f0f3-4adf-a8dd-658463997914",
+      "project_id": "3f70cba4-dcba-43ec-a0e1-4296be3ff997",
+      "split": "development",
+      "stable_key": "8afa2f8bf2bf6ee3",
+      "title": "Refund only the failed shipment",
+      "version": 1
+    },
+    {
+      "id": "d9b95a58-3d41-4c7f-b8cd-226fd67b0fa5",
+      "project_id": "3f70cba4-dcba-43ec-a0e1-4296be3ff997",
+      "split": "development",
+      "stable_key": "a0302088950d0a5e",
+      "title": "Ambiguous refund request",
+      "version": 1
+    },
+    {
+      "id": "a53643c1-3954-445a-9376-9c0e68af57b4",
+      "project_id": "3f70cba4-dcba-43ec-a0e1-4296be3ff997",
+      "split": "hidden",
+      "stable_key": "033dec46d5b2e015",
+      "title": "Locate a shopper by email",
+      "version": 1
+    },
+    {
+      "id": "fef8e92d-25c1-40a5-acee-fd344b3871a5",
+      "project_id": "3f70cba4-dcba-43ec-a0e1-4296be3ff997",
+      "split": "hidden",
+      "stable_key": "b70631d7e551cb89",
+      "title": "Respect semantic boundaries: locate a shopper by email",
+      "version": 1
+    },
+    {
+      "id": "4fe9139c-a401-4e8d-a765-fbb665493f47",
+      "project_id": "3f70cba4-dcba-43ec-a0e1-4296be3ff997",
+      "split": "development",
+      "stable_key": "de32e92bd01be12c",
+      "title": "Retrieve one shopper by identifier",
+      "version": 1
+    },
+    {
+      "id": "11ef5a65-e388-4b67-a085-6c2ca9d18f28",
+      "project_id": "3f70cba4-dcba-43ec-a0e1-4296be3ff997",
+      "split": "development",
+      "stable_key": "b1f4ca87f67819ec",
+      "title": "Recover from an invalid identifier: retrieve one shopper by identifier",
+      "version": 1
+    },
+    {
+      "id": "0029a475-a07c-42df-8bce-a5cf25d02f34",
+      "project_id": "3f70cba4-dcba-43ec-a0e1-4296be3ff997",
+      "split": "hidden",
+      "stable_key": "f7bca785c44674fa",
+      "title": "Delete a confirmed shopper profile",
+      "version": 1
+    },
+    {
+      "id": "4ef7e388-aea4-4334-9e6d-b5bfdb879108",
+      "project_id": "3f70cba4-dcba-43ec-a0e1-4296be3ff997",
+      "split": "hidden",
+      "stable_key": "379bb4d2a03f0e97",
+      "title": "Recover from an invalid identifier: delete a confirmed shopper profile",
+      "version": 1
+    },
+    {
+      "id": "6966f508-b5ce-48fc-9077-008919a39361",
+      "project_id": "3f70cba4-dcba-43ec-a0e1-4296be3ff997",
+      "split": "development",
+      "stable_key": "4376f4a3ae078faf",
+      "title": "List purchases for one shopper",
+      "version": 1
+    },
+    {
+      "id": "05840afc-cac5-4113-aa8d-c8fb44bb7264",
+      "project_id": "3f70cba4-dcba-43ec-a0e1-4296be3ff997",
+      "split": "development",
+      "stable_key": "c9d47cb6bf64148d",
+      "title": "Respect semantic boundaries: list purchases for one shopper",
+      "version": 1
+    },
+    {
+      "id": "73fb625a-c4e8-4607-9b0e-0ea216f1308a",
+      "project_id": "3f70cba4-dcba-43ec-a0e1-4296be3ff997",
+      "split": "development",
+      "stable_key": "ead41ef9ab0a632b",
+      "title": "Retrieve one purchase by identifier",
+      "version": 1
+    },
+    {
+      "id": "8ccee4d2-f039-4156-be4a-3edd8f2cc546",
+      "project_id": "3f70cba4-dcba-43ec-a0e1-4296be3ff997",
+      "split": "development",
+      "stable_key": "a6dd0a3230195238",
+      "title": "Recover from an invalid identifier: retrieve one purchase by identifier",
+      "version": 1
+    },
+    {
+      "id": "3f64e1d7-0ed9-4ce8-9bb7-e5918ff37c3e",
+      "project_id": "3f70cba4-dcba-43ec-a0e1-4296be3ff997",
+      "split": "development",
+      "stable_key": "439b69a091fcc497",
+      "title": "Refund one confirmed purchase",
+      "version": 1
+    },
+    {
+      "id": "cb6e3815-2c9b-4283-a5dc-a84faafb810b",
+      "project_id": "3f70cba4-dcba-43ec-a0e1-4296be3ff997",
+      "split": "development",
+      "stable_key": "db6ac4476550623c",
+      "title": "Recover from an invalid identifier: refund one confirmed purchase",
+      "version": 1
+    },
+    {
+      "id": "347abd71-0a33-430f-82b1-23ea0f28f087",
+      "project_id": "3f70cba4-dcba-43ec-a0e1-4296be3ff997",
+      "split": "hidden",
+      "stable_key": "ca12b4bd204dd160",
+      "title": "List failed deliveries",
+      "version": 1
+    },
+    {
+      "id": "b6096fc8-6768-4250-8c8f-934102f1e467",
+      "project_id": "3f70cba4-dcba-43ec-a0e1-4296be3ff997",
+      "split": "development",
+      "stable_key": "751471e80c823239",
+      "title": "Respect semantic boundaries: list failed deliveries",
+      "version": 1
+    },
+    {
+      "id": "89438494-bb1a-464a-9c1d-f9d57469eb2d",
+      "project_id": "aba47567-5333-42ad-8608-fcded15ff2f1",
+      "split": "development",
+      "stable_key": "b4c511e10543ed41",
+      "title": "Assign high-value Acme opportunities",
+      "version": 1
+    },
+    {
+      "id": "a4a4ab95-45c9-476e-a73c-494c0a68b7a3",
+      "project_id": "aba47567-5333-42ad-8608-fcded15ff2f1",
+      "split": "development",
+      "stable_key": "d92caef7135d0c74",
+      "title": "Ambiguous opportunity deletion",
+      "version": 1
+    },
+    {
+      "id": "2db8a30e-2196-4d7b-8291-25889f2132eb",
+      "project_id": "aba47567-5333-42ad-8608-fcded15ff2f1",
+      "split": "hidden",
+      "stable_key": "0c1b443a0203500e",
+      "title": "Locate a company by name",
+      "version": 1
+    },
+    {
+      "id": "4bec9c1a-d8d9-42c9-9001-044656bfb655",
+      "project_id": "aba47567-5333-42ad-8608-fcded15ff2f1",
+      "split": "development",
+      "stable_key": "16fc784a22ceebf5",
+      "title": "Respect semantic boundaries: locate a company by name",
+      "version": 1
+    },
+    {
+      "id": "01025f7c-768a-4133-ab8c-245fef5dfe7e",
+      "project_id": "aba47567-5333-42ad-8608-fcded15ff2f1",
+      "split": "development",
+      "stable_key": "4b7a033af0963960",
+      "title": "Retrieve one company by identifier",
+      "version": 1
+    },
+    {
+      "id": "57d81f3c-c7a3-4553-b7ef-917f0d4ef4fe",
+      "project_id": "aba47567-5333-42ad-8608-fcded15ff2f1",
+      "split": "development",
+      "stable_key": "1a5b042e24546bb6",
+      "title": "Recover from an invalid identifier: retrieve one company by identifier",
+      "version": 1
+    },
+    {
+      "id": "34680c04-32ef-4980-a956-f143ced089bf",
+      "project_id": "aba47567-5333-42ad-8608-fcded15ff2f1",
+      "split": "development",
+      "stable_key": "fc20c0353ca0289a",
+      "title": "List high-value open sales opportunities",
+      "version": 1
+    },
+    {
+      "id": "24f22483-b631-486e-9b27-b25e39ae1e7b",
+      "project_id": "aba47567-5333-42ad-8608-fcded15ff2f1",
+      "split": "development",
+      "stable_key": "fe147fe09d636dbf",
+      "title": "Respect semantic boundaries: list high-value open sales opportunities",
+      "version": 1
+    },
+    {
+      "id": "f47d3342-76f9-46b7-82e7-a6ab7a36e4c4",
+      "project_id": "aba47567-5333-42ad-8608-fcded15ff2f1",
+      "split": "hidden",
+      "stable_key": "f28294ab95668845",
+      "title": "Assign one sales opportunity",
+      "version": 1
+    },
+    {
+      "id": "41bf7f68-ef4e-4820-ba88-96fc1497e3bf",
+      "project_id": "aba47567-5333-42ad-8608-fcded15ff2f1",
+      "split": "hidden",
+      "stable_key": "def4a57b1f80d30d",
+      "title": "Recover from an invalid identifier: assign one sales opportunity",
+      "version": 1
+    },
+    {
+      "id": "bb21881e-cf7f-4f83-93bb-bf576b76cc80",
+      "project_id": "aba47567-5333-42ad-8608-fcded15ff2f1",
+      "split": "hidden",
+      "stable_key": "aaf6709916a5e41d",
+      "title": "Delete a confirmed sales opportunity",
+      "version": 1
+    },
+    {
+      "id": "a5d3e4dc-4f6c-4172-8ff0-75fed97c812d",
+      "project_id": "aba47567-5333-42ad-8608-fcded15ff2f1",
+      "split": "hidden",
+      "stable_key": "1b40fa12f93842d6",
+      "title": "Recover from an invalid identifier: delete a confirmed sales opportunity",
+      "version": 1
+    },
+    {
+      "id": "12bd7ec4-bbc5-4cd8-bf65-63147192fe49",
+      "project_id": "aba47567-5333-42ad-8608-fcded15ff2f1",
+      "split": "development",
+      "stable_key": "a6d36922fe09dc82",
+      "title": "Locate an account owner by name",
+      "version": 1
+    },
+    {
+      "id": "beb0bb6a-92d9-4d41-9c94-4382bee086e5",
+      "project_id": "aba47567-5333-42ad-8608-fcded15ff2f1",
+      "split": "hidden",
+      "stable_key": "14f54fc0dffa68fd",
+      "title": "Respect semantic boundaries: locate an account owner by name",
+      "version": 1
+    },
+    {
+      "id": "61091e6f-7f26-4b9d-adea-a67158973f76",
+      "project_id": "aba47567-5333-42ad-8608-fcded15ff2f1",
+      "split": "development",
+      "stable_key": "e1e25d609bd992e4",
+      "title": "List contacts for one company",
+      "version": 1
+    },
+    {
+      "id": "907de6f7-21ff-4bca-b25b-32a29749b354",
+      "project_id": "aba47567-5333-42ad-8608-fcded15ff2f1",
+      "split": "development",
+      "stable_key": "74acf1395ce004bc",
+      "title": "Respect semantic boundaries: list contacts for one company",
+      "version": 1
+    }
+  ],
+  "task_split_seed": 42,
+  "temperatures": {
+    "mock:reliable": 0.0
+  }
+}

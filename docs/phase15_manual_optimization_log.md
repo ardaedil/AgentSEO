@@ -12,3 +12,6 @@ V2 is a human-authored, frozen general interface. The runner executes V0 on deve
 
 Every V2 description is generated from canonical operation semantics. No backend behavior, task, initial state, expected state, evaluator, or provider setting changes with V2.
 
+## Local system-validation checkpoint
+
+Experiment `f67c4e98-9d5b-4046-bed3-2ed5889a5bbb` produced no MockAgent baseline failures. V2 was therefore not adapted to synthetic outcomes. OpenAI, Anthropic, and Gemini were unavailable, so no real development failure trace was used and no claim of optimization lift is made.
