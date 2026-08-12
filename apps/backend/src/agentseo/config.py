@@ -22,6 +22,12 @@ class Settings(BaseSettings):
     max_tool_calls: int = 12
     max_iterations: int = 16
     run_timeout_seconds: int = 120
+    phase15_max_cost_usd: float = 5.0
+    phase15_max_concurrency: int = 2
+    phase15_repetitions: int = 3
+    phase15_task_split_seed: int = 42
+    phase15_temperature: float = 0.0
+    phase15_bootstrap_samples: int = 2000
 
     @field_validator("cors_origins", mode="before")
     @classmethod
