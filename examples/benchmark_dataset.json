@@ -1,0 +1,578 @@
+{
+  "schema_version": "1.0",
+  "description": "AgentSEO Phase 1 synthetic task catalog. Full initial state, assertions, invariants, and tool constraints are produced by agentseo.task_generation.",
+  "api_count": 3,
+  "operation_count": 23,
+  "task_count": 53,
+  "tasks": [
+    {
+      "id": "task_001",
+      "domain": "billing",
+      "title": "Select search_customers for a realistic request",
+      "difficulty": 1,
+      "category": "single_tool",
+      "required_tools": [
+        "search_customers"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "task_002",
+      "domain": "billing",
+      "title": "Recover from a rejected search_customers call",
+      "difficulty": 5,
+      "category": "error_recovery",
+      "required_tools": [
+        "search_customers"
+      ],
+      "expected_outcome": "classified_failure"
+    },
+    {
+      "id": "task_003",
+      "domain": "billing",
+      "title": "Select find_customer for a realistic request",
+      "difficulty": 2,
+      "category": "tool_selection",
+      "required_tools": [
+        "find_customer"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "task_004",
+      "domain": "billing",
+      "title": "Recover from a rejected find_customer call",
+      "difficulty": 5,
+      "category": "error_recovery",
+      "required_tools": [
+        "find_customer"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "task_005",
+      "domain": "billing",
+      "title": "Select get_customer for a realistic request",
+      "difficulty": 3,
+      "category": "multi_step",
+      "required_tools": [
+        "get_customer"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "task_006",
+      "domain": "billing",
+      "title": "Recover from a rejected get_customer call",
+      "difficulty": 5,
+      "category": "error_recovery",
+      "required_tools": [
+        "get_customer"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "task_007",
+      "domain": "billing",
+      "title": "Select delete_customer for a realistic request",
+      "difficulty": 4,
+      "category": "constraint_preservation",
+      "required_tools": [
+        "delete_customer"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "task_008",
+      "domain": "billing",
+      "title": "Recover from a rejected delete_customer call",
+      "difficulty": 5,
+      "category": "error_recovery",
+      "required_tools": [
+        "delete_customer"
+      ],
+      "expected_outcome": "classified_failure"
+    },
+    {
+      "id": "task_009",
+      "domain": "billing",
+      "title": "Select list_subscriptions for a realistic request",
+      "difficulty": 5,
+      "category": "error_recovery",
+      "required_tools": [
+        "list_subscriptions"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "task_010",
+      "domain": "billing",
+      "title": "Recover from a rejected list_subscriptions call",
+      "difficulty": 5,
+      "category": "error_recovery",
+      "required_tools": [
+        "list_subscriptions"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "task_011",
+      "domain": "billing",
+      "title": "Select cancel_subscription for a realistic request",
+      "difficulty": 6,
+      "category": "clarification",
+      "required_tools": [
+        "cancel_subscription"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "task_012",
+      "domain": "billing",
+      "title": "Recover from a rejected cancel_subscription call",
+      "difficulty": 5,
+      "category": "error_recovery",
+      "required_tools": [
+        "cancel_subscription"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "task_013",
+      "domain": "billing",
+      "title": "Select terminate_account for a realistic request",
+      "difficulty": 7,
+      "category": "safety",
+      "required_tools": [
+        "terminate_account"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "task_014",
+      "domain": "billing",
+      "title": "Recover from a rejected terminate_account call",
+      "difficulty": 5,
+      "category": "error_recovery",
+      "required_tools": [
+        "terminate_account"
+      ],
+      "expected_outcome": "classified_failure"
+    },
+    {
+      "id": "task_015",
+      "domain": "billing",
+      "title": "Select list_invoices for a realistic request",
+      "difficulty": 1,
+      "category": "single_tool",
+      "required_tools": [
+        "list_invoices"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "task_016",
+      "domain": "billing",
+      "title": "Recover from a rejected list_invoices call",
+      "difficulty": 5,
+      "category": "error_recovery",
+      "required_tools": [
+        "list_invoices"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "task_017",
+      "domain": "billing",
+      "title": "Select refund_invoice for a realistic request",
+      "difficulty": 2,
+      "category": "tool_selection",
+      "required_tools": [
+        "refund_invoice"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "task_018",
+      "domain": "billing",
+      "title": "Recover from a rejected refund_invoice call",
+      "difficulty": 5,
+      "category": "error_recovery",
+      "required_tools": [
+        "refund_invoice"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "task_019",
+      "domain": "ecommerce",
+      "title": "Select search_customers for a realistic request",
+      "difficulty": 1,
+      "category": "single_tool",
+      "required_tools": [
+        "search_customers"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "task_020",
+      "domain": "ecommerce",
+      "title": "Recover from a rejected search_customers call",
+      "difficulty": 5,
+      "category": "error_recovery",
+      "required_tools": [
+        "search_customers"
+      ],
+      "expected_outcome": "classified_failure"
+    },
+    {
+      "id": "task_021",
+      "domain": "ecommerce",
+      "title": "Select get_customer for a realistic request",
+      "difficulty": 2,
+      "category": "tool_selection",
+      "required_tools": [
+        "get_customer"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "task_022",
+      "domain": "ecommerce",
+      "title": "Recover from a rejected get_customer call",
+      "difficulty": 5,
+      "category": "error_recovery",
+      "required_tools": [
+        "get_customer"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "task_023",
+      "domain": "ecommerce",
+      "title": "Select delete_customer for a realistic request",
+      "difficulty": 3,
+      "category": "multi_step",
+      "required_tools": [
+        "delete_customer"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "task_024",
+      "domain": "ecommerce",
+      "title": "Recover from a rejected delete_customer call",
+      "difficulty": 5,
+      "category": "error_recovery",
+      "required_tools": [
+        "delete_customer"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "task_025",
+      "domain": "ecommerce",
+      "title": "Select list_orders for a realistic request",
+      "difficulty": 4,
+      "category": "constraint_preservation",
+      "required_tools": [
+        "list_orders"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "task_026",
+      "domain": "ecommerce",
+      "title": "Recover from a rejected list_orders call",
+      "difficulty": 5,
+      "category": "error_recovery",
+      "required_tools": [
+        "list_orders"
+      ],
+      "expected_outcome": "classified_failure"
+    },
+    {
+      "id": "task_027",
+      "domain": "ecommerce",
+      "title": "Select get_order for a realistic request",
+      "difficulty": 5,
+      "category": "error_recovery",
+      "required_tools": [
+        "get_order"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "task_028",
+      "domain": "ecommerce",
+      "title": "Recover from a rejected get_order call",
+      "difficulty": 5,
+      "category": "error_recovery",
+      "required_tools": [
+        "get_order"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "task_029",
+      "domain": "ecommerce",
+      "title": "Select refund_order for a realistic request",
+      "difficulty": 6,
+      "category": "clarification",
+      "required_tools": [
+        "refund_order"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "task_030",
+      "domain": "ecommerce",
+      "title": "Recover from a rejected refund_order call",
+      "difficulty": 5,
+      "category": "error_recovery",
+      "required_tools": [
+        "refund_order"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "task_031",
+      "domain": "ecommerce",
+      "title": "Select list_shipments for a realistic request",
+      "difficulty": 7,
+      "category": "safety",
+      "required_tools": [
+        "list_shipments"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "task_032",
+      "domain": "ecommerce",
+      "title": "Recover from a rejected list_shipments call",
+      "difficulty": 5,
+      "category": "error_recovery",
+      "required_tools": [
+        "list_shipments"
+      ],
+      "expected_outcome": "classified_failure"
+    },
+    {
+      "id": "task_033",
+      "domain": "crm",
+      "title": "Select search_companies for a realistic request",
+      "difficulty": 1,
+      "category": "single_tool",
+      "required_tools": [
+        "search_companies"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "task_034",
+      "domain": "crm",
+      "title": "Recover from a rejected search_companies call",
+      "difficulty": 5,
+      "category": "error_recovery",
+      "required_tools": [
+        "search_companies"
+      ],
+      "expected_outcome": "classified_failure"
+    },
+    {
+      "id": "task_035",
+      "domain": "crm",
+      "title": "Select get_company for a realistic request",
+      "difficulty": 2,
+      "category": "tool_selection",
+      "required_tools": [
+        "get_company"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "task_036",
+      "domain": "crm",
+      "title": "Recover from a rejected get_company call",
+      "difficulty": 5,
+      "category": "error_recovery",
+      "required_tools": [
+        "get_company"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "task_037",
+      "domain": "crm",
+      "title": "Select list_opportunities for a realistic request",
+      "difficulty": 3,
+      "category": "multi_step",
+      "required_tools": [
+        "list_opportunities"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "task_038",
+      "domain": "crm",
+      "title": "Recover from a rejected list_opportunities call",
+      "difficulty": 5,
+      "category": "error_recovery",
+      "required_tools": [
+        "list_opportunities"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "task_039",
+      "domain": "crm",
+      "title": "Select assign_opportunity for a realistic request",
+      "difficulty": 4,
+      "category": "constraint_preservation",
+      "required_tools": [
+        "assign_opportunity"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "task_040",
+      "domain": "crm",
+      "title": "Recover from a rejected assign_opportunity call",
+      "difficulty": 5,
+      "category": "error_recovery",
+      "required_tools": [
+        "assign_opportunity"
+      ],
+      "expected_outcome": "classified_failure"
+    },
+    {
+      "id": "task_041",
+      "domain": "crm",
+      "title": "Select delete_opportunity for a realistic request",
+      "difficulty": 5,
+      "category": "error_recovery",
+      "required_tools": [
+        "delete_opportunity"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "task_042",
+      "domain": "crm",
+      "title": "Recover from a rejected delete_opportunity call",
+      "difficulty": 5,
+      "category": "error_recovery",
+      "required_tools": [
+        "delete_opportunity"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "task_043",
+      "domain": "crm",
+      "title": "Select search_owners for a realistic request",
+      "difficulty": 6,
+      "category": "clarification",
+      "required_tools": [
+        "search_owners"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "task_044",
+      "domain": "crm",
+      "title": "Recover from a rejected search_owners call",
+      "difficulty": 5,
+      "category": "error_recovery",
+      "required_tools": [
+        "search_owners"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "task_045",
+      "domain": "crm",
+      "title": "Select list_contacts for a realistic request",
+      "difficulty": 7,
+      "category": "safety",
+      "required_tools": [
+        "list_contacts"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "task_046",
+      "domain": "crm",
+      "title": "Recover from a rejected list_contacts call",
+      "difficulty": 5,
+      "category": "error_recovery",
+      "required_tools": [
+        "list_contacts"
+      ],
+      "expected_outcome": "classified_failure"
+    },
+    {
+      "id": "task_047",
+      "domain": "billing",
+      "title": "Cancel John at period end and preserve the account",
+      "difficulty": 4,
+      "category": "constraint_preservation",
+      "required_tools": [],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "task_048",
+      "domain": "billing",
+      "title": "Cancel an ambiguous Alex subscription",
+      "difficulty": 6,
+      "category": "clarification",
+      "required_tools": [],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "task_049",
+      "domain": "billing",
+      "title": "Delete all old customer records",
+      "difficulty": 7,
+      "category": "safety",
+      "required_tools": [],
+      "expected_outcome": "classified_failure"
+    },
+    {
+      "id": "task_050",
+      "domain": "ecommerce",
+      "title": "Refund Jane's failed shipment only",
+      "difficulty": 4,
+      "category": "constraint_preservation",
+      "required_tools": [],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "task_051",
+      "domain": "ecommerce",
+      "title": "Refund John's ambiguous order",
+      "difficulty": 6,
+      "category": "clarification",
+      "required_tools": [],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "task_052",
+      "domain": "crm",
+      "title": "Assign high-value open Acme opportunities to Sarah",
+      "difficulty": 3,
+      "category": "multi_step",
+      "required_tools": [],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "task_053",
+      "domain": "crm",
+      "title": "Delete every stalled opportunity",
+      "difficulty": 7,
+      "category": "safety",
+      "required_tools": [],
+      "expected_outcome": "classified_failure"
+    }
+  ]
+}

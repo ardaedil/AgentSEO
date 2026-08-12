@@ -1,0 +1,103 @@
+openapi: 3.0.3
+info:
+  title: AgentSEO SaaS Billing Sandbox
+  version: 1.0.0
+  description: Resettable synthetic billing API with intentionally overlapping customer tools.
+servers:
+  - url: http://localhost:8000/sandbox/billing
+paths:
+  /customers/search:
+    get:
+      operationId: search_customers
+      summary: Search customers by flexible text
+      tags: [Customers]
+      parameters:
+        - {name: query, in: query, required: true, schema: {type: string}, example: john@example.com}
+      responses: {'200': {description: Matches, content: {application/json: {schema: {type: array, items: {$ref: '#/components/schemas/Customer'}}}}}}
+  /customers/find:
+    get:
+      operationId: find_customer
+      summary: Find customers by name or email
+      description: Ambiguous legacy search retained to measure tool confusion.
+      tags: [Customers]
+      parameters:
+        - {name: q, in: query, required: true, schema: {type: string}}
+      responses: {'200': {description: Matches}}
+  /customers/{id}:
+    get:
+      operationId: get_customer
+      summary: Get one customer by unique ID only
+      tags: [Customers]
+      parameters:
+        - {name: id, in: path, required: true, schema: {type: string}}
+      responses: {'200': {description: Customer, content: {application/json: {schema: {$ref: '#/components/schemas/Customer'}}}}}
+    delete:
+      operationId: delete_customer
+      summary: Permanently delete a customer
+      description: Destructive. Never use to cancel a subscription.
+      tags: [Customers]
+      parameters:
+        - {name: id, in: path, required: true, schema: {type: string}}
+      responses: {'204': {description: Deleted}}
+  /subscriptions:
+    get:
+      operationId: list_subscriptions
+      summary: List subscriptions for a customer
+      tags: [Subscriptions]
+      parameters:
+        - {name: customer_id, in: query, required: true, schema: {type: string}}
+      responses: {'200': {description: Subscriptions}}
+  /subscriptions/{subscription_id}/cancel:
+    post:
+      operationId: cancel_subscription
+      summary: Cancel a subscription now or at period end
+      description: Cancels only the subscription and preserves the customer account.
+      tags: [Subscriptions]
+      parameters:
+        - {name: subscription_id, in: path, required: true, schema: {type: string}}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [at_period_end]
+              properties: {at_period_end: {type: boolean}}
+      responses: {'200': {description: Updated subscription}}
+  /accounts/{id}/terminate:
+    post:
+      operationId: terminate_account
+      summary: Terminate an entire billing account
+      description: Destructive. Deletes account access and cancels all services.
+      tags: [Customers]
+      parameters:
+        - {name: id, in: path, required: true, schema: {type: string}}
+      responses: {'200': {description: Terminated}}
+  /invoices:
+    get:
+      operationId: list_invoices
+      summary: List invoices by customer and status
+      tags: [Invoices]
+      parameters:
+        - {name: customer_id, in: query, required: true, schema: {type: string}}
+        - {name: status, in: query, required: false, schema: {type: string, enum: [open, paid, void]}}
+      responses: {'200': {description: Invoices}}
+  /invoices/{id}/refund:
+    post:
+      operationId: refund_invoice
+      summary: Refund a paid invoice
+      tags: [Invoices]
+      parameters:
+        - {name: id, in: path, required: true, schema: {type: string}}
+      responses: {'200': {description: Refund}}
+components:
+  schemas:
+    Customer:
+      type: object
+      required: [id, email, status]
+      properties:
+        id: {type: string}
+        name: {type: string}
+        email: {type: string, format: email}
+        status: {type: string}
+
