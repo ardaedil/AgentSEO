@@ -56,9 +56,10 @@ class MockAgent(AgentProvider):
     def __init__(self, model: str = "reliable") -> None:
         self.model = model
 
-    def _arguments(self, tool: str, instruction: str) -> dict[str, Any]:
+    def _arguments(self, tool: str, instruction: str, invalid: bool = False) -> dict[str, Any]:
         lower = tool.lower()
         text = instruction.lower()
+        missing = "missing_record"
         if "search_customer" in lower or "find_customer" in lower or "lookup_customer" in lower:
             if "john" in text:
                 return {"query": "john@example.com", "email": "john@example.com"}
@@ -68,24 +69,46 @@ class MockAgent(AgentProvider):
         if "subscription" in lower and lower.startswith(("list", "search", "find")):
             return {"customer_id": "cus_john"}
         if lower == "cancel_subscription":
-            return {"subscription_id": "sub_john", "at_period_end": True}
+            return {
+                "subscription_id": missing if invalid else "sub_john",
+                "at_period_end": True,
+            }
         if "invoice" in lower and lower.startswith(("list", "search", "find")):
             return {"customer_id": "cus_john", "status": "open"}
-        if "company" in lower:
+        if "compan" in lower:
+            if lower.startswith("get"):
+                return {"id": missing if invalid else "co_acme"}
             return {"query": "Acme Inc."}
         if "opportunit" in lower and lower.startswith(("list", "search", "find")):
             return {"company_id": "co_acme", "status": "open", "min_value": 20000}
         if "owner" in lower:
             return {"query": "Sarah"}
         if lower == "assign_opportunity":
-            return {"opportunity_id": "opp_1", "owner_id": "own_sarah"}
+            return {
+                "opportunity_id": missing if invalid else "opp_1",
+                "owner_id": "own_sarah",
+            }
         if "order" in lower and lower.startswith(("list", "search", "find")):
             return {"customer_id": "cus_jane"}
         if "shipment" in lower:
             return {"status": "failed"}
         if lower == "refund_order":
-            return {"order_id": "ord_1"}
-        return {"id": "example-id"}
+            return {"order_id": missing if invalid else "ord_1"}
+        if lower == "refund_invoice":
+            return {"id": missing if invalid else "inv_alice"}
+        if lower == "terminate_account":
+            return {"id": missing if invalid else "cus_alice"}
+        if lower == "get_customer":
+            return {"id": missing if invalid else ("cus_jane" if "jane" in text else "cus_john")}
+        if lower == "delete_customer":
+            return {"id": missing if invalid else ("cus_jane" if "jane" in text else "cus_alice")}
+        if lower == "get_order":
+            return {"id": missing if invalid else "ord_1"}
+        if lower == "delete_opportunity":
+            return {"id": missing if invalid else "opp_2"}
+        if lower == "list_contacts":
+            return {"company_id": "co_acme"}
+        return {"id": missing if invalid else "example-id"}
 
     async def next_action(
         self,
@@ -101,17 +124,35 @@ class MockAgent(AgentProvider):
                 token_usage={"input": 24, "output": 8},
             )
         required = task_context.get("required_tools", [])
-        called = [event.get("tool") for event in history if event.get("type") == "tool_result"]
-        remaining = [name for name in required if name not in called]
+        canonical_to_agent = {
+            tool.tool_metadata.get("canonical_operation_id", tool.operation_id): tool.name
+            for tool in tools
+        }
+        called = [
+            event.get("canonical_tool", event.get("tool"))
+            for event in history
+            if event.get("type") == "tool_result"
+        ]
+        successful = [
+            event.get("canonical_tool", event.get("tool"))
+            for event in history
+            if event.get("type") == "tool_result" and not event.get("error_code")
+        ]
+        remaining = [name for name in required if name not in successful]
         if remaining:
-            selected = remaining[0]
+            canonical_selected = remaining[0]
             # The fallible mock variant deterministically chooses a confusing destructive tool.
             if self.model == "fallible" and not called and task_context.get("forbidden_tools"):
-                selected = task_context["forbidden_tools"][0]
+                canonical_selected = task_context["forbidden_tools"][0]
+            selected = canonical_to_agent.get(canonical_selected, canonical_selected)
             return AgentAction(
                 "tool_call",
                 tool=selected,
-                arguments=self._arguments(selected, instruction),
+                arguments=self._arguments(
+                    canonical_selected,
+                    instruction,
+                    invalid=bool(task_context.get("category") == "error_recovery" and not called),
+                ),
                 token_usage={"input": 45, "output": 14},
             )
         return AgentAction(
@@ -139,22 +180,25 @@ class OpenAIProvider(HTTPProvider):
         input_items: list[dict[str, Any]] = [{"role": "user", "content": instruction}]
         for item in history:
             input_items.append({"role": "user", "content": json.dumps(item)})
+        payload: dict[str, Any] = {
+            "model": self.model,
+            "input": input_items,
+            "tools": [
+                {
+                    "type": "function",
+                    "name": tool.name,
+                    "description": tool.description,
+                    "parameters": tool_input_schema(tool),
+                }
+                for tool in tools
+            ],
+        }
+        if task_context.get("temperature") is not None:
+            payload["temperature"] = task_context["temperature"]
         response = await self.client.post(
             "https://api.openai.com/v1/responses",
             headers={"Authorization": f"Bearer {self.api_key}"},
-            json={
-                "model": self.model,
-                "input": input_items,
-                "tools": [
-                    {
-                        "type": "function",
-                        "name": tool.name,
-                        "description": tool.description,
-                        "parameters": tool_input_schema(tool),
-                    }
-                    for tool in tools
-                ],
-            },
+            json=payload,
         )
         response.raise_for_status()
         data = response.json()
@@ -195,22 +239,25 @@ class AnthropicProvider(HTTPProvider):
         messages = [
             {"role": "user", "content": instruction + "\n\nTool history:\n" + json.dumps(history)}
         ]
+        payload: dict[str, Any] = {
+            "model": self.model,
+            "max_tokens": 1024,
+            "messages": messages,
+            "tools": [
+                {
+                    "name": tool.name,
+                    "description": tool.description,
+                    "input_schema": tool_input_schema(tool),
+                }
+                for tool in tools
+            ],
+        }
+        if task_context.get("temperature") is not None:
+            payload["temperature"] = task_context["temperature"]
         response = await self.client.post(
             "https://api.anthropic.com/v1/messages",
             headers={"x-api-key": self.api_key, "anthropic-version": "2023-06-01"},
-            json={
-                "model": self.model,
-                "max_tokens": 1024,
-                "messages": messages,
-                "tools": [
-                    {
-                        "name": tool.name,
-                        "description": tool.description,
-                        "input_schema": tool_input_schema(tool),
-                    }
-                    for tool in tools
-                ],
-            },
+            json=payload,
         )
         response.raise_for_status()
         data = response.json()
@@ -274,6 +321,9 @@ class GeminiProvider(HTTPProvider):
                         ]
                     }
                 ],
+                "generationConfig": {
+                    "temperature": task_context.get("temperature", 0.0),
+                },
             },
         )
         response.raise_for_status()
@@ -301,9 +351,8 @@ class GeminiProvider(HTTPProvider):
 
 def create_provider(identifier: str, settings: Settings) -> AgentProvider:
     provider, _, model = identifier.partition(":")
-    model = model or "reliable"
     if provider == "mock":
-        return MockAgent(model)
+        return MockAgent(model or "reliable")
     if provider == "openai" and settings.openai_api_key:
         return OpenAIProvider(model or settings.openai_model, settings.openai_api_key)
     if provider == "anthropic" and settings.anthropic_api_key:

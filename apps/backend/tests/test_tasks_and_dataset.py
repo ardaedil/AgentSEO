@@ -16,8 +16,13 @@ def test_dataset_contains_more_than_fifty_tasks_and_fifteen_operations():
         total_tools += len(tools)
         total_tasks += len(tasks)
         assert {task.difficulty for task in tasks} >= {1, 5, 7}
+        assert not any(
+            operation.name.lower() in task.natural_language_instruction.lower()
+            for task in tasks
+            for operation in tools
+        )
     assert total_tools >= 15
-    assert total_tasks >= 50
+    assert total_tasks == 53
 
 
 def test_llm_task_validation_rejects_unknown_tools():
