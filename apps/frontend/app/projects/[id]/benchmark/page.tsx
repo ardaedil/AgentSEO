@@ -1,0 +1,26 @@
+"use client";
+
+import {FormEvent, useEffect, useState} from "react";
+import {useParams, useRouter} from "next/navigation";
+import {PageTitle, ProjectNav} from "@/components/ui";
+import {sendJSON, getJSON, type Run, type Task} from "@/lib/api";
+
+const MODEL_OPTIONS = [
+  {id: "mock:reliable", name: "MockAgent Reliable", note: "Offline deterministic baseline"},
+  {id: "mock:fallible", name: "MockAgent Fallible", note: "Synthetic failure demonstration"},
+  {id: "openai:gpt-4.1-mini", name: "OpenAI GPT", note: "Requires OPENAI_API_KEY"},
+  {id: "anthropic:claude-sonnet-4-20250514", name: "Anthropic Claude", note: "Requires ANTHROPIC_API_KEY"},
+  {id: "google:gemini-2.5-flash", name: "Google Gemini", note: "Requires GOOGLE_API_KEY"},
+];
+
+export default function BenchmarkPage() {
+  const id = useParams<{id: string}>().id; const router = useRouter(); const [tasks, setTasks] = useState<Task[]>([]); const [selectedTasks, setSelectedTasks] = useState<string[]>([]); const [models, setModels] = useState(["mock:reliable", "mock:fallible"]); const [busy, setBusy] = useState(false); const [error, setError] = useState("");
+  useEffect(() => {getJSON<Task[]>(`/api/projects/${id}/tasks`).then(value => {setTasks(value); setSelectedTasks(value.filter(task => task.enabled).map(task => task.id));});}, [id]);
+  function toggle(model: string) {setModels(value => value.includes(model) ? value.filter(item => item !== model) : [...value, model]);}
+  function toggleTask(taskId: string) {setSelectedTasks(value => value.includes(taskId) ? value.filter(item => item !== taskId) : [...value, taskId]);}
+  async function submit(event: FormEvent<HTMLFormElement>) {event.preventDefault(); setBusy(true); setError(""); try {const form = new FormData(event.currentTarget); const runs = await sendJSON<Run[]>(`/api/projects/${id}/benchmark-runs`, "POST", {models, task_ids: selectedTasks, max_iterations: Number(form.get("iterations")), max_tool_calls: Number(form.get("calls")), timeout_seconds: Number(form.get("timeout"))}); router.push(runs.length === 1 ? `/runs/${runs[0].id}` : `/projects/${id}/report`);} catch (error) {setError(String(error)); setBusy(false);}}
+  return <><ProjectNav id={id} /><PageTitle eyebrow="Controlled experiment" title="New benchmark" description="Every model receives the same interface, tasks, configuration, and reset sandbox state." />
+    <form onSubmit={submit} className="grid gap-6 lg:grid-cols-[1.35fr_0.8fr]"><section className="space-y-6"><div className="card p-6"><h2 className="mb-4 font-semibold">Models</h2><div className="space-y-3">{MODEL_OPTIONS.map(option => <label key={option.id} className={`flex cursor-pointer items-center gap-4 rounded-xl border p-4 ${models.includes(option.id) ? "border-accent bg-indigo-50" : "border-slate-200"}`}><input type="checkbox" checked={models.includes(option.id)} onChange={() => toggle(option.id)} /><span><span className="block font-medium">{option.name}</span><span className="text-xs text-slate-500">{option.note}</span></span></label>)}</div></div><div className="card p-6"><div className="mb-4 flex items-center justify-between"><div><h2 className="font-semibold">Tasks</h2><p className="mt-1 text-xs text-slate-500">{selectedTasks.length} of {tasks.length} selected</p></div><button type="button" className="text-sm font-semibold text-accent" onClick={() => setSelectedTasks(selectedTasks.length === tasks.length ? [] : tasks.map(task => task.id))}>{selectedTasks.length === tasks.length ? "Clear all" : "Select all"}</button></div><div className="max-h-72 divide-y overflow-y-auto rounded-xl border">{tasks.map(task => <label key={task.id} className="flex cursor-pointer items-start gap-3 p-3 hover:bg-slate-50"><input className="mt-1" type="checkbox" checked={selectedTasks.includes(task.id)} onChange={() => toggleTask(task.id)} /><span><span className="block text-sm font-medium">{task.title}</span><span className="text-xs text-slate-500">L{task.difficulty} · {task.category.replaceAll("_", " ")}</span></span></label>)}</div><div className="mt-6 rounded-xl bg-amber-50 p-4 text-sm text-amber-900"><strong>Cost safeguard:</strong> this run includes {selectedTasks.length} tasks × {models.length} models. Real providers use bounded loops; MockAgent runs are explicitly marked synthetic.</div></div></section>
+      <aside className="card h-fit p-6"><h2 className="mb-4 font-semibold">Run limits</h2><div className="space-y-4"><div><label className="label">Maximum iterations</label><input className="input" name="iterations" type="number" min="1" max="50" defaultValue="12" /></div><div><label className="label">Maximum tool calls</label><input className="input" name="calls" type="number" min="1" max="30" defaultValue="10" /></div><div><label className="label">Per-task timeout (seconds)</label><input className="input" name="timeout" type="number" min="1" max="600" defaultValue="60" /></div>{error && <p className="rounded-lg bg-red-50 p-3 text-xs text-red-700">{error}</p>}<button disabled={busy || !models.length || !selectedTasks.length} className="btn-primary w-full">{busy ? "Running benchmark…" : "Run benchmark"}</button><p className="text-center text-xs text-slate-400">The environment resets before every task.</p></div></aside></form>
+  </>;
+}
