@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import asyncio
 import json
+import sys
 from pathlib import Path
 
 from agentseo.config import get_settings
@@ -134,6 +135,9 @@ def summarize(experiment_id: str) -> dict[str, object]:
 
 
 async def main() -> None:
+    for stream in (sys.stdout, sys.stderr):
+        if hasattr(stream, "reconfigure"):
+            stream.reconfigure(encoding="utf-8", errors="backslashreplace")
     parser = argparse.ArgumentParser()
     parser.add_argument("--output-root", type=Path, default=ROOT / "artifacts" / "phase15_smoke")
     parser.add_argument(
