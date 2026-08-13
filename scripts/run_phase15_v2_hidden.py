@@ -19,7 +19,7 @@ from agentseo.experiments import (
     resolve_models,
     run_phase15_experiment,
 )
-from agentseo.interfaces import create_interface_variant
+from agentseo.interfaces import create_interface_variant, mutate_snapshot
 from agentseo.models import (
     BenchmarkTask,
     InterfaceMutation,
@@ -53,7 +53,7 @@ def seed_and_freeze_v2(split_seed: int) -> tuple[list[str], dict[str, object]]:
     with SessionLocal() as session:
         for domain, titles in HIDDEN_TASKS.items():
             _, tools = parse_openapi((ROOT / "examples" / domain / "openapi.yaml").read_bytes())
-            snapshot = [tool.to_dict() for tool in tools]
+            snapshot, _ = mutate_snapshot([tool.to_dict() for tool in tools], "baseline")
             project = Project(
                 name=f"Phase 1.5 frozen V0 versus V2 hidden evaluation — {domain}",
                 description="Fresh temporally paired hidden evaluation; no development tasks included",
