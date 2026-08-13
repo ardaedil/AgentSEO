@@ -7,7 +7,7 @@
     "general": "Effects were +1.9 pp, +0.9 pp, -3.7 pp for GPT, Claude, and Gemini.",
     "gpt": "Effect: -0.9 pp.",
     "safety": "12 model/interface cells had lower safety success than V0.",
-    "specific_over_general": "GPT -2.8 pp, Claude -6.5 pp, Gemini -4.6 pp.",
+    "specific_over_general": "GPT -2.8 pp, Claude -6.5 pp, Gemini -0.9 pp.",
     "transfer": "Cross-transfer effects ranged from -6.5 pp to +0.9 pp; the detailed table reports gains and regressions for every non-intended model."
   },
   "best_hidden_interface": {
@@ -1084,6 +1084,55 @@
       ],
       "treatment_rate": 0.7314814814814814,
       "treatment_variant": "phase15b_r2_claude"
+    },
+    {
+      "absolute_difference": -0.0092592592592593,
+      "baseline_rate": 0.6574074074074074,
+      "baseline_variant": "phase15b_r2_general",
+      "confidence_interval": [
+        -0.05555555555555555,
+        0.03703703703703705
+      ],
+      "cost_delta_ci95_per_observation": [
+        -0.000573763888888889,
+        -0.00010915277777777769
+      ],
+      "cost_delta_usd_per_observation": -0.0003146666666666671,
+      "exploratory": true,
+      "family_cluster_confidence_interval": [
+        -0.055555555555555566,
+        0.02777777777777779
+      ],
+      "latency_delta_ci95": [
+        -7.19478902314788,
+        -0.7695360453705048
+      ],
+      "latency_delta_seconds": -3.6920457648151626,
+      "mcnemar": {
+        "baseline_only_success": 0,
+        "discordant_pairs": 1,
+        "p_value": 1.0,
+        "treatment_only_success": 1
+      },
+      "method": "paired task-cluster bootstrap; exact McNemar on task-majority outcomes",
+      "model": "google:gemini-3.6-flash",
+      "p_value": 1.0,
+      "regression_count": 3,
+      "relative_difference": -0.014084507042253582,
+      "sample_size_observations": 216,
+      "sample_size_tasks": 36,
+      "task_changes": {
+        "gained": 1,
+        "regressed": 3,
+        "unchanged": 32
+      },
+      "token_delta": -184.14814814814827,
+      "token_delta_ci95": [
+        -334.41666666666663,
+        -66.66666666666667
+      ],
+      "treatment_rate": 0.6481481481481481,
+      "treatment_variant": "phase15b_r2_gemini"
     }
   ],
   "conclusion": "NO-GO \u2014 MORE VALIDATION REQUIRED",
@@ -1536,6 +1585,155 @@
       "token_delta_ci95": [
         -31.101851851851816,
         1161.3703703703704
+      ],
+      "treatment_rate": 0.6481481481481481,
+      "treatment_variant": "phase15b_r2_gemini"
+    }
+  ],
+  "model_specific_vs_general": [
+    {
+      "absolute_difference": -0.02777777777777768,
+      "baseline_rate": 0.5462962962962963,
+      "baseline_variant": "phase15b_r2_general",
+      "confidence_interval": [
+        -0.1388888888888889,
+        0.07407407407407407
+      ],
+      "cost_delta_ci95_per_observation": [
+        -7.672962962962963e-05,
+        4.479999999999998e-05
+      ],
+      "cost_delta_usd_per_observation": -1.8048148148148155e-05,
+      "exploratory": true,
+      "family_cluster_confidence_interval": [
+        -0.16666666666666666,
+        0.08333333333333334
+      ],
+      "latency_delta_ci95": [
+        -0.3688892194438301,
+        1.9136022759262739
+      ],
+      "latency_delta_seconds": 0.682445746296489,
+      "mcnemar": {
+        "baseline_only_success": 5,
+        "discordant_pairs": 8,
+        "p_value": 0.7265625,
+        "treatment_only_success": 3
+      },
+      "method": "paired task-cluster bootstrap; exact McNemar on task-majority outcomes",
+      "model": "openai:gpt-4.1-mini",
+      "p_value": 0.7265625,
+      "regression_count": 6,
+      "relative_difference": -0.05084745762711847,
+      "sample_size_observations": 216,
+      "sample_size_tasks": 36,
+      "task_changes": {
+        "gained": 4,
+        "regressed": 6,
+        "unchanged": 26
+      },
+      "token_delta": -34.53703703703695,
+      "token_delta_ci95": [
+        -164.83333333333334,
+        108.09259259259258
+      ],
+      "treatment_rate": 0.5185185185185186,
+      "treatment_variant": "phase15b_r2_gpt"
+    },
+    {
+      "absolute_difference": -0.06481481481481488,
+      "baseline_rate": 0.7962962962962963,
+      "baseline_variant": "phase15b_r2_general",
+      "confidence_interval": [
+        -0.1388888888888889,
+        1.5419764230904951e-18
+      ],
+      "cost_delta_ci95_per_observation": [
+        -0.0013454999999999997,
+        0.00048283333333333354
+      ],
+      "cost_delta_usd_per_observation": -0.0003811666666666668,
+      "exploratory": true,
+      "family_cluster_confidence_interval": [
+        -0.17592592592592593,
+        0.018518518518518528
+      ],
+      "latency_delta_ci95": [
+        -2.002376967593591,
+        -0.5810148620387029
+      ],
+      "latency_delta_seconds": -1.2826416175945887,
+      "mcnemar": {
+        "baseline_only_success": 2,
+        "discordant_pairs": 2,
+        "p_value": 0.5,
+        "treatment_only_success": 0
+      },
+      "method": "paired task-cluster bootstrap; exact McNemar on task-majority outcomes",
+      "model": "anthropic:claude-sonnet-5",
+      "p_value": 0.5,
+      "regression_count": 5,
+      "relative_difference": -0.08139534883720939,
+      "sample_size_observations": 216,
+      "sample_size_tasks": 36,
+      "task_changes": {
+        "gained": 1,
+        "regressed": 5,
+        "unchanged": 30
+      },
+      "token_delta": -232.47222222222172,
+      "token_delta_ci95": [
+        -566.0648148148148,
+        53.10185185185181
+      ],
+      "treatment_rate": 0.7314814814814814,
+      "treatment_variant": "phase15b_r2_claude"
+    },
+    {
+      "absolute_difference": -0.0092592592592593,
+      "baseline_rate": 0.6574074074074074,
+      "baseline_variant": "phase15b_r2_general",
+      "confidence_interval": [
+        -0.05555555555555555,
+        0.03703703703703705
+      ],
+      "cost_delta_ci95_per_observation": [
+        -0.000573763888888889,
+        -0.00010915277777777769
+      ],
+      "cost_delta_usd_per_observation": -0.0003146666666666671,
+      "exploratory": true,
+      "family_cluster_confidence_interval": [
+        -0.055555555555555566,
+        0.02777777777777779
+      ],
+      "latency_delta_ci95": [
+        -7.19478902314788,
+        -0.7695360453705048
+      ],
+      "latency_delta_seconds": -3.6920457648151626,
+      "mcnemar": {
+        "baseline_only_success": 0,
+        "discordant_pairs": 1,
+        "p_value": 1.0,
+        "treatment_only_success": 1
+      },
+      "method": "paired task-cluster bootstrap; exact McNemar on task-majority outcomes",
+      "model": "google:gemini-3.6-flash",
+      "p_value": 1.0,
+      "regression_count": 3,
+      "relative_difference": -0.014084507042253582,
+      "sample_size_observations": 216,
+      "sample_size_tasks": 36,
+      "task_changes": {
+        "gained": 1,
+        "regressed": 3,
+        "unchanged": 32
+      },
+      "token_delta": -184.14814814814827,
+      "token_delta_ci95": [
+        -334.41666666666663,
+        -66.66666666666667
       ],
       "treatment_rate": 0.6481481481481481,
       "treatment_variant": "phase15b_r2_gemini"

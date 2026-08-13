@@ -461,6 +461,11 @@ def main() -> None:
         row = _comparison(model, comparator, SPECIFIC[model], grouped)
         all_comparisons[(model, comparator, SPECIFIC[model])] = row
         model_specific_advantage.append(row)
+    specific_vs_general = []
+    for model in MODELS:
+        row = _comparison(model, "phase15b_r2_general", SPECIFIC[model], grouped)
+        all_comparisons[(model, "phase15b_r2_general", SPECIFIC[model])] = row
+        specific_vs_general.append(row)
     cross_model_transfer = [
         all_comparisons[(model, "baseline", variant)]
         for variant, intended in (
@@ -501,7 +506,7 @@ def main() -> None:
         for model in MODELS
     }
     specific_general_effects = {
-        row["model"]: row["absolute_difference"] for row in model_specific_advantage
+        row["model"]: row["absolute_difference"] for row in specific_vs_general
     }
     best = {
         model: max(VARIANTS, key=lambda variant: cells[model][variant]["task_success"])
@@ -556,6 +561,7 @@ def main() -> None:
         "primary_comparisons": [all_comparisons[key] for key in primary_keys],
         "comparisons": comparison_rows,
         "model_specific_advantage": model_specific_advantage,
+        "model_specific_vs_general": specific_vs_general,
         "cross_model_transfer": cross_model_transfer,
         "safety_changes": safety_regressions,
         "pareto_efficient": pareto,

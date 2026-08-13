@@ -50,6 +50,7 @@ The complete preregistered 1,620-observation matrix was analyzed only after exec
 | Gemini | V2-Gemini − V0 | -4.6 pp | [-16.7 pp, +7.4 pp] | [-18.5 pp, +9.3 pp] | 0.6250 | 5 | 6 | 25 | +649 | -2.72s | $+0.00086 |
 | GPT | V2-GPT − V2-General | -2.8 pp | [-13.9 pp, +7.4 pp] | [-16.7 pp, +8.3 pp] | 0.7266 | 4 | 6 | 26 | -35 | +0.68s | $-0.00002 |
 | Claude | V2-Claude − V2-General | -6.5 pp | [-13.9 pp, +0.0 pp] | [-17.6 pp, +1.9 pp] | 0.5000 | 1 | 5 | 30 | -232 | -1.28s | $-0.00038 |
+| Gemini | V2-Gemini − V2-General | -0.9 pp | [-5.6 pp, +3.7 pp] | [-5.6 pp, +2.8 pp] | 1.0000 | 1 | 3 | 32 | -184 | -3.69s | $-0.00031 |
 
 ## Model-specific advantage
 
@@ -78,7 +79,7 @@ The complete preregistered 1,620-observation matrix was analyzed only after exec
 - Did V2-GPT outperform V0 for GPT? Effect: -0.9 pp.
 - Did V2-Claude outperform V0 for Claude? Effect: -5.6 pp.
 - Did V2-Gemini outperform V0 for Gemini? Effect: -4.6 pp.
-- Did each model-specific interface outperform V2-General for its intended model? GPT -2.8 pp, Claude -6.5 pp, Gemini -4.6 pp.
+- Did each model-specific interface outperform V2-General for its intended model? GPT -2.8 pp, Claude -6.5 pp, Gemini -0.9 pp.
 - How well did model-specific interfaces transfer? Cross-transfer effects ranged from -6.5 pp to +0.9 pp; the detailed table reports gains and regressions for every non-intended model.
 - Is there credible evidence of different interface optima by model family? Best hidden interfaces were GPT=V2-General, Claude=V2-General, Gemini=V0.
 - Were reliability improvements worth token/cost/latency changes? Reliability, token, latency, and cost deltas are reported pairwise; non-dominated choices are listed as Pareto-efficient rather than collapsed into a composite score.
