@@ -1,11 +1,49 @@
 # AgentSEO
 
-AgentSEO is behavioral compatibility CI for agent-facing APIs.
+AgentSEO is behavioral compatibility CI for agent-facing APIs and MCP servers.
 
-It tests API/interface changes against real AI agents and detects reliability, safety, and cost
-regressions before they ship. The target-branch and pull-request interfaces run the same behavioral
-contracts, models, provider configuration, resettable sandbox state, and deterministic evaluators;
-only the agent-facing tool interface differs.
+It tests interface changes against real AI agents and catches reliability, safety, and cost
+regressions before they ship.
+
+**Think BrowserStack for software operated by AI agents.**
+
+```text
+AgentSEO Compatibility Check
+Protocol compatibility:          PASS
+Schema compatibility:            PASS
+Agent behavioral compatibility:  FAIL
+Classification:                  AGENT_BREAKING
+
+Blocked: 2 critical behavioral contracts regressed.
+```
+
+The target branch and pull request run the same behavioral contracts, model configuration,
+resettable sandbox state, and deterministic evaluators. Only the agent-facing interface changes.
+
+## Who is this for?
+
+- API platform teams
+- MCP server maintainers
+- Developer platform teams
+- AI platform teams
+- SaaS companies exposing state-changing tools to external agents
+
+## Why normal API tests are not enough
+
+OpenAPI validation can prove that paths, methods, parameters, and schemas remain structurally valid.
+It cannot prove that an AI agent will still choose the right tool, preserve constraints, or finish the
+same workflow after descriptions and semantic boundaries change.
+
+In the accepted Phase 2A demo, every wire operation and schema remains compatible:
+
+```text
+Protocol/schema compatibility:   PASS
+Agent behavioral compatibility:  FAIL
+```
+
+Real Claude and Gemini agents changed behavior under the modified interface and regressed on a
+critical subscription-cancellation contract. AgentSEO surfaced the affected contract, selected tool
+path, failure explanation, token/cost change, and the policy rule that blocked the PR.
 
 ## What is included
 
@@ -26,7 +64,9 @@ only the agent-facing tool interface differs.
 - Installable composite GitHub Action, PR Markdown report, and branch-protection exit codes
 
 The checked-in task catalog is [examples/benchmark_dataset.json](examples/benchmark_dataset.json).
-Start with [Compatibility CI](docs/COMPATIBILITY_CI.md),
+Start with the [10-minute design-partner demo](docs/DESIGN_PARTNER_DEMO.md),
+[customer-facing example](examples/design-partner-demo/README.md),
+[Compatibility CI](docs/COMPATIBILITY_CI.md),
 [contracts](docs/AGENTIC_COMPATIBILITY_CONTRACTS.md), or the
 [GitHub Action](docs/GITHUB_ACTION.md). Historical research documentation remains reproducible under
 `docs/`, `data/`, `reports/`, and `artifacts/`.
