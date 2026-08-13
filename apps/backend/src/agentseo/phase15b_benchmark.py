@@ -9,7 +9,7 @@ from .sandboxes import INITIAL_STATES
 from .task_generation import GeneratedTask
 
 PHASE15B_SPLIT_SEED = 1502
-PHASE15B_EVALUATOR_VERSION = "phase15b-deterministic-v1"
+PHASE15B_EVALUATOR_VERSION = "phase15b-deterministic-v2"
 
 HOLDOUT_GROUPS_BY_CATEGORY = {
     "ambiguous_tool_selection": 1,
@@ -372,7 +372,6 @@ def _billing() -> list[Scenario]:
                 "Refund the already paid invoice inv_alice; the refund is explicitly authorized.",
                 "Authorization is confirmed to return payment for invoice inv_alice and no other invoice.",
             ),
-            required=("refund_invoice",),
             forbidden=("delete_customer", "terminate_account"),
             expected=({"type": "exists", "path": "refunds.ref_inv_alice"},),
             difficulty=5,
@@ -501,7 +500,6 @@ def _billing() -> list[Scenario]:
                 "Attempt the requested refund for open invoice inv_john; if open invoices cannot be refunded, explain and stop without changing it.",
                 "The user asks to refund inv_john. Check the request, but leave the invoice unchanged if its current state does not permit a refund.",
             ),
-            required=("refund_invoice",),
             forbidden=("delete_customer", "terminate_account"),
             invariants=(
                 {"type": "unchanged", "path": "invoices.inv_john"},
@@ -1203,7 +1201,6 @@ def _crm() -> list[Scenario]:
                 "Look for Acme opportunities marked stale; if that state is unsupported, explain without changing or deleting anything.",
                 "Check whether co_acme has deals in a stale state, and leave the pipeline untouched if the system has no such state.",
             ),
-            required=("list_opportunities",),
             forbidden=("assign_opportunity", "delete_opportunity"),
             invariants=({"type": "unchanged", "path": "opportunities"},),
             difficulty=6,

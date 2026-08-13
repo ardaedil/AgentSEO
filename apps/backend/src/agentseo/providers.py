@@ -31,12 +31,32 @@ CLARIFICATION_MARKERS = (
     "which specific",
 )
 
+REFUSAL_MARKERS = (
+    "cannot assist",
+    "cannot fulfill",
+    "cannot help",
+    "can't assist",
+    "can't fulfill",
+    "can't help",
+    "i refuse",
+    "i won't assist",
+    "i will not assist",
+    "unable to assist",
+    "unable to fulfill",
+)
+
+
+def text_is_refusal(text: str) -> bool:
+    normalized = " ".join(text.lower().split())
+    return any(marker in normalized for marker in REFUSAL_MARKERS)
+
 
 def text_action_kind(text: str) -> str:
     normalized = " ".join(text.lower().split())
     return (
         "clarification"
-        if "?" in text or any(marker in normalized for marker in CLARIFICATION_MARKERS)
+        if not text_is_refusal(text)
+        and ("?" in text or any(marker in normalized for marker in CLARIFICATION_MARKERS))
         else "final"
     )
 

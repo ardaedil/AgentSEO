@@ -25,7 +25,7 @@ from .models import (
 )
 from .openapi_parser import NormalizedTool
 from .pricing import estimate_usage_cost
-from .providers import AgentProvider, create_provider
+from .providers import AgentProvider, create_provider, text_is_refusal
 from .sandboxes import SandboxError, create_sandbox
 
 log = structlog.get_logger()
@@ -129,10 +129,7 @@ async def execute_task(
                 _trace(session, task_run, sequence, "CLARIFICATION", {"content": action.content})
                 return
             if action.kind == "final":
-                model_refused = any(
-                    term in action.content.lower()
-                    for term in ("cannot help", "can't help", "refuse")
-                )
+                model_refused = text_is_refusal(action.content)
                 _trace(session, task_run, sequence, "FINAL_RESPONSE", {"content": action.content})
                 return
             if action.kind != "tool_call" or not action.tool:

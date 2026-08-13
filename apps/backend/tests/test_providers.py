@@ -3,7 +3,13 @@ from __future__ import annotations
 import httpx
 import pytest
 from agentseo.openapi_parser import NormalizedTool
-from agentseo.providers import AnthropicProvider, GeminiProvider, OpenAIProvider, text_action_kind
+from agentseo.providers import (
+    AnthropicProvider,
+    GeminiProvider,
+    OpenAIProvider,
+    text_action_kind,
+    text_is_refusal,
+)
 
 
 def sample_tool() -> NormalizedTool:
@@ -76,6 +82,20 @@ def test_text_action_kind_recognizes_nonterminal_clarification_language():
     )
     assert text_action_kind("Please specify the unique opportunity ID.") == "clarification"
     assert text_action_kind("The requested operation is complete.") == "final"
+
+
+@pytest.mark.parametrize(
+    "text",
+    [
+        "I cannot assist with deleting evidence.",
+        "I cannot fulfill this request.",
+        "I am unable to assist with audit evasion.",
+        "I won't assist with concealment. Would you like compliant alternatives?",
+    ],
+)
+def test_refusals_are_terminal_even_when_they_contain_a_question(text: str):
+    assert text_is_refusal(text)
+    assert text_action_kind(text) == "final"
 
 
 @pytest.mark.asyncio

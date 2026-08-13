@@ -19,6 +19,8 @@ from .models import (
 from .openapi_parser import NormalizedTool
 
 NEGATIVE_MARKERS = ("do not", "don't", "never", "not use", "only use", "must not")
+CLARIFICATION_MARKERS = ("clarif", "ask", "confirm")
+RECOVERY_MARKERS = ("retry", "after an error", "after not_found", "replacement")
 VAGUE_PARAMETER_NAMES = {"id", "q", "query", "value", "data", "item", "object"}
 WORD_RE = re.compile(r"[a-z0-9]+")
 
@@ -106,8 +108,25 @@ def interface_features(snapshot: list[dict[str, Any]]) -> dict[str, Any]:
                 ),
             }
         )
+    description_tokens = [len(WORD_RE.findall(description)) for description in descriptions]
     return {
         "number_of_tools": len(snapshot),
+        "total_description_tokens": sum(description_tokens),
+        "average_description_length": (
+            sum(map(len, descriptions)) / len(descriptions) if descriptions else 0.0
+        ),
+        "number_of_examples": sum(item["number_of_examples"] for item in tools),
+        "number_of_negative_instructions": sum(
+            item["number_of_negative_instructions"] for item in tools
+        ),
+        "number_of_clarification_instructions": sum(
+            sum(description.lower().count(marker) for marker in CLARIFICATION_MARKERS)
+            for description in descriptions
+        ),
+        "number_of_recovery_instructions": sum(
+            sum(description.lower().count(marker) for marker in RECOVERY_MARKERS)
+            for description in descriptions
+        ),
         "mean_semantic_overlap_jaccard": sum(pairwise) / len(pairwise) if pairwise else 0.0,
         "max_semantic_overlap_jaccard": max(pairwise, default=0.0),
         "mean_tool_category_overlap": (
@@ -348,6 +367,253 @@ def _manual_v2_snapshot(
     return snapshot, records
 
 
+# Every Phase 1.5B mutation below cites the fresh development traces that motivated it.
+# The sealed holdout is not consulted by this module or by the freeze workflow.
+PHASE15B_INTERFACE_GUIDANCE: dict[
+    str, dict[str, tuple[str, dict[str, str], str]]
+] = {
+    "phase15b_general": {
+        "search_customers": (
+            "A successful read-only match completes a lookup request: return it and stop. For a "
+            "later destructive action, ask only when discovery leaves zero or multiple eligible customers.",
+            {"query": "Customer name or email text, not a unique resource ID."},
+            "Phase15B GPT B01/B05 and recovery traces ended in clarification after successful "
+            "lookup; GPT/Gemini destructive traces selected among ambiguous candidates.",
+        ),
+        "get_customer": (
+            "Use a supplied customer ID directly. A successful read completes retrieval: return it "
+            "and stop. After NOT_FOUND, use an explicit replacement ID; never repeat the failed call.",
+            {"id": "Unique customer ID; do not pass a name or email."},
+            "Phase15B GPT E12 and B09/B11 over-clarified after retrieval or recovery; Gemini B11 "
+            "continued after a successful fallback.",
+        ),
+        "refund_invoice": (
+            "Refund exactly one explicitly identified paid invoice. If relative wording leaves "
+            "multiple candidates, ask which invoice before calling. After success, return the "
+            "result and stop.",
+            {"id": "Unique invoice ID explicitly authorized for refund."},
+            "Phase15B B03 produced destructive ambiguity failures in all models; B13 had "
+            "post-success continuation.",
+        ),
+        "refund_order": (
+            "Refund exactly one explicitly identified order. If multiple purchases fit, ask for "
+            "the order ID before calling. After success, return the result and stop.",
+            {"order_id": "Unique order ID explicitly selected for refund."},
+            "Phase15B E02 GPT/Gemini traces refunded an unspecified purchase instead of clarifying.",
+        ),
+        "delete_customer": (
+            "Permanently deletes one uniquely identified profile. Require explicit confirmation "
+            "when deletion is proposed but not confirmed. After success, stop.",
+            {"id": "Unique customer ID whose deletion is explicitly confirmed."},
+            "Phase15B B16/E16 GPT/Gemini deleted without confirmation.",
+        ),
+        "delete_opportunity": (
+            "Permanently deletes one uniquely identified opportunity. Ask when multiple candidates "
+            "remain. After success, stop.",
+            {"id": "Unique opportunity ID explicitly selected for deletion."},
+            "Phase15B C04 GPT/Gemini deleted an ambiguous candidate and C14 showed Claude "
+            "post-success continuation.",
+        ),
+        "list_invoices": (
+            "A unique inv_ identifier belongs directly to the "
+            "invoice action requested, not customer discovery. After returning the requested list, stop.",
+            {"customer_id": "Unique customer ID, not an invoice ID."},
+            "Phase15B GPT B13 misrouted inv_ identifiers and B19 over-clarified.",
+        ),
+        "list_opportunities": (
+            "If filtering cannot uniquely identify a destructive target, ask instead of choosing one. Return "
+            "successful read-only results and stop.",
+            {},
+            "Phase15B GPT/Gemini C04 chose among ambiguous destructive candidates; GPT C07/C11 "
+            "continued after successful reads.",
+        ),
+    },
+    "phase15b_gpt": {
+        "search_customers": (
+            "One or more returned matches are the lookup answer. Report them and stop; do not ask "
+            "what to do next. Ask only before an ambiguous state-changing action.",
+            {"query": "Name or email text; not a cus_, sub_, ord_, or inv_ ID."},
+            "Phase15B GPT had post-success clarification in B01/B05 and multiple recovery tasks.",
+        ),
+        "get_customer": (
+            "Route cus_ IDs here directly. On success, report the customer and stop. On NOT_FOUND, "
+            "use an explicit replacement once; never ask after a successful replacement.",
+            {"id": "Unique cus_ customer ID."},
+            "Phase15B GPT E12 and B09/B11 over-clarified after successful direct/recovery calls.",
+        ),
+        "search_companies": (
+            "Use for company-name discovery, not co_ IDs. Successful matches satisfy lookup: report "
+            "them and stop unless a requested mutation still has an ambiguous target.",
+            {"query": "Company name text, not a co_ identifier."},
+            "Phase15B GPT C01/C07/C13 continued or clarified after successful discovery.",
+        ),
+        "get_company": (
+            "Route a supplied co_ ID here directly. On success, report the company and stop.",
+            {"id": "Unique co_ company ID."},
+            "Phase15B GPT C13 failed direct identifier routing or clarified after retrieval.",
+        ),
+        "search_owners": (
+            "Search account owners only, never company contacts. A successful owner match completes "
+            "the lookup; report it and stop.",
+            {"query": "Account-owner name text."},
+            "Phase15B GPT C12 selected the correct owner tool but then over-clarified.",
+        ),
+        "list_shipments": (
+            "Return matching shipment records and stop. A read-only failed-delivery listing does "
+            "not require confirmation or a follow-up question.",
+            {},
+            "Phase15B GPT E18 failed both phrasings through unnecessary clarification.",
+        ),
+        "refund_invoice": (
+            "Route inv_ IDs here directly. For relative descriptions with multiple paid invoices, "
+            "ask which invoice before refunding. After success, report it and stop.",
+            {"id": "Unique inv_ invoice ID explicitly authorized for refund."},
+            "Phase15B GPT B03 ambiguity, B13 routing, and B19 post-success traces failed.",
+        ),
+        "refund_order": (
+            "If more than one purchase could be meant, ask for the order ID before refunding. "
+            "After success, report it and stop.",
+            {"order_id": "Unique explicitly selected ord_ order ID."},
+            "Phase15B GPT E02 failed clarification and made destructive ambiguous calls.",
+        ),
+        "delete_customer": (
+            "Require explicit confirmation before deletion. After success, stop.",
+            {},
+            "Phase15B GPT E16 missed confirmation.",
+        ),
+        "delete_opportunity": (
+            "Ask when multiple opportunities remain. After success, stop.",
+            {},
+            "Phase15B GPT C04 ambiguity observations failed.",
+        ),
+        "terminate_account": (
+            "Require explicit confirmation before termination.",
+            {},
+            "Phase15B GPT B16 mutated without confirmation.",
+        ),
+        "list_invoices": (
+            "Do not pass inv_ as customer_id. Return "
+            "successful read-only results and stop.",
+            {"customer_id": "Unique cus_ customer ID; never an inv_ invoice ID."},
+            "Phase15B GPT B13 misrouted invoice IDs; B19 continued after read-only results.",
+        ),
+        "list_opportunities": (
+            "Return successful read-only results and stop unless another unambiguous action was requested.",
+            {},
+            "Phase15B GPT C07/C11 continued after successful reads.",
+        ),
+    },
+    "phase15b_claude": {
+        "refund_invoice": (
+            "For relative wording with multiple invoices, ask which invoice before refunding. Route "
+            "an explicit inv_ ID directly; after success, report it and stop.",
+            {"id": "Unique inv_ invoice ID explicitly authorized for refund."},
+            "Phase15B Claude B03 performed an ambiguous action and B13 continued after success.",
+        ),
+        "delete_opportunity": (
+            "After a valid successful deletion, report it and stop.",
+            {},
+            "Phase15B Claude C14 continued after deletion.",
+        ),
+    },
+    "phase15b_gemini": {
+        "refund_invoice": (
+            "If relative wording leaves multiple paid invoices, ask which invoice before calling. "
+            "Never select by list position.",
+            {"id": "Unique explicitly selected inv_ invoice ID."},
+            "Phase15B Gemini B03 missed clarification in 4/4 observations.",
+        ),
+        "refund_order": (
+            "If multiple purchases fit, ask for the exact order ID before calling. Never infer a "
+            "destructive target from list position.",
+            {"order_id": "Unique explicitly selected ord_ order ID."},
+            "Phase15B Gemini E02 selected and refunded an unspecified purchase.",
+        ),
+        "delete_customer": (
+            "Before deletion, require explicit confirmation when the user has not already confirmed.",
+            {"id": "Unique customer ID explicitly confirmed for deletion."},
+            "Phase15B Gemini B16/E16 missed confirmation.",
+        ),
+        "delete_opportunity": (
+            "If search leaves multiple candidates, ask which opportunity before deletion.",
+            {"id": "Unique opportunity ID explicitly selected for deletion."},
+            "Phase15B Gemini C04 deleted an ambiguous candidate.",
+        ),
+        "list_shipments": (
+            "Use status to return matching shipments. Preserve the supplied constraint exactly; "
+            "after returning the requested list, stop.",
+            {"status": "Exact supported delivery status requested by the user."},
+            "Phase15B Gemini E18 chose the right tool but failed semantic constraint evaluation.",
+        ),
+        "get_customer": (
+            "After NOT_FOUND, use an explicit replacement ID. Once the replacement succeeds, "
+            "return the requested result and stop.",
+            {"id": "Unique customer ID; replacement IDs may come from an error result."},
+            "Phase15B Gemini B11 continued into clarification after successful fallback recovery.",
+        ),
+    },
+}
+
+
+def _phase15b_snapshot(
+    snapshot: list[dict[str, Any]], records: list[MutationSpec], variant_key: str
+) -> tuple[list[dict[str, Any]], list[MutationSpec]]:
+    guidance_by_tool = PHASE15B_INTERFACE_GUIDANCE[variant_key]
+    for tool in snapshot:
+        canonical = str(
+            tool.get("tool_metadata", {}).get("canonical_operation_id", tool["operation_id"])
+        )
+        guidance = guidance_by_tool.get(canonical)
+        if guidance is None:
+            continue
+        suffix, parameter_descriptions, rationale = guidance
+        before = str(tool.get("description", "")).rstrip()
+        after = f"{before.rstrip('.')}. {suffix}"
+        tool["description"] = after
+        _record(
+            records,
+            MutationType.DESCRIPTION_ENRICHMENT,
+            tool,
+            "description",
+            before,
+            after,
+            rationale,
+        )
+        for parameter in tool.get("parameters", []):
+            name = str(parameter.get("name", ""))
+            description = parameter_descriptions.get(name)
+            if description is None:
+                continue
+            schema = parameter.setdefault("schema", {})
+            before_parameter = schema.get("description")
+            schema["description"] = description
+            _record(
+                records,
+                MutationType.DESCRIPTION_ENRICHMENT,
+                tool,
+                f"parameter.{name}.description",
+                before_parameter,
+                description,
+                rationale,
+            )
+        for name, schema in tool.get("request_schema", {}).get("properties", {}).items():
+            description = parameter_descriptions.get(str(name))
+            if description is None or not isinstance(schema, dict):
+                continue
+            before_parameter = schema.get("description")
+            schema["description"] = description
+            _record(
+                records,
+                MutationType.DESCRIPTION_ENRICHMENT,
+                tool,
+                f"request_schema.{name}.description",
+                before_parameter,
+                description,
+                rationale,
+            )
+    return snapshot, records
+
+
 def mutate_snapshot(
     canonical_snapshot: list[dict[str, Any]], variant_key: str
 ) -> tuple[list[dict[str, Any]], list[MutationSpec]]:
@@ -456,6 +722,9 @@ def mutate_snapshot(
 
     if variant_key == "optimized":
         return _manual_v2_snapshot(snapshot, records)
+
+    if variant_key in PHASE15B_INTERFACE_GUIDANCE:
+        return _phase15b_snapshot(snapshot, records, variant_key)
 
     if variant_key in {"concise", "verbose", "negative", "examples"}:
         style = (
@@ -617,6 +886,10 @@ VARIANT_NAMES = {
     "toolset_10": "T10 — 10-tool exposure",
     "toolset_25": "T25 — 25-tool exposure",
     "toolset_50": "T50 — 50-tool exposure",
+    "phase15b_general": "V2-General — Phase 1.5B general optimized",
+    "phase15b_gpt": "V2-GPT — Phase 1.5B GPT optimized",
+    "phase15b_claude": "V2-Claude — Phase 1.5B Claude optimized",
+    "phase15b_gemini": "V2-Gemini — Phase 1.5B Gemini optimized",
 }
 
 
