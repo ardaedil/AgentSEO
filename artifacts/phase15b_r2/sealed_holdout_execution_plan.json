@@ -1,0 +1,61 @@
+{
+  "analysis_gate": "exactly 1620 unique completed observations",
+  "benchmark_sha256": "4568fc82c24d096d8e5fc0d147e17a4f4c9b56a59beb437167d5341c9e963247",
+  "expected_observations": 1620,
+  "holdout_manifest_sha256": "2ad4a55afd04926fe0eaae4e5ee53d5859756102fce2ef79fe9b3b18da6d69ba",
+  "infrastructure_policy": "preserve completed observations and retry only missing observations in an affected cell",
+  "interface_freeze_sha256": "b905b769f25f56c7a8f8057d085494d9d7b2d2285c2084485bfa93fc50847a34",
+  "intermediate_outcome_analysis": "prohibited",
+  "launches": [
+    {
+      "estimated_cost_usd": 0.4086771428571429,
+      "guarded_cost_usd": 0.5108464285714286,
+      "id": "L1_OPENAI_TRIALS_1_3",
+      "model": "openai:gpt-4.1-mini",
+      "planned_observations": 540,
+      "trials": [1, 2, 3]
+    },
+    {
+      "estimated_cost_usd": 2.873026,
+      "guarded_cost_usd": 3.5912825,
+      "id": "L2_ANTHROPIC_TRIAL_1",
+      "model": "anthropic:claude-sonnet-5",
+      "planned_observations": 180,
+      "trials": [1]
+    },
+    {
+      "estimated_cost_usd": 2.873026,
+      "guarded_cost_usd": 3.5912825,
+      "id": "L3_ANTHROPIC_TRIAL_2",
+      "model": "anthropic:claude-sonnet-5",
+      "planned_observations": 180,
+      "trials": [2]
+    },
+    {
+      "estimated_cost_usd": 2.873026,
+      "guarded_cost_usd": 3.5912825,
+      "id": "L4_ANTHROPIC_TRIAL_3",
+      "model": "anthropic:claude-sonnet-5",
+      "planned_observations": 180,
+      "trials": [3]
+    },
+    {
+      "estimated_cost_usd": 2.7779374285714287,
+      "guarded_cost_usd": 3.472421785714286,
+      "id": "L5_GEMINI_TRIALS_1_3",
+      "model": "google:gemini-3.6-flash",
+      "planned_observations": 540,
+      "trials": [1, 2, 3]
+    }
+  ],
+  "matrix": {
+    "holdout_tasks": 36,
+    "interfaces": 5,
+    "models": 3,
+    "repetitions": 3
+  },
+  "per_launch_cost_cap_usd": 5.0,
+  "protocol": "PHASE15B_R2_SEALED_HOLDOUT_EXECUTION",
+  "provider_credit_preflight": "authenticated billable inference on each exact model before the first holdout request",
+  "state": "APPROVED_READY_FOR_CREDIT_PREFLIGHT"
+}
