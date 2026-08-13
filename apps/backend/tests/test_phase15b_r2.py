@@ -6,6 +6,7 @@ from agentseo.phase15b_r2_benchmark import (
     generate_phase15b_r2_tasks,
     phase15b_r2_families,
 )
+from agentseo.sandboxes import create_sandbox
 
 
 def test_r2_candidate_pool_has_first_class_families_and_hard_distribution():
@@ -74,3 +75,12 @@ def test_r2_instructions_do_not_leak_agent_interface_identifiers():
         assert not any(name in lower for name in operation_names | parameter_names)
         assert "call the tool" not in lower
         assert "api" not in lower
+
+
+def test_minimum_value_filter_is_inclusive_for_conditional_routing():
+    sandbox = create_sandbox("crm")
+    rows = sandbox.execute(
+        "list_opportunities",
+        {"company_id": "co_acme", "status": "open", "min_value": 25000},
+    )
+    assert [row["id"] for row in rows] == ["opp_1"]

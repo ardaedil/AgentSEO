@@ -1,6 +1,6 @@
 {
   "calibration_eligible_family_count": 28,
-  "candidate_manifest_sha256": "20b396f1d4825a9152ec13f47aac744a7171df5e987ae698abc61d5a1928f86f",
+  "candidate_manifest_sha256": "cf95f94fb8bfcc3f8e2286dfbf0f92302a4eeda8b870f805709e8804d78de914",
   "category_distribution": {
     "clarification_not_required": 12,
     "clarification_required": 12,
@@ -24,7 +24,7 @@
     "ecommerce": 33
   },
   "evaluator_version": "phase15b-r2-deterministic-v1",
-  "git_commit": "058255f445fa87ab85e09d9cee7fd6f272dee6bd",
+  "git_commit": "bf80bd469881a216f5e99ba74840e4671e6cbdf6",
   "protocol": "PHASE15B_R2_HARD_BENCHMARK",
   "state": "UNSPLIT_CALIBRATION_CANDIDATE_POOL",
   "task_count": 120,

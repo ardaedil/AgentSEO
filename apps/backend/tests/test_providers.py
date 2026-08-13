@@ -81,6 +81,7 @@ def test_text_action_kind_recognizes_nonterminal_clarification_language():
         text_action_kind("Could you clarify which record? Details can follow.") == "clarification"
     )
     assert text_action_kind("Please specify the unique opportunity ID.") == "clarification"
+    assert text_action_kind("Please provide the customer email.") == "clarification"
     assert text_action_kind("The requested operation is complete.") == "final"
 
 

@@ -24,6 +24,7 @@ CLARIFICATION_MARKERS = (
     "could you clarify",
     "could you confirm",
     "could you provide",
+    "please provide",
     "please clarify",
     "please confirm",
     "please specify",

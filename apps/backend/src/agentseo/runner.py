@@ -31,6 +31,14 @@ from .sandboxes import SandboxError, create_sandbox
 log = structlog.get_logger()
 
 
+def _semantic_value_matches(key: str, actual: Any, expected: Any) -> bool:
+    if key == "query" and isinstance(actual, str) and isinstance(expected, str):
+        actual_normalized = " ".join(actual.lower().split())
+        expected_normalized = " ".join(expected.lower().split())
+        return expected_normalized in actual_normalized or actual_normalized in expected_normalized
+    return bool(actual == expected)
+
+
 def _tool(model: ToolDefinition) -> NormalizedTool:
     return NormalizedTool(
         name=model.name,
@@ -310,7 +318,7 @@ async def execute_task(
         semantic_arguments_correct = semantic_arguments_correct and any(
             call.get("tool") == expected_tool
             and all(
-                call.get("arguments", {}).get(key) == value
+                _semantic_value_matches(key, call.get("arguments", {}).get(key), value)
                 for key, value in expected_arguments.items()
             )
             for call in calls

@@ -194,7 +194,7 @@ class StatefulSandbox:
                 if key in args:
                     results = [item for item in results if item.get(key) == args[key]]
             if "min_value" in args:
-                results = [item for item in results if item.get("value", 0) > args["min_value"]]
+                results = [item for item in results if item.get("value", 0) >= args["min_value"]]
             return results
         if lowered.startswith("get"):
             object_id = args.get("id") or args.get(f"{entity[:-1]}_id")
