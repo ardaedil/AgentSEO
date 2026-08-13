@@ -28,6 +28,7 @@ from agentseo.models import (
     TaskRun,
     now,
 )
+from agentseo.phase15b_r2_benchmark import R2_UNCALIBRATED_FAMILIES
 from agentseo.research_export import export_experiment_dataset
 from sqlalchemy import func, select
 
@@ -79,8 +80,22 @@ async def main() -> None:
         experiment = session.get(Experiment, args.experiment_id)
         if experiment is None:
             raise RuntimeError("Calibration experiment not found")
-        task_ids = list(experiment.manifest["selected_task_ids"])
-        tasks = list(session.scalars(select(BenchmarkTask).where(BenchmarkTask.id.in_(task_ids))))
+        task_ids = list(experiment.manifest.get("selected_task_ids", []))
+        if task_ids:
+            tasks = list(
+                session.scalars(select(BenchmarkTask).where(BenchmarkTask.id.in_(task_ids)))
+            )
+        elif experiment.configuration.get("stage") == "CALIBRATION_B":
+            tasks = list(
+                session.scalars(
+                    select(BenchmarkTask).where(
+                        BenchmarkTask.task_family.not_in(R2_UNCALIBRATED_FAMILIES)
+                    )
+                )
+            )
+            task_ids = [task.id for task in tasks]
+        else:
+            raise RuntimeError("Interrupted experiment has no recoverable selected-task manifest")
         projects = list(session.scalars(select(Project).order_by(Project.sandbox_domain)))
         interfaces = list(session.scalars(select(InterfaceVersion).where(InterfaceVersion.variant_key == "baseline")))
         by_project = {interface.project_id: interface for interface in interfaces}
@@ -153,6 +168,13 @@ async def main() -> None:
         experiment.notes = "\n".join(failures)
         summary = {
             **experiment.manifest,
+            "protocol": experiment.configuration.get("protocol"),
+            "stage": experiment.configuration.get("stage"),
+            "experiment_id": experiment.id,
+            "model_ids": experiment.models,
+            "selected_task_ids": sorted(task_ids),
+            "selected_task_families": sorted({task.task_family for task in tasks}),
+            "uncalibrated_family_count": len(R2_UNCALIBRATED_FAMILIES),
             "status": experiment.status,
             "task_runs": task_run_count,
             "actual_cost_usd": experiment.actual_cost,
