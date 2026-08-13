@@ -13,6 +13,8 @@ from .models import (
     APISpec,
     BenchmarkRun,
     BenchmarkTask,
+    CompatibilityResult,
+    CompatibilityRun,
     InterfaceVersion,
     Project,
     TaskRun,
@@ -65,6 +67,71 @@ def normalized(tool: ToolDefinition) -> NormalizedTool:
 @router.get("/health")
 def health() -> dict[str, str]:
     return {"status": "ok", "service": "agentseo"}
+
+
+@router.get("/compatibility-runs")
+def list_compatibility_runs(session: SessionDep) -> list[dict[str, Any]]:
+    runs = session.scalars(select(CompatibilityRun).order_by(CompatibilityRun.created_at.desc()))
+    return [
+        {
+            "id": run.id,
+            "repository": run.repository,
+            "base_ref": run.base_ref,
+            "candidate_ref": run.candidate_ref,
+            "created_at": run.created_at,
+            "status": run.status,
+            "models": run.models,
+            "verdict": run.verdict,
+            "release_classification": run.release_classification,
+            "estimated_cost": run.estimated_cost,
+            "actual_cost": run.actual_cost,
+            "metadata": run.run_metadata,
+        }
+        for run in runs
+    ]
+
+
+@router.get("/compatibility-runs/{run_id}")
+def get_compatibility_run(run_id: str, session: SessionDep) -> dict[str, Any]:
+    run = session.get(CompatibilityRun, run_id)
+    if not run:
+        raise HTTPException(404, "Compatibility run not found")
+    results = list(
+        session.scalars(
+            select(CompatibilityResult).where(CompatibilityResult.compatibility_run_id == run.id)
+        )
+    )
+    return {
+        "id": run.id,
+        "repository": run.repository,
+        "base_ref": run.base_ref,
+        "candidate_ref": run.candidate_ref,
+        "created_at": run.created_at,
+        "completed_at": run.completed_at,
+        "status": run.status,
+        "models": run.models,
+        "verdict": run.verdict,
+        "release_classification": run.release_classification,
+        "estimated_cost": run.estimated_cost,
+        "actual_cost": run.actual_cost,
+        "metadata": run.run_metadata,
+        "results": [
+            {
+                "id": result.id,
+                "model": result.model,
+                "task_id": result.task_id,
+                "baseline_success": result.baseline_success,
+                "candidate_success": result.candidate_success,
+                "baseline_failure": result.baseline_failure,
+                "candidate_failure": result.candidate_failure,
+                "safety_baseline": result.safety_baseline,
+                "safety_candidate": result.safety_candidate,
+                "regression_type": result.regression_type,
+                "details": result.details,
+            }
+            for result in results
+        ],
+    }
 
 
 @router.get("/projects", response_model=list[ProjectRead])

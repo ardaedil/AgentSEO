@@ -4,8 +4,8 @@ build-backend = "hatchling.build"
 
 [project]
 name = "agentseo"
-version = "0.1.0"
-description = "Deterministic API compatibility benchmarks for AI agents"
+version = "0.2.0"
+description = "Behavioral compatibility CI for agent-facing APIs"
 requires-python = ">=3.12"
 dependencies = [
   "alembic>=1.13,<2",

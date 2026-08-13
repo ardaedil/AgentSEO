@@ -55,6 +55,32 @@ class ExperimentStatus(StrEnum):
     FAILED = "FAILED"
 
 
+class CompatibilityVerdict(StrEnum):
+    PASS = "PASS"
+    WARNING = "WARNING"
+    FAIL = "FAIL"
+
+
+class AgenticCompatibilityClass(StrEnum):
+    AGENT_COMPATIBLE = "AGENT_COMPATIBLE"
+    AGENT_WARNING = "AGENT_WARNING"
+    AGENT_BREAKING = "AGENT_BREAKING"
+
+
+class CompatibilityRegressionType(StrEnum):
+    RELIABILITY_REGRESSION = "RELIABILITY_REGRESSION"
+    TOOL_SELECTION_REGRESSION = "TOOL_SELECTION_REGRESSION"
+    ARGUMENT_REGRESSION = "ARGUMENT_REGRESSION"
+    CLARIFICATION_REGRESSION = "CLARIFICATION_REGRESSION"
+    ERROR_RECOVERY_REGRESSION = "ERROR_RECOVERY_REGRESSION"
+    SAFETY_REGRESSION = "SAFETY_REGRESSION"
+    COST_REGRESSION = "COST_REGRESSION"
+    LATENCY_REGRESSION = "LATENCY_REGRESSION"
+    TOOL_CALL_INFLATION = "TOOL_CALL_INFLATION"
+    NEW_FAILURE_MODE = "NEW_FAILURE_MODE"
+    RESOLVED_FAILURE = "RESOLVED_FAILURE"
+
+
 class MutationGeneratedBy(StrEnum):
     HUMAN = "HUMAN"
     SYSTEMATIC_EXPERIMENT = "SYSTEMATIC_EXPERIMENT"
@@ -288,3 +314,58 @@ class ExperimentResult(Base):
     p_value: Mapped[float | None] = mapped_column(Float)
     details: Mapped[dict[str, Any]] = mapped_column(JSON, default=dict)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now)
+
+
+class CompatibilityRun(Base):
+    __tablename__ = "compatibility_runs"
+
+    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=new_id)
+    repository: Mapped[str] = mapped_column(String(300), default="local")
+    base_ref: Mapped[str] = mapped_column(String(250), default="baseline")
+    candidate_ref: Mapped[str] = mapped_column(String(250), default="candidate")
+    base_commit: Mapped[str | None] = mapped_column(String(80))
+    candidate_commit: Mapped[str | None] = mapped_column(String(80))
+    baseline_interface_version_id: Mapped[str] = mapped_column(ForeignKey("interface_versions.id"))
+    candidate_interface_version_id: Mapped[str] = mapped_column(ForeignKey("interface_versions.id"))
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now)
+    completed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    status: Mapped[str] = mapped_column(String(40), default=RunStatus.PENDING.value)
+    models: Mapped[list[str]] = mapped_column(JSON, default=list)
+    task_suite_id: Mapped[str] = mapped_column(String(300))
+    test_selection_strategy: Mapped[str] = mapped_column(String(40), default="FULL_SUITE")
+    estimated_cost: Mapped[float] = mapped_column(Float, default=0.0)
+    actual_cost: Mapped[float] = mapped_column(Float, default=0.0)
+    verdict: Mapped[str | None] = mapped_column(String(30))
+    release_classification: Mapped[str | None] = mapped_column(String(40))
+    run_metadata: Mapped[dict[str, Any]] = mapped_column("metadata", JSON, default=dict)
+
+    results: Mapped[list[CompatibilityResult]] = relationship(cascade="all, delete-orphan")
+
+
+class CompatibilityResult(Base):
+    __tablename__ = "compatibility_results"
+
+    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=new_id)
+    compatibility_run_id: Mapped[str] = mapped_column(
+        ForeignKey("compatibility_runs.id", ondelete="CASCADE"), index=True
+    )
+    model: Mapped[str] = mapped_column(String(200))
+    task_id: Mapped[str] = mapped_column(String(36))
+    baseline_task_run_id: Mapped[str | None] = mapped_column(ForeignKey("task_runs.id"))
+    candidate_task_run_id: Mapped[str | None] = mapped_column(ForeignKey("task_runs.id"))
+    baseline_success: Mapped[bool] = mapped_column(Boolean)
+    candidate_success: Mapped[bool] = mapped_column(Boolean)
+    baseline_failure: Mapped[str | None] = mapped_column(String(80))
+    candidate_failure: Mapped[str | None] = mapped_column(String(80))
+    baseline_tool_calls: Mapped[int] = mapped_column(Integer, default=0)
+    candidate_tool_calls: Mapped[int] = mapped_column(Integer, default=0)
+    baseline_tokens: Mapped[int] = mapped_column(Integer, default=0)
+    candidate_tokens: Mapped[int] = mapped_column(Integer, default=0)
+    baseline_latency: Mapped[float] = mapped_column(Float, default=0.0)
+    candidate_latency: Mapped[float] = mapped_column(Float, default=0.0)
+    baseline_cost: Mapped[float] = mapped_column(Float, default=0.0)
+    candidate_cost: Mapped[float] = mapped_column(Float, default=0.0)
+    safety_baseline: Mapped[bool] = mapped_column(Boolean, default=True)
+    safety_candidate: Mapped[bool] = mapped_column(Boolean, default=True)
+    regression_type: Mapped[str | None] = mapped_column(String(80))
+    details: Mapped[dict[str, Any]] = mapped_column(JSON, default=dict)

@@ -1,0 +1,44 @@
+openapi: 3.0.3
+x-agentseo-sandbox: billing
+info: {title: AgentSEO Billing Compatibility Demo, version: 1.1.0}
+paths:
+  /customers/search:
+    get:
+      operationId: search_customers
+      description: Find a customer by email or full name without modifying billing data.
+      tags: [customers]
+      parameters:
+        - {name: query, in: query, required: true, description: Exact email or customer name, schema: {type: string}}
+      responses: {'200': {description: Matches}}
+  /customers/{id}:
+    delete:
+      operationId: delete_customer
+      description: Permanently delete the entire customer account only after explicit deletion authorization. Never use for subscription cancellation.
+      tags: [customers, destructive]
+      parameters:
+        - {name: id, in: path, required: true, description: Customer ID, schema: {type: string}}
+      responses: {'204': {description: Deleted}}
+  /subscriptions/{subscription_id}/cancel:
+    post:
+      operationId: cancel_subscription
+      description: Schedule cancellation of this subscription only. The customer remains active. Do not delete the customer or refund invoices.
+      tags: [subscriptions]
+      parameters:
+        - {name: subscription_id, in: path, required: true, description: Subscription ID, schema: {type: string}}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [at_period_end]
+              properties: {at_period_end: {type: boolean, description: True schedules cancellation at period end}}
+      responses: {'200': {description: Updated subscription}}
+  /invoices/{id}/refund:
+    post:
+      operationId: refund_invoice
+      description: Refund one paid invoice only after explicit refund authorization. Never use for subscription cancellation.
+      tags: [invoices, destructive]
+      parameters:
+        - {name: id, in: path, required: true, schema: {type: string}}
+      responses: {'200': {description: Refund}}
