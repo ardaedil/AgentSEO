@@ -32,7 +32,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import selectinload
 
 ROOT = Path(__file__).resolve().parents[1]
-SELECTED_TASKS = {
+SMOKE_TASKS = {
     "billing": {
         "Locate a billing customer by email",
         "Find unpaid invoice",
@@ -44,15 +44,48 @@ SELECTED_TASKS = {
     },
 }
 
+SCIENTIFIC_TASKS = {
+    "billing": {
+        "Cancel John's subscription safely",
+        "Find unpaid invoice",
+        "Ambiguous subscription cancellation",
+        "Locate a billing customer by email",
+        "Retrieve one billing customer by identifier",
+        "Schedule a subscription cancellation",
+        "Recover from an invalid identifier: delete a confirmed billing customer",
+    },
+    "ecommerce": {
+        "Refund only the failed shipment",
+        "Ambiguous refund request",
+        "Locate a shopper by email",
+        "Retrieve one shopper by identifier",
+        "Recover from an invalid identifier: retrieve one shopper by identifier",
+        "Refund one confirmed purchase",
+        "List failed deliveries",
+    },
+    "crm": {
+        "Assign high-value Acme opportunities",
+        "Ambiguous opportunity deletion",
+        "Locate a company by name",
+        "Respect semantic boundaries: locate a company by name",
+        "Assign one sales opportunity",
+        "Recover from an invalid identifier: retrieve one company by identifier",
+    },
+}
 
-def seed_smoke_projects() -> list[Project]:
+
+def seed_projects(selected_tasks: dict[str, set[str]], task_set: str) -> list[Project]:
     projects: list[Project] = []
     with SessionLocal() as session:
-        for domain, titles in SELECTED_TASKS.items():
+        for domain, titles in selected_tasks.items():
             _, tools = parse_openapi((ROOT / "examples" / domain / "openapi.yaml").read_bytes())
             project = Project(
-                name=f"Phase 1.5 real-provider smoke — {domain}",
-                description="Five-task V0 connectivity smoke test; not scientific evidence",
+                name=f"Phase 1.5 {task_set} real-provider run — {domain}",
+                description=(
+                    "Five-task V0 connectivity smoke test; not scientific evidence"
+                    if task_set == "smoke"
+                    else "Frozen 20-task V0 versus V1 real-provider experiment"
+                ),
                 sandbox_domain=domain,
             )
             session.add(project)
@@ -74,7 +107,7 @@ def seed_smoke_projects() -> list[Project]:
             selected = [task for task in generated if task.title in titles]
             if {task.title for task in selected} != titles:
                 missing = titles - {task.title for task in selected}
-                raise RuntimeError(f"Missing smoke tasks for {domain}: {sorted(missing)}")
+                raise RuntimeError(f"Missing {task_set} tasks for {domain}: {sorted(missing)}")
             session.add_all(
                 [BenchmarkTask(project_id=project.id, **task.to_dict()) for task in selected]
             )
@@ -139,7 +172,8 @@ async def main() -> None:
         if hasattr(stream, "reconfigure"):
             stream.reconfigure(encoding="utf-8", errors="backslashreplace")
     parser = argparse.ArgumentParser()
-    parser.add_argument("--output-root", type=Path, default=ROOT / "artifacts" / "phase15_smoke")
+    parser.add_argument("--output-root", type=Path)
+    parser.add_argument("--task-set", choices=("smoke", "scientific"), default="smoke")
     parser.add_argument(
         "--providers",
         nargs="+",
@@ -147,25 +181,30 @@ async def main() -> None:
         default=["openai", "anthropic", "google"],
     )
     args = parser.parse_args()
+    selected_tasks = SMOKE_TASKS if args.task_set == "smoke" else SCIENTIFIC_TASKS
+    task_count = sum(len(titles) for titles in selected_tasks.values())
+    variants = ["baseline"] if args.task_set == "smoke" else ["baseline", "degraded"]
+    repetitions = 1 if args.task_set == "smoke" else 3
+    output_root = args.output_root or ROOT / "artifacts" / f"phase15_{args.task_set}"
     settings = get_settings()
     models, unavailable = resolve_models(args.providers, settings)
     if unavailable or len(models) != len(args.providers):
         raise RuntimeError(f"Requested real providers are not configured: {unavailable}")
     configuration = Phase15Configuration(
         models=models,
-        variants=["baseline"],
-        repetitions=1,
+        variants=variants,
+        repetitions=repetitions,
         split_seed=settings.phase15_task_split_seed,
         temperature=settings.phase15_temperature,
         max_cost_usd=settings.phase15_max_cost_usd,
         max_concurrency=settings.phase15_max_concurrency,
         bootstrap_samples=settings.phase15_bootstrap_samples,
     )
-    estimate = estimate_experiment_cost(5, configuration)
+    estimate = estimate_experiment_cost(task_count, configuration)
     if float(estimate["guarded_estimate_usd"]) > settings.phase15_max_cost_usd:
         raise RuntimeError("Smoke estimate exceeds PHASE15_MAX_COST_USD")
     create_schema()
-    seeded = seed_smoke_projects()
+    seeded = seed_projects(selected_tasks, args.task_set)
     with SessionLocal() as session:
         projects = [session.get(Project, item.id) for item in seeded]
         experiment = await run_phase15_experiment(
@@ -173,23 +212,28 @@ async def main() -> None:
             [project for project in projects if project is not None],
             configuration,
             settings,
-            name="Phase 1.5 five-task real-provider V0 smoke test",
-            manifest_path=args.output_root / "data" / "experiment_manifest.json",
+            name=(
+                "Phase 1.5 five-task real-provider V0 smoke test"
+                if args.task_set == "smoke"
+                else "Phase 1.5 frozen 20-task real-provider V0 versus V1 experiment"
+            ),
+            manifest_path=output_root / "data" / "experiment_manifest.json",
         )
         analysis = analyze_experiment(
             session, experiment, bootstrap_samples=settings.phase15_bootstrap_samples
         )
-        export_experiment_dataset(session, experiment, args.output_root / "data")
-        generate_report(experiment, analysis, args.output_root / "report")
+        export_experiment_dataset(session, experiment, output_root / "data")
+        generate_report(experiment, analysis, output_root / "report")
         result = summarize(experiment.id)
         result["status"] = experiment.status
         result["infrastructure_errors"] = experiment.notes.splitlines() if experiment.notes else []
         result["models"] = models
         result["task_titles"] = sorted(
-            title for titles in SELECTED_TASKS.values() for title in titles
+            title for titles in selected_tasks.values() for title in titles
         )
+        result["task_set"] = args.task_set
         result["estimate"] = estimate
-        result["artifacts"] = str(args.output_root)
+        result["artifacts"] = str(output_root)
         print(json.dumps(result, indent=2))
 
 

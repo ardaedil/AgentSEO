@@ -252,7 +252,7 @@ class AnthropicProvider(HTTPProvider):
                 for tool in tools
             ],
         }
-        if task_context.get("temperature") is not None:
+        if self.model != "claude-sonnet-5" and task_context.get("temperature") is not None:
             payload["temperature"] = task_context["temperature"]
         response = await self.client.post(
             "https://api.anthropic.com/v1/messages",

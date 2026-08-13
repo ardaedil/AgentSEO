@@ -23,6 +23,7 @@ from .models import (
     now,
 )
 from .openapi_parser import NormalizedTool
+from .pricing import estimate_usage_cost
 from .providers import AgentProvider, create_provider
 from .sandboxes import SandboxError, create_sandbox
 
@@ -271,8 +272,11 @@ async def execute_task(
     estimated_cost = (
         0.0
         if provider.name == "mock"
-        else (total_tokens.get("input", 0) * 0.0000005)
-        + (total_tokens.get("output", 0) * 0.0000015)
+        else estimate_usage_cost(
+            f"{provider.name}:{provider.model}",
+            total_tokens.get("input", 0),
+            total_tokens.get("output", 0),
+        )
     )
     task_run.status = RunStatus.COMPLETED.value
     task_run.success = bool(evaluation["passed"])
