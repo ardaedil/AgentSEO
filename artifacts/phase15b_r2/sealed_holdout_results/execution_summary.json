@@ -1,0 +1,278 @@
+{
+  "actual_cost_usd": 10.9456391,
+  "completed_at": "2026-08-13T18:38:04.912169+00:00",
+  "completed_observations": 1620,
+  "created_at": "2026-08-13T16:38:46.288940+00:00",
+  "experiment_id": "4462ff36-259f-4c4c-8f6c-cbf548fc0718",
+  "launches": {
+    "L1_OPENAI_TRIALS_1_3": {
+      "actual_cost_usd": 0.43499160000000003,
+      "completed_at": "2026-08-13T17:32:05.014834+00:00",
+      "completed_observations": 540,
+      "estimated_cost_usd": 0.4086771428571429,
+      "guarded_cost_usd": 0.5108464285714286,
+      "infrastructure_errors": [],
+      "model": "openai:gpt-4.1-mini",
+      "started_at": "2026-08-13T16:39:04.083936+00:00",
+      "status": "COMPLETED_UNINSPECTED",
+      "trials": [
+        1,
+        2,
+        3
+      ]
+    },
+    "L2_ANTHROPIC_TRIAL_1": {
+      "actual_cost_usd": 2.611402,
+      "completed_at": "2026-08-13T17:38:32.544677+00:00",
+      "completed_observations": 180,
+      "estimated_cost_usd": 2.873026,
+      "guarded_cost_usd": 3.5912825,
+      "infrastructure_errors": [],
+      "model": "anthropic:claude-sonnet-5",
+      "status": "COMPLETED_UNINSPECTED",
+      "trials": [
+        1
+      ]
+    },
+    "L3_ANTHROPIC_TRIAL_2": {
+      "actual_cost_usd": 2.565186,
+      "completed_at": "2026-08-13T17:38:32.548169+00:00",
+      "completed_observations": 180,
+      "estimated_cost_usd": 2.873026,
+      "guarded_cost_usd": 3.5912825,
+      "infrastructure_errors": [],
+      "model": "anthropic:claude-sonnet-5",
+      "status": "COMPLETED_UNINSPECTED",
+      "trials": [
+        2
+      ]
+    },
+    "L4_ANTHROPIC_TRIAL_3": {
+      "actual_cost_usd": 2.597374,
+      "completed_at": "2026-08-13T17:38:35.345876+00:00",
+      "completed_observations": 180,
+      "estimated_cost_usd": 2.873026,
+      "guarded_cost_usd": 3.5912825,
+      "infrastructure_errors": [],
+      "model": "anthropic:claude-sonnet-5",
+      "status": "COMPLETED_UNINSPECTED",
+      "trials": [
+        3
+      ]
+    },
+    "L5_GEMINI_TRIALS_1_3": {
+      "actual_cost_usd": 2.7366855,
+      "completed_at": "2026-08-13T18:38:01.869003+00:00",
+      "completed_observations": 540,
+      "estimated_cost_usd": 2.7779374285714287,
+      "guarded_cost_usd": 3.472421785714286,
+      "infrastructure_errors": [
+        {
+          "attempt": 1,
+          "category": "INFRASTRUCTURE_ERROR",
+          "cell": "billing/baseline/trial-1",
+          "recorded_at": "2026-08-13T16:50:00.978989+00:00"
+        },
+        {
+          "attempt": 1,
+          "category": "TRANSIENT_PROVIDER_ERROR",
+          "cell": "billing/phase15b_r2_general/trial-1",
+          "recorded_at": "2026-08-13T16:52:10.366990+00:00"
+        },
+        {
+          "attempt": 1,
+          "category": "TRANSIENT_PROVIDER_ERROR",
+          "cell": "billing/phase15b_r2_gpt/trial-1",
+          "recorded_at": "2026-08-13T16:58:40.512883+00:00"
+        },
+        {
+          "attempt": 2,
+          "category": "TRANSIENT_PROVIDER_ERROR",
+          "cell": "billing/phase15b_r2_gpt/trial-1",
+          "recorded_at": "2026-08-13T16:58:57.189333+00:00"
+        },
+        {
+          "attempt": 3,
+          "category": "TRANSIENT_PROVIDER_ERROR",
+          "cell": "billing/phase15b_r2_gpt/trial-1",
+          "recorded_at": "2026-08-13T17:00:51.291663+00:00"
+        },
+        {
+          "attempt": 4,
+          "category": "TRANSIENT_PROVIDER_ERROR",
+          "cell": "billing/phase15b_r2_gpt/trial-1",
+          "recorded_at": "2026-08-13T17:06:56.264537+00:00"
+        },
+        {
+          "attempt": 5,
+          "category": "TRANSIENT_PROVIDER_ERROR",
+          "cell": "billing/phase15b_r2_gpt/trial-1",
+          "recorded_at": "2026-08-13T17:09:08.169977+00:00"
+        },
+        {
+          "attempt": 1,
+          "category": "TRANSIENT_PROVIDER_ERROR",
+          "cell": "billing/phase15b_r2_gemini/trial-1",
+          "recorded_at": "2026-08-13T17:15:57.146162+00:00"
+        },
+        {
+          "attempt": 1,
+          "category": "TRANSIENT_PROVIDER_ERROR",
+          "cell": "crm/phase15b_r2_general/trial-1",
+          "recorded_at": "2026-08-13T17:22:05.389379+00:00"
+        },
+        {
+          "attempt": 1,
+          "category": "TRANSIENT_PROVIDER_ERROR",
+          "cell": "crm/phase15b_r2_claude/trial-1",
+          "recorded_at": "2026-08-13T17:25:42.132004+00:00"
+        },
+        {
+          "attempt": 1,
+          "category": "INFRASTRUCTURE_ERROR",
+          "cell": "billing/baseline/trial-2",
+          "recorded_at": "2026-08-13T16:49:58.386457+00:00"
+        },
+        {
+          "attempt": 1,
+          "category": "TRANSIENT_PROVIDER_ERROR",
+          "cell": "billing/baseline/trial-2",
+          "recorded_at": "2026-08-13T16:51:42.999795+00:00"
+        },
+        {
+          "attempt": 1,
+          "category": "TRANSIENT_PROVIDER_ERROR",
+          "cell": "billing/phase15b_r2_general/trial-2",
+          "recorded_at": "2026-08-13T16:53:39.623661+00:00"
+        },
+        {
+          "attempt": 2,
+          "category": "TRANSIENT_PROVIDER_ERROR",
+          "cell": "billing/phase15b_r2_general/trial-2",
+          "recorded_at": "2026-08-13T16:55:39.543497+00:00"
+        },
+        {
+          "attempt": 3,
+          "category": "TRANSIENT_PROVIDER_ERROR",
+          "cell": "billing/phase15b_r2_general/trial-2",
+          "recorded_at": "2026-08-13T16:56:56.808627+00:00"
+        },
+        {
+          "attempt": 4,
+          "category": "TRANSIENT_PROVIDER_ERROR",
+          "cell": "billing/phase15b_r2_general/trial-2",
+          "recorded_at": "2026-08-13T16:58:29.677678+00:00"
+        },
+        {
+          "attempt": 5,
+          "category": "TRANSIENT_PROVIDER_ERROR",
+          "cell": "billing/phase15b_r2_general/trial-2",
+          "recorded_at": "2026-08-13T17:00:01.730295+00:00"
+        },
+        {
+          "attempt": 1,
+          "category": "TRANSIENT_PROVIDER_ERROR",
+          "cell": "billing/phase15b_r2_gemini/trial-2",
+          "recorded_at": "2026-08-13T17:50:11.652887+00:00"
+        },
+        {
+          "attempt": 1,
+          "category": "TRANSIENT_PROVIDER_ERROR",
+          "cell": "crm/phase15b_r2_general/trial-2",
+          "recorded_at": "2026-08-13T17:53:59.950048+00:00"
+        },
+        {
+          "attempt": 1,
+          "category": "INFRASTRUCTURE_ERROR",
+          "cell": "billing/baseline/trial-3",
+          "recorded_at": "2026-08-13T16:50:18.310656+00:00"
+        },
+        {
+          "attempt": 1,
+          "category": "TRANSIENT_PROVIDER_ERROR",
+          "cell": "billing/phase15b_r2_general/trial-3",
+          "recorded_at": "2026-08-13T16:54:52.048542+00:00"
+        },
+        {
+          "attempt": 1,
+          "category": "TRANSIENT_PROVIDER_ERROR",
+          "cell": "billing/phase15b_r2_gpt/trial-3",
+          "recorded_at": "2026-08-13T16:57:22.851224+00:00"
+        },
+        {
+          "attempt": 2,
+          "category": "TRANSIENT_PROVIDER_ERROR",
+          "cell": "billing/phase15b_r2_gpt/trial-3",
+          "recorded_at": "2026-08-13T16:58:17.698530+00:00"
+        },
+        {
+          "attempt": 3,
+          "category": "TRANSIENT_PROVIDER_ERROR",
+          "cell": "billing/phase15b_r2_gpt/trial-3",
+          "recorded_at": "2026-08-13T16:59:51.071613+00:00"
+        },
+        {
+          "attempt": 4,
+          "category": "TRANSIENT_PROVIDER_ERROR",
+          "cell": "billing/phase15b_r2_gpt/trial-3",
+          "recorded_at": "2026-08-13T17:01:28.731316+00:00"
+        },
+        {
+          "attempt": 5,
+          "category": "TRANSIENT_PROVIDER_ERROR",
+          "cell": "billing/phase15b_r2_gpt/trial-3",
+          "recorded_at": "2026-08-13T17:03:03.124392+00:00"
+        }
+      ],
+      "model": "google:gemini-3.6-flash",
+      "status": "COMPLETED_UNINSPECTED",
+      "trials": [
+        1,
+        2,
+        3
+      ]
+    }
+  },
+  "outcomes_inspected_before_completion": false,
+  "protocol": "PHASE15B_R2_SEALED_HOLDOUT",
+  "provider_credit_preflight": [
+    {
+      "model": "openai:gpt-4.1-mini",
+      "status": "BILLABLE_INFERENCE_AVAILABLE"
+    },
+    {
+      "model": "anthropic:claude-sonnet-5",
+      "status": "BILLABLE_INFERENCE_AVAILABLE"
+    },
+    {
+      "model": "google:gemini-3.6-flash",
+      "status": "BILLABLE_INFERENCE_AVAILABLE"
+    }
+  ],
+  "status": "COMPLETED_READY_FOR_PREREGISTERED_ANALYSIS",
+  "unique_observations": 1620,
+  "verification": {
+    "benchmark_sha256": "4568fc82c24d096d8e5fc0d147e17a4f4c9b56a59beb437167d5341c9e963247",
+    "expected_observations": 1620,
+    "git_commit": "498bf46512d124a1527a44ae9157a5cd604529a9",
+    "holdout_family_count": 12,
+    "holdout_manifest_sha256": "2ad4a55afd04926fe0eaae4e5ee53d5859756102fce2ef79fe9b3b18da6d69ba",
+    "holdout_task_count": 36,
+    "interface_freeze_sha256": "b905b769f25f56c7a8f8057d085494d9d7b2d2285c2084485bfa93fc50847a34",
+    "models": [
+      "openai:gpt-4.1-mini",
+      "anthropic:claude-sonnet-5",
+      "google:gemini-3.6-flash"
+    ],
+    "per_launch_cost_cap_usd": 5.0,
+    "repetitions": 3,
+    "variants": [
+      "baseline",
+      "phase15b_r2_general",
+      "phase15b_r2_gpt",
+      "phase15b_r2_claude",
+      "phase15b_r2_gemini"
+    ],
+    "verified_at": "2026-08-13T16:38:38.032368+00:00"
+  }
+}

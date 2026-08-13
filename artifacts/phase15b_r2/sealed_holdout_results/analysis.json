@@ -1,0 +1,1925 @@
+{
+  "answers": {
+    "claude": "Effect: -5.6 pp.",
+    "different_optima": "Best hidden interfaces were GPT=V2-General, Claude=V2-General, Gemini=V0.",
+    "efficiency": "Reliability, token, latency, and cost deltas are reported pairwise; non-dominated choices are listed as Pareto-efficient rather than collapsed into a composite score.",
+    "gemini": "Effect: -4.6 pp.",
+    "general": "Effects were +1.9 pp, +0.9 pp, -3.7 pp for GPT, Claude, and Gemini.",
+    "gpt": "Effect: -0.9 pp.",
+    "safety": "12 model/interface cells had lower safety success than V0.",
+    "specific_over_general": "GPT -2.8 pp, Claude -6.5 pp, Gemini -4.6 pp.",
+    "transfer": "Cross-transfer effects ranged from -6.5 pp to +0.9 pp; the detailed table reports gains and regressions for every non-intended model."
+  },
+  "best_hidden_interface": {
+    "anthropic:claude-sonnet-5": "phase15b_r2_general",
+    "google:gemini-3.6-flash": "baseline",
+    "openai:gpt-4.1-mini": "phase15b_r2_general"
+  },
+  "cells": {
+    "anthropic:claude-sonnet-5": {
+      "baseline": {
+        "average_cost_usd": 0.013176555555555556,
+        "average_latency_seconds": 12.397431296296283,
+        "average_tokens": 4175.87037037037,
+        "average_tool_calls": 2.111111111111111,
+        "clarification_accuracy": 1.0,
+        "error_recovery": 1.0,
+        "estimated_cost_usd": 1.423068,
+        "multi_step_completion": 0.2222222222222222,
+        "observations": 108,
+        "safety_success": 1.0,
+        "semantic_argument_correctness": 0.7962962962962963,
+        "semantic_argument_observations": 54,
+        "task_success": 0.7870370370370371,
+        "task_success_ci95_task_cluster": [
+          0.6574074074074074,
+          0.8981481481481481
+        ],
+        "task_success_ci95_wilson_observations": [
+          0.7006656475723132,
+          0.853690497758367
+        ],
+        "tasks": 36,
+        "tool_selection_accuracy": 0.9259259259259259
+      },
+      "phase15b_r2_claude": {
+        "average_cost_usd": 0.01461411111111111,
+        "average_latency_seconds": 8.599571336109673,
+        "average_tokens": 5445.907407407408,
+        "average_tool_calls": 1.8888888888888888,
+        "clarification_accuracy": 1.0,
+        "error_recovery": 1.0,
+        "estimated_cost_usd": 1.578324,
+        "multi_step_completion": 0.1111111111111111,
+        "observations": 108,
+        "safety_success": 0.7777777777777778,
+        "semantic_argument_correctness": 0.7777777777777778,
+        "semantic_argument_observations": 54,
+        "task_success": 0.7314814814814815,
+        "task_success_ci95_task_cluster": [
+          0.5925925925925926,
+          0.8611111111111112
+        ],
+        "task_success_ci95_wilson_observations": [
+          0.6410104214214318,
+          0.8060509861033103
+        ],
+        "tasks": 36,
+        "tool_selection_accuracy": 0.8425925925925926
+      },
+      "phase15b_r2_gemini": {
+        "average_cost_usd": 0.014642018518518518,
+        "average_latency_seconds": 12.527552078704266,
+        "average_tokens": 5430.0462962962965,
+        "average_tool_calls": 1.9537037037037037,
+        "clarification_accuracy": 1.0,
+        "error_recovery": 1.0,
+        "estimated_cost_usd": 1.581338,
+        "multi_step_completion": 0.2777777777777778,
+        "observations": 108,
+        "safety_success": 0.8888888888888888,
+        "semantic_argument_correctness": 0.7777777777777778,
+        "semantic_argument_observations": 54,
+        "task_success": 0.7592592592592593,
+        "task_success_ci95_task_cluster": [
+          0.6296296296296297,
+          0.8796296296296297
+        ],
+        "task_success_ci95_wilson_observations": [
+          0.6706206664021658,
+          0.8300881100255454
+        ],
+        "tasks": 36,
+        "tool_selection_accuracy": 0.8611111111111112
+      },
+      "phase15b_r2_general": {
+        "average_cost_usd": 0.014995277777777778,
+        "average_latency_seconds": 9.882212953704261,
+        "average_tokens": 5678.37962962963,
+        "average_tool_calls": 2.0277777777777777,
+        "clarification_accuracy": 1.0,
+        "error_recovery": 1.0,
+        "estimated_cost_usd": 1.61949,
+        "multi_step_completion": 0.3888888888888889,
+        "observations": 108,
+        "safety_success": 0.7777777777777778,
+        "semantic_argument_correctness": 0.7777777777777778,
+        "semantic_argument_observations": 54,
+        "task_success": 0.7962962962962963,
+        "task_success_ci95_task_cluster": [
+          0.6666666666666666,
+          0.9074074074074074
+        ],
+        "task_success_ci95_wilson_observations": [
+          0.7107866710637564,
+          0.8614519305679135
+        ],
+        "tasks": 36,
+        "tool_selection_accuracy": 0.9166666666666666
+      },
+      "phase15b_r2_gpt": {
+        "average_cost_usd": 0.014553166666666667,
+        "average_latency_seconds": 11.322290365741301,
+        "average_tokens": 5487.101851851852,
+        "average_tool_calls": 2.0,
+        "clarification_accuracy": 1.0,
+        "error_recovery": 1.0,
+        "estimated_cost_usd": 1.571742,
+        "multi_step_completion": 0.3888888888888889,
+        "observations": 108,
+        "safety_success": 0.7777777777777778,
+        "semantic_argument_correctness": 0.7777777777777778,
+        "semantic_argument_observations": 54,
+        "task_success": 0.7685185185185185,
+        "task_success_ci95_task_cluster": [
+          0.6296296296296297,
+          0.8888888888888888
+        ],
+        "task_success_ci95_wilson_observations": [
+          0.6805848684457456,
+          0.8380063642829552
+        ],
+        "tasks": 36,
+        "tool_selection_accuracy": 0.8796296296296297
+      }
+    },
+    "google:gemini-3.6-flash": {
+      "baseline": {
+        "average_cost_usd": 0.004265930555555556,
+        "average_latency_seconds": 13.61646669351871,
+        "average_tokens": 2239.324074074074,
+        "average_tool_calls": 2.740740740740741,
+        "clarification_accuracy": 1.0,
+        "error_recovery": 0.7777777777777778,
+        "estimated_cost_usd": 0.4607205,
+        "multi_step_completion": 0.3333333333333333,
+        "observations": 108,
+        "safety_success": 1.0,
+        "semantic_argument_correctness": 0.8333333333333334,
+        "semantic_argument_observations": 54,
+        "task_success": 0.6944444444444444,
+        "task_success_ci95_task_cluster": [
+          0.5555555555555556,
+          0.8240740740740741
+        ],
+        "task_success_ci95_wilson_observations": [
+          0.6021339202309699,
+          0.7733976620898133
+        ],
+        "tasks": 36,
+        "tool_selection_accuracy": 0.9351851851851852
+      },
+      "phase15b_r2_claude": {
+        "average_cost_usd": 0.005317027777777778,
+        "average_latency_seconds": 10.845102895370845,
+        "average_tokens": 3014.574074074074,
+        "average_tool_calls": 2.240740740740741,
+        "clarification_accuracy": 1.0,
+        "error_recovery": 0.9444444444444444,
+        "estimated_cost_usd": 0.574239,
+        "multi_step_completion": 0.16666666666666666,
+        "observations": 108,
+        "safety_success": 0.4444444444444444,
+        "semantic_argument_correctness": 0.8333333333333334,
+        "semantic_argument_observations": 54,
+        "task_success": 0.6296296296296297,
+        "task_success_ci95_task_cluster": [
+          0.4722222222222222,
+          0.7777777777777778
+        ],
+        "task_success_ci95_wilson_observations": [
+          0.5355697359856005,
+          0.7147846522282552
+        ],
+        "tasks": 36,
+        "tool_selection_accuracy": 0.8611111111111112
+      },
+      "phase15b_r2_gemini": {
+        "average_cost_usd": 0.005124805555555555,
+        "average_latency_seconds": 10.897400899999614,
+        "average_tokens": 2888.685185185185,
+        "average_tool_calls": 2.212962962962963,
+        "clarification_accuracy": 1.0,
+        "error_recovery": 1.0,
+        "estimated_cost_usd": 0.553479,
+        "multi_step_completion": 0.16666666666666666,
+        "observations": 108,
+        "safety_success": 0.5555555555555556,
+        "semantic_argument_correctness": 0.8333333333333334,
+        "semantic_argument_observations": 54,
+        "task_success": 0.6481481481481481,
+        "task_success_ci95_task_cluster": [
+          0.49074074074074076,
+          0.7962962962962963
+        ],
+        "task_success_ci95_wilson_observations": [
+          0.5544093191687146,
+          0.7317099816471203
+        ],
+        "tasks": 36,
+        "tool_selection_accuracy": 0.8888888888888888
+      },
+      "phase15b_r2_general": {
+        "average_cost_usd": 0.005439472222222222,
+        "average_latency_seconds": 14.589446664814776,
+        "average_tokens": 3072.8333333333335,
+        "average_tool_calls": 2.3055555555555554,
+        "clarification_accuracy": 1.0,
+        "error_recovery": 1.0,
+        "estimated_cost_usd": 0.587463,
+        "multi_step_completion": 0.2777777777777778,
+        "observations": 108,
+        "safety_success": 0.4444444444444444,
+        "semantic_argument_correctness": 0.8333333333333334,
+        "semantic_argument_observations": 54,
+        "task_success": 0.6574074074074074,
+        "task_success_ci95_task_cluster": [
+          0.5092592592592593,
+          0.7962962962962963
+        ],
+        "task_success_ci95_wilson_observations": [
+          0.5638813982964374,
+          0.7401203588203874
+        ],
+        "tasks": 36,
+        "tool_selection_accuracy": 0.8981481481481481
+      },
+      "phase15b_r2_gpt": {
+        "average_cost_usd": 0.005192444444444445,
+        "average_latency_seconds": 11.842705873148118,
+        "average_tokens": 2910.814814814815,
+        "average_tool_calls": 2.240740740740741,
+        "clarification_accuracy": 1.0,
+        "error_recovery": 1.0,
+        "estimated_cost_usd": 0.560784,
+        "multi_step_completion": 0.2222222222222222,
+        "observations": 108,
+        "safety_success": 0.5555555555555556,
+        "semantic_argument_correctness": 0.8333333333333334,
+        "semantic_argument_observations": 54,
+        "task_success": 0.6666666666666666,
+        "task_success_ci95_task_cluster": [
+          0.5092592592592593,
+          0.8148148148148148
+        ],
+        "task_success_ci95_wilson_observations": [
+          0.5733891673119,
+          0.7484950461059141
+        ],
+        "tasks": 36,
+        "tool_selection_accuracy": 0.8888888888888888
+      }
+    },
+    "openai:gpt-4.1-mini": {
+      "baseline": {
+        "average_cost_usd": 0.0005377888888888889,
+        "average_latency_seconds": 5.695211439815331,
+        "average_tokens": 1024.388888888889,
+        "average_tool_calls": 1.8796296296296295,
+        "clarification_accuracy": 0.9444444444444444,
+        "error_recovery": 0.6666666666666666,
+        "estimated_cost_usd": 0.0580812,
+        "multi_step_completion": 0.2777777777777778,
+        "observations": 108,
+        "safety_success": 0.4444444444444444,
+        "semantic_argument_correctness": 0.7037037037037037,
+        "semantic_argument_observations": 54,
+        "task_success": 0.5277777777777778,
+        "task_success_ci95_task_cluster": [
+          0.37037037037037035,
+          0.6759259259259259
+        ],
+        "task_success_ci95_wilson_observations": [
+          0.43429667413386164,
+          0.6193506947691074
+        ],
+        "tasks": 36,
+        "tool_selection_accuracy": 0.7777777777777778
+      },
+      "phase15b_r2_claude": {
+        "average_cost_usd": 0.0008706888888888889,
+        "average_latency_seconds": 5.818784165741953,
+        "average_tokens": 1873.3333333333333,
+        "average_tool_calls": 1.7962962962962963,
+        "clarification_accuracy": 1.0,
+        "error_recovery": 0.8333333333333334,
+        "estimated_cost_usd": 0.0940344,
+        "multi_step_completion": 0.3333333333333333,
+        "observations": 108,
+        "safety_success": 0.3333333333333333,
+        "semantic_argument_correctness": 0.7777777777777778,
+        "semantic_argument_observations": 54,
+        "task_success": 0.5370370370370371,
+        "task_success_ci95_task_cluster": [
+          0.37962962962962965,
+          0.6944444444444444
+        ],
+        "task_success_ci95_wilson_observations": [
+          0.4433455287185074,
+          0.6281842964854515
+        ],
+        "tasks": 36,
+        "tool_selection_accuracy": 0.7592592592592593
+      },
+      "phase15b_r2_gemini": {
+        "average_cost_usd": 0.0008228777777777778,
+        "average_latency_seconds": 4.982742597222467,
+        "average_tokens": 1763.1666666666667,
+        "average_tool_calls": 1.7314814814814814,
+        "clarification_accuracy": 1.0,
+        "error_recovery": 0.8333333333333334,
+        "estimated_cost_usd": 0.0888708,
+        "multi_step_completion": 0.3333333333333333,
+        "observations": 108,
+        "safety_success": 0.2222222222222222,
+        "semantic_argument_correctness": 0.8518518518518519,
+        "semantic_argument_observations": 54,
+        "task_success": 0.5277777777777778,
+        "task_success_ci95_task_cluster": [
+          0.37962962962962965,
+          0.6759259259259259
+        ],
+        "task_success_ci95_wilson_observations": [
+          0.43429667413386164,
+          0.6193506947691074
+        ],
+        "tasks": 36,
+        "tool_selection_accuracy": 0.7962962962962963
+      },
+      "phase15b_r2_general": {
+        "average_cost_usd": 0.0009071962962962964,
+        "average_latency_seconds": 6.058964634259071,
+        "average_tokens": 1946.3796296296296,
+        "average_tool_calls": 1.8888888888888888,
+        "clarification_accuracy": 0.9444444444444444,
+        "error_recovery": 0.8888888888888888,
+        "estimated_cost_usd": 0.0979772,
+        "multi_step_completion": 0.4444444444444444,
+        "observations": 108,
+        "safety_success": 0.3333333333333333,
+        "semantic_argument_correctness": 0.8703703703703703,
+        "semantic_argument_observations": 54,
+        "task_success": 0.5462962962962963,
+        "task_success_ci95_task_cluster": [
+          0.3888888888888889,
+          0.6944444444444444
+        ],
+        "task_success_ci95_wilson_observations": [
+          0.45242531815601683,
+          0.6369869633489315
+        ],
+        "tasks": 36,
+        "tool_selection_accuracy": 0.8148148148148148
+      },
+      "phase15b_r2_gpt": {
+        "average_cost_usd": 0.0008891481481481482,
+        "average_latency_seconds": 6.74141038055556,
+        "average_tokens": 1911.8425925925926,
+        "average_tool_calls": 1.9444444444444444,
+        "clarification_accuracy": 0.8888888888888888,
+        "error_recovery": 0.5555555555555556,
+        "estimated_cost_usd": 0.096028,
+        "multi_step_completion": 0.3888888888888889,
+        "observations": 108,
+        "safety_success": 0.3333333333333333,
+        "semantic_argument_correctness": 0.8148148148148148,
+        "semantic_argument_observations": 54,
+        "task_success": 0.5185185185185185,
+        "task_success_ci95_task_cluster": [
+          0.3796296296296296,
+          0.6574074074074074
+        ],
+        "task_success_ci95_wilson_observations": [
+          0.42527864654226755,
+          0.6104862660597117
+        ],
+        "tasks": 36,
+        "tool_selection_accuracy": 0.7870370370370371
+      }
+    }
+  },
+  "comparisons": [
+    {
+      "absolute_difference": 0.01851851851851849,
+      "baseline_rate": 0.5277777777777778,
+      "baseline_variant": "baseline",
+      "confidence_interval": [
+        -0.1388888888888889,
+        0.17592592592592593
+      ],
+      "cost_delta_ci95_per_observation": [
+        0.00026612222222222227,
+        0.0004837074074074075
+      ],
+      "cost_delta_usd_per_observation": 0.0003694074074074075,
+      "exploratory": true,
+      "family_cluster_confidence_interval": [
+        -0.18518518518518517,
+        0.2222222222222222
+      ],
+      "latency_delta_ci95": [
+        -0.9357709805560634,
+        1.6863340175918387
+      ],
+      "latency_delta_seconds": 0.3637531944437393,
+      "mcnemar": {
+        "baseline_only_success": 5,
+        "discordant_pairs": 11,
+        "p_value": 1.0,
+        "treatment_only_success": 6
+      },
+      "method": "paired task-cluster bootstrap; exact McNemar on task-majority outcomes",
+      "model": "openai:gpt-4.1-mini",
+      "p_value": 1.0,
+      "regression_count": 7,
+      "relative_difference": 0.03508771929824556,
+      "sample_size_observations": 216,
+      "sample_size_tasks": 36,
+      "task_changes": {
+        "gained": 6,
+        "regressed": 7,
+        "unchanged": 23
+      },
+      "token_delta": 921.9907407407406,
+      "token_delta_ci95": [
+        682.8333333333334,
+        1187.6666666666667
+      ],
+      "treatment_rate": 0.5462962962962963,
+      "treatment_variant": "phase15b_r2_general"
+    },
+    {
+      "absolute_difference": -0.00925925925925919,
+      "baseline_rate": 0.5277777777777778,
+      "baseline_variant": "baseline",
+      "confidence_interval": [
+        -0.14814814814814817,
+        0.12962962962962965
+      ],
+      "cost_delta_ci95_per_observation": [
+        0.0002585555555555556,
+        0.0004544148148148149
+      ],
+      "cost_delta_usd_per_observation": 0.00035135925925925933,
+      "exploratory": true,
+      "family_cluster_confidence_interval": [
+        -0.15740740740740738,
+        0.1574074074074074
+      ],
+      "latency_delta_ci95": [
+        -0.28969191481492423,
+        2.423486862962481
+      ],
+      "latency_delta_seconds": 1.0461989407402283,
+      "mcnemar": {
+        "baseline_only_success": 6,
+        "discordant_pairs": 11,
+        "p_value": 1.0,
+        "treatment_only_success": 5
+      },
+      "method": "paired task-cluster bootstrap; exact McNemar on task-majority outcomes",
+      "model": "openai:gpt-4.1-mini",
+      "p_value": 1.0,
+      "regression_count": 9,
+      "relative_difference": -0.017543859649122674,
+      "sample_size_observations": 216,
+      "sample_size_tasks": 36,
+      "task_changes": {
+        "gained": 7,
+        "regressed": 9,
+        "unchanged": 20
+      },
+      "token_delta": 887.4537037037037,
+      "token_delta_ci95": [
+        677.5462962962963,
+        1119.2592592592591
+      ],
+      "treatment_rate": 0.5185185185185186,
+      "treatment_variant": "phase15b_r2_gpt"
+    },
+    {
+      "absolute_difference": 0.00925925925925919,
+      "baseline_rate": 0.5277777777777778,
+      "baseline_variant": "baseline",
+      "confidence_interval": [
+        -0.12962962962962962,
+        0.14814814814814817
+      ],
+      "cost_delta_ci95_per_observation": [
+        0.0002511814814814815,
+        0.0004199111111111111
+      ],
+      "cost_delta_usd_per_observation": 0.0003329,
+      "exploratory": true,
+      "family_cluster_confidence_interval": [
+        -0.16666666666666666,
+        0.18518518518518517
+      ],
+      "latency_delta_ci95": [
+        -1.1339118203712268,
+        1.4667358000010102
+      ],
+      "latency_delta_seconds": 0.12357272592662127,
+      "mcnemar": {
+        "baseline_only_success": 5,
+        "discordant_pairs": 9,
+        "p_value": 1.0,
+        "treatment_only_success": 4
+      },
+      "method": "paired task-cluster bootstrap; exact McNemar on task-majority outcomes",
+      "model": "openai:gpt-4.1-mini",
+      "p_value": 1.0,
+      "regression_count": 6,
+      "relative_difference": 0.017543859649122674,
+      "sample_size_observations": 216,
+      "sample_size_tasks": 36,
+      "task_changes": {
+        "gained": 7,
+        "regressed": 6,
+        "unchanged": 23
+      },
+      "token_delta": 848.9444444444443,
+      "token_delta_ci95": [
+        663.5925925925926,
+        1050.2314814814815
+      ],
+      "treatment_rate": 0.537037037037037,
+      "treatment_variant": "phase15b_r2_claude"
+    },
+    {
+      "absolute_difference": 0.0,
+      "baseline_rate": 0.5277777777777778,
+      "baseline_variant": "baseline",
+      "confidence_interval": [
+        -0.1388888888888889,
+        0.14814814814814814
+      ],
+      "cost_delta_ci95_per_observation": [
+        0.00021054814814814817,
+        0.00036140370370370376
+      ],
+      "cost_delta_usd_per_observation": 0.0002850888888888889,
+      "exploratory": true,
+      "family_cluster_confidence_interval": [
+        -0.15740740740740738,
+        0.17592592592592593
+      ],
+      "latency_delta_ci95": [
+        -1.6783420009258543,
+        0.1650309259243335
+      ],
+      "latency_delta_seconds": -0.7124688425928642,
+      "mcnemar": {
+        "baseline_only_success": 5,
+        "discordant_pairs": 9,
+        "p_value": 1.0,
+        "treatment_only_success": 4
+      },
+      "method": "paired task-cluster bootstrap; exact McNemar on task-majority outcomes",
+      "model": "openai:gpt-4.1-mini",
+      "p_value": 1.0,
+      "regression_count": 8,
+      "relative_difference": 0.0,
+      "sample_size_observations": 216,
+      "sample_size_tasks": 36,
+      "task_changes": {
+        "gained": 7,
+        "regressed": 8,
+        "unchanged": 21
+      },
+      "token_delta": 738.7777777777778,
+      "token_delta_ci95": [
+        565.0092592592592,
+        920.0833333333333
+      ],
+      "treatment_rate": 0.5277777777777778,
+      "treatment_variant": "phase15b_r2_gemini"
+    },
+    {
+      "absolute_difference": 0.0092592592592593,
+      "baseline_rate": 0.787037037037037,
+      "baseline_variant": "baseline",
+      "confidence_interval": [
+        -0.0925925925925926,
+        0.10185185185185186
+      ],
+      "cost_delta_ci95_per_observation": [
+        0.0005463703703703703,
+        0.0032423888888888893
+      ],
+      "cost_delta_usd_per_observation": 0.0018187222222222216,
+      "exploratory": true,
+      "family_cluster_confidence_interval": [
+        -0.10185185185185185,
+        0.12037037037037036
+      ],
+      "latency_delta_ci95": [
+        -3.362657027777594,
+        -1.7498064351852078
+      ],
+      "latency_delta_seconds": -2.5152183425920214,
+      "mcnemar": {
+        "baseline_only_success": 3,
+        "discordant_pairs": 4,
+        "p_value": 0.625,
+        "treatment_only_success": 1
+      },
+      "method": "paired task-cluster bootstrap; exact McNemar on task-majority outcomes",
+      "model": "anthropic:claude-sonnet-5",
+      "p_value": 0.625,
+      "regression_count": 5,
+      "relative_difference": 0.011764705882352995,
+      "sample_size_observations": 216,
+      "sample_size_tasks": 36,
+      "task_changes": {
+        "gained": 7,
+        "regressed": 5,
+        "unchanged": 24
+      },
+      "token_delta": 1502.5092592592591,
+      "token_delta_ci95": [
+        1009.7685185185186,
+        2056.75
+      ],
+      "treatment_rate": 0.7962962962962963,
+      "treatment_variant": "phase15b_r2_general"
+    },
+    {
+      "absolute_difference": -0.01851851851851838,
+      "baseline_rate": 0.787037037037037,
+      "baseline_variant": "baseline",
+      "confidence_interval": [
+        -0.1388888888888889,
+        0.10185185185185186
+      ],
+      "cost_delta_ci95_per_observation": [
+        0.00024005555555555523,
+        0.002698648148148148
+      ],
+      "cost_delta_usd_per_observation": 0.0013766111111111114,
+      "exploratory": true,
+      "family_cluster_confidence_interval": [
+        -0.2037037037037037,
+        0.1388888888888889
+      ],
+      "latency_delta_ci95": [
+        -2.3325719444447146,
+        0.21773753055579906
+      ],
+      "latency_delta_seconds": -1.0751409305549817,
+      "mcnemar": {
+        "baseline_only_success": 4,
+        "discordant_pairs": 6,
+        "p_value": 0.6875,
+        "treatment_only_success": 2
+      },
+      "method": "paired task-cluster bootstrap; exact McNemar on task-majority outcomes",
+      "model": "anthropic:claude-sonnet-5",
+      "p_value": 0.6875,
+      "regression_count": 5,
+      "relative_difference": -0.023529411764705705,
+      "sample_size_observations": 216,
+      "sample_size_tasks": 36,
+      "task_changes": {
+        "gained": 6,
+        "regressed": 5,
+        "unchanged": 25
+      },
+      "token_delta": 1311.2314814814818,
+      "token_delta_ci95": [
+        867.7222222222222,
+        1829.712962962963
+      ],
+      "treatment_rate": 0.7685185185185186,
+      "treatment_variant": "phase15b_r2_gpt"
+    },
+    {
+      "absolute_difference": -0.05555555555555558,
+      "baseline_rate": 0.787037037037037,
+      "baseline_variant": "baseline",
+      "confidence_interval": [
+        -0.16666666666666666,
+        0.05555555555555555
+      ],
+      "cost_delta_ci95_per_observation": [
+        0.0005357592592592597,
+        0.002365796296296297
+      ],
+      "cost_delta_usd_per_observation": 0.0014375555555555548,
+      "exploratory": true,
+      "family_cluster_confidence_interval": [
+        -0.21296296296296294,
+        0.08333333333333334
+      ],
+      "latency_delta_ci95": [
+        -4.965293776853219,
+        -2.7131354398172536
+      ],
+      "latency_delta_seconds": -3.79785996018661,
+      "mcnemar": {
+        "baseline_only_success": 5,
+        "discordant_pairs": 6,
+        "p_value": 0.21875,
+        "treatment_only_success": 1
+      },
+      "method": "paired task-cluster bootstrap; exact McNemar on task-majority outcomes",
+      "model": "anthropic:claude-sonnet-5",
+      "p_value": 0.21875,
+      "regression_count": 6,
+      "relative_difference": -0.07058823529411769,
+      "sample_size_observations": 216,
+      "sample_size_tasks": 36,
+      "task_changes": {
+        "gained": 4,
+        "regressed": 6,
+        "unchanged": 26
+      },
+      "token_delta": 1270.0370370370374,
+      "token_delta_ci95": [
+        945.7777777777778,
+        1621.8981481481483
+      ],
+      "treatment_rate": 0.7314814814814814,
+      "treatment_variant": "phase15b_r2_claude"
+    },
+    {
+      "absolute_difference": -0.02777777777777779,
+      "baseline_rate": 0.787037037037037,
+      "baseline_variant": "baseline",
+      "confidence_interval": [
+        -0.1388888888888889,
+        0.08333333333333333
+      ],
+      "cost_delta_ci95_per_observation": [
+        0.0005428333333333333,
+        0.0025109444444444446
+      ],
+      "cost_delta_usd_per_observation": 0.0014654629629629618,
+      "exploratory": true,
+      "family_cluster_confidence_interval": [
+        -0.18518518518518515,
+        0.08333333333333336
+      ],
+      "latency_delta_ci95": [
+        -0.6119783203703938,
+        0.9357489175927186
+      ],
+      "latency_delta_seconds": 0.13012078240798353,
+      "mcnemar": {
+        "baseline_only_success": 4,
+        "discordant_pairs": 5,
+        "p_value": 0.375,
+        "treatment_only_success": 1
+      },
+      "method": "paired task-cluster bootstrap; exact McNemar on task-majority outcomes",
+      "model": "anthropic:claude-sonnet-5",
+      "p_value": 0.375,
+      "regression_count": 7,
+      "relative_difference": -0.035294117647058844,
+      "sample_size_observations": 216,
+      "sample_size_tasks": 36,
+      "task_changes": {
+        "gained": 6,
+        "regressed": 7,
+        "unchanged": 23
+      },
+      "token_delta": 1254.175925925926,
+      "token_delta_ci95": [
+        874.8148148148148,
+        1693.5092592592594
+      ],
+      "treatment_rate": 0.7592592592592592,
+      "treatment_variant": "phase15b_r2_gemini"
+    },
+    {
+      "absolute_difference": -0.03703703703703698,
+      "baseline_rate": 0.6944444444444444,
+      "baseline_variant": "baseline",
+      "confidence_interval": [
+        -0.1574074074074074,
+        0.07407407407407408
+      ],
+      "cost_delta_ci95_per_observation": [
+        2.7097222222222193e-05,
+        0.0020761666666666667
+      ],
+      "cost_delta_usd_per_observation": 0.0011735416666666665,
+      "exploratory": true,
+      "family_cluster_confidence_interval": [
+        -0.17592592592592593,
+        0.0925925925925926
+      ],
+      "latency_delta_ci95": [
+        -2.4622834907415916,
+        4.508533837962642
+      ],
+      "latency_delta_seconds": 0.9729799712960663,
+      "mcnemar": {
+        "baseline_only_success": 4,
+        "discordant_pairs": 5,
+        "p_value": 0.375,
+        "treatment_only_success": 1
+      },
+      "method": "paired task-cluster bootstrap; exact McNemar on task-majority outcomes",
+      "model": "google:gemini-3.6-flash",
+      "p_value": 0.375,
+      "regression_count": 6,
+      "relative_difference": -0.053333333333333253,
+      "sample_size_observations": 216,
+      "sample_size_tasks": 36,
+      "task_changes": {
+        "gained": 6,
+        "regressed": 6,
+        "unchanged": 24
+      },
+      "token_delta": 833.5092592592596,
+      "token_delta_ci95": [
+        116.1944444444444,
+        1398.4259259259259
+      ],
+      "treatment_rate": 0.6574074074074074,
+      "treatment_variant": "phase15b_r2_general"
+    },
+    {
+      "absolute_difference": -0.02777777777777779,
+      "baseline_rate": 0.6944444444444444,
+      "baseline_variant": "baseline",
+      "confidence_interval": [
+        -0.14814814814814814,
+        0.08333333333333333
+      ],
+      "cost_delta_ci95_per_observation": [
+        -0.00016112499999999992,
+        0.0016986805555555555
+      ],
+      "cost_delta_usd_per_observation": 0.000926513888888889,
+      "exploratory": true,
+      "family_cluster_confidence_interval": [
+        -0.16666666666666666,
+        0.10185185185185186
+      ],
+      "latency_delta_ci95": [
+        -4.629827399074808,
+        0.6923420666659056
+      ],
+      "latency_delta_seconds": -1.7737608203705921,
+      "mcnemar": {
+        "baseline_only_success": 3,
+        "discordant_pairs": 4,
+        "p_value": 0.625,
+        "treatment_only_success": 1
+      },
+      "method": "paired task-cluster bootstrap; exact McNemar on task-majority outcomes",
+      "model": "google:gemini-3.6-flash",
+      "p_value": 0.625,
+      "regression_count": 6,
+      "relative_difference": -0.04000000000000002,
+      "sample_size_observations": 216,
+      "sample_size_tasks": 36,
+      "task_changes": {
+        "gained": 6,
+        "regressed": 6,
+        "unchanged": 24
+      },
+      "token_delta": 671.4907407407409,
+      "token_delta_ci95": [
+        -2.722222222222175,
+        1162.1574074074074
+      ],
+      "treatment_rate": 0.6666666666666666,
+      "treatment_variant": "phase15b_r2_gpt"
+    },
+    {
+      "absolute_difference": -0.06481481481481477,
+      "baseline_rate": 0.6944444444444444,
+      "baseline_variant": "baseline",
+      "confidence_interval": [
+        -0.1851851851851852,
+        0.05555555555555555
+      ],
+      "cost_delta_ci95_per_observation": [
+        4.181944444444467e-05,
+        0.0017647777777777779
+      ],
+      "cost_delta_usd_per_observation": 0.0010510972222222224,
+      "exploratory": true,
+      "family_cluster_confidence_interval": [
+        -0.20370370370370372,
+        0.06481481481481481
+      ],
+      "latency_delta_ci95": [
+        -6.094113914815858,
+        0.0058909564806393705
+      ],
+      "latency_delta_seconds": -2.771363798147865,
+      "mcnemar": {
+        "baseline_only_success": 4,
+        "discordant_pairs": 5,
+        "p_value": 0.375,
+        "treatment_only_success": 1
+      },
+      "method": "paired task-cluster bootstrap; exact McNemar on task-majority outcomes",
+      "model": "google:gemini-3.6-flash",
+      "p_value": 0.375,
+      "regression_count": 6,
+      "relative_difference": -0.09333333333333327,
+      "sample_size_observations": 216,
+      "sample_size_tasks": 36,
+      "task_changes": {
+        "gained": 4,
+        "regressed": 6,
+        "unchanged": 26
+      },
+      "token_delta": 775.25,
+      "token_delta_ci95": [
+        133.75925925925918,
+        1231.6666666666667
+      ],
+      "treatment_rate": 0.6296296296296297,
+      "treatment_variant": "phase15b_r2_claude"
+    },
+    {
+      "absolute_difference": -0.04629629629629628,
+      "baseline_rate": 0.6944444444444444,
+      "baseline_variant": "baseline",
+      "confidence_interval": [
+        -0.16666666666666666,
+        0.07407407407407408
+      ],
+      "cost_delta_ci95_per_observation": [
+        -0.00022826388888888885,
+        0.0016847916666666667
+      ],
+      "cost_delta_usd_per_observation": 0.0008588749999999994,
+      "exploratory": true,
+      "family_cluster_confidence_interval": [
+        -0.18518518518518517,
+        0.09259259259259259
+      ],
+      "latency_delta_ci95": [
+        -5.7199136351854465,
+        -0.05482430925985645
+      ],
+      "latency_delta_seconds": -2.7190657935190963,
+      "mcnemar": {
+        "baseline_only_success": 3,
+        "discordant_pairs": 4,
+        "p_value": 0.625,
+        "treatment_only_success": 1
+      },
+      "method": "paired task-cluster bootstrap; exact McNemar on task-majority outcomes",
+      "model": "google:gemini-3.6-flash",
+      "p_value": 0.625,
+      "regression_count": 6,
+      "relative_difference": -0.06666666666666665,
+      "sample_size_observations": 216,
+      "sample_size_tasks": 36,
+      "task_changes": {
+        "gained": 5,
+        "regressed": 6,
+        "unchanged": 25
+      },
+      "token_delta": 649.3611111111113,
+      "token_delta_ci95": [
+        -31.101851851851816,
+        1161.3703703703704
+      ],
+      "treatment_rate": 0.6481481481481481,
+      "treatment_variant": "phase15b_r2_gemini"
+    },
+    {
+      "absolute_difference": -0.02777777777777768,
+      "baseline_rate": 0.5462962962962963,
+      "baseline_variant": "phase15b_r2_general",
+      "confidence_interval": [
+        -0.1388888888888889,
+        0.07407407407407407
+      ],
+      "cost_delta_ci95_per_observation": [
+        -7.672962962962963e-05,
+        4.479999999999998e-05
+      ],
+      "cost_delta_usd_per_observation": -1.8048148148148155e-05,
+      "exploratory": true,
+      "family_cluster_confidence_interval": [
+        -0.16666666666666666,
+        0.08333333333333334
+      ],
+      "latency_delta_ci95": [
+        -0.3688892194438301,
+        1.9136022759262739
+      ],
+      "latency_delta_seconds": 0.682445746296489,
+      "mcnemar": {
+        "baseline_only_success": 5,
+        "discordant_pairs": 8,
+        "p_value": 0.7265625,
+        "treatment_only_success": 3
+      },
+      "method": "paired task-cluster bootstrap; exact McNemar on task-majority outcomes",
+      "model": "openai:gpt-4.1-mini",
+      "p_value": 0.7265625,
+      "regression_count": 6,
+      "relative_difference": -0.05084745762711847,
+      "sample_size_observations": 216,
+      "sample_size_tasks": 36,
+      "task_changes": {
+        "gained": 4,
+        "regressed": 6,
+        "unchanged": 26
+      },
+      "token_delta": -34.53703703703695,
+      "token_delta_ci95": [
+        -164.83333333333334,
+        108.09259259259258
+      ],
+      "treatment_rate": 0.5185185185185186,
+      "treatment_variant": "phase15b_r2_gpt"
+    },
+    {
+      "absolute_difference": -0.06481481481481488,
+      "baseline_rate": 0.7962962962962963,
+      "baseline_variant": "phase15b_r2_general",
+      "confidence_interval": [
+        -0.1388888888888889,
+        1.5419764230904951e-18
+      ],
+      "cost_delta_ci95_per_observation": [
+        -0.0013454999999999997,
+        0.00048283333333333354
+      ],
+      "cost_delta_usd_per_observation": -0.0003811666666666668,
+      "exploratory": true,
+      "family_cluster_confidence_interval": [
+        -0.17592592592592593,
+        0.018518518518518528
+      ],
+      "latency_delta_ci95": [
+        -2.002376967593591,
+        -0.5810148620387029
+      ],
+      "latency_delta_seconds": -1.2826416175945887,
+      "mcnemar": {
+        "baseline_only_success": 2,
+        "discordant_pairs": 2,
+        "p_value": 0.5,
+        "treatment_only_success": 0
+      },
+      "method": "paired task-cluster bootstrap; exact McNemar on task-majority outcomes",
+      "model": "anthropic:claude-sonnet-5",
+      "p_value": 0.5,
+      "regression_count": 5,
+      "relative_difference": -0.08139534883720939,
+      "sample_size_observations": 216,
+      "sample_size_tasks": 36,
+      "task_changes": {
+        "gained": 1,
+        "regressed": 5,
+        "unchanged": 30
+      },
+      "token_delta": -232.47222222222172,
+      "token_delta_ci95": [
+        -566.0648148148148,
+        53.10185185185181
+      ],
+      "treatment_rate": 0.7314814814814814,
+      "treatment_variant": "phase15b_r2_claude"
+    }
+  ],
+  "conclusion": "NO-GO \u2014 MORE VALIDATION REQUIRED",
+  "cross_model_transfer": [
+    {
+      "absolute_difference": -0.01851851851851838,
+      "baseline_rate": 0.787037037037037,
+      "baseline_variant": "baseline",
+      "confidence_interval": [
+        -0.1388888888888889,
+        0.10185185185185186
+      ],
+      "cost_delta_ci95_per_observation": [
+        0.00024005555555555523,
+        0.002698648148148148
+      ],
+      "cost_delta_usd_per_observation": 0.0013766111111111114,
+      "exploratory": true,
+      "family_cluster_confidence_interval": [
+        -0.2037037037037037,
+        0.1388888888888889
+      ],
+      "latency_delta_ci95": [
+        -2.3325719444447146,
+        0.21773753055579906
+      ],
+      "latency_delta_seconds": -1.0751409305549817,
+      "mcnemar": {
+        "baseline_only_success": 4,
+        "discordant_pairs": 6,
+        "p_value": 0.6875,
+        "treatment_only_success": 2
+      },
+      "method": "paired task-cluster bootstrap; exact McNemar on task-majority outcomes",
+      "model": "anthropic:claude-sonnet-5",
+      "p_value": 0.6875,
+      "regression_count": 5,
+      "relative_difference": -0.023529411764705705,
+      "sample_size_observations": 216,
+      "sample_size_tasks": 36,
+      "task_changes": {
+        "gained": 6,
+        "regressed": 5,
+        "unchanged": 25
+      },
+      "token_delta": 1311.2314814814818,
+      "token_delta_ci95": [
+        867.7222222222222,
+        1829.712962962963
+      ],
+      "treatment_rate": 0.7685185185185186,
+      "treatment_variant": "phase15b_r2_gpt"
+    },
+    {
+      "absolute_difference": -0.02777777777777779,
+      "baseline_rate": 0.6944444444444444,
+      "baseline_variant": "baseline",
+      "confidence_interval": [
+        -0.14814814814814814,
+        0.08333333333333333
+      ],
+      "cost_delta_ci95_per_observation": [
+        -0.00016112499999999992,
+        0.0016986805555555555
+      ],
+      "cost_delta_usd_per_observation": 0.000926513888888889,
+      "exploratory": true,
+      "family_cluster_confidence_interval": [
+        -0.16666666666666666,
+        0.10185185185185186
+      ],
+      "latency_delta_ci95": [
+        -4.629827399074808,
+        0.6923420666659056
+      ],
+      "latency_delta_seconds": -1.7737608203705921,
+      "mcnemar": {
+        "baseline_only_success": 3,
+        "discordant_pairs": 4,
+        "p_value": 0.625,
+        "treatment_only_success": 1
+      },
+      "method": "paired task-cluster bootstrap; exact McNemar on task-majority outcomes",
+      "model": "google:gemini-3.6-flash",
+      "p_value": 0.625,
+      "regression_count": 6,
+      "relative_difference": -0.04000000000000002,
+      "sample_size_observations": 216,
+      "sample_size_tasks": 36,
+      "task_changes": {
+        "gained": 6,
+        "regressed": 6,
+        "unchanged": 24
+      },
+      "token_delta": 671.4907407407409,
+      "token_delta_ci95": [
+        -2.722222222222175,
+        1162.1574074074074
+      ],
+      "treatment_rate": 0.6666666666666666,
+      "treatment_variant": "phase15b_r2_gpt"
+    },
+    {
+      "absolute_difference": 0.00925925925925919,
+      "baseline_rate": 0.5277777777777778,
+      "baseline_variant": "baseline",
+      "confidence_interval": [
+        -0.12962962962962962,
+        0.14814814814814817
+      ],
+      "cost_delta_ci95_per_observation": [
+        0.0002511814814814815,
+        0.0004199111111111111
+      ],
+      "cost_delta_usd_per_observation": 0.0003329,
+      "exploratory": true,
+      "family_cluster_confidence_interval": [
+        -0.16666666666666666,
+        0.18518518518518517
+      ],
+      "latency_delta_ci95": [
+        -1.1339118203712268,
+        1.4667358000010102
+      ],
+      "latency_delta_seconds": 0.12357272592662127,
+      "mcnemar": {
+        "baseline_only_success": 5,
+        "discordant_pairs": 9,
+        "p_value": 1.0,
+        "treatment_only_success": 4
+      },
+      "method": "paired task-cluster bootstrap; exact McNemar on task-majority outcomes",
+      "model": "openai:gpt-4.1-mini",
+      "p_value": 1.0,
+      "regression_count": 6,
+      "relative_difference": 0.017543859649122674,
+      "sample_size_observations": 216,
+      "sample_size_tasks": 36,
+      "task_changes": {
+        "gained": 7,
+        "regressed": 6,
+        "unchanged": 23
+      },
+      "token_delta": 848.9444444444443,
+      "token_delta_ci95": [
+        663.5925925925926,
+        1050.2314814814815
+      ],
+      "treatment_rate": 0.537037037037037,
+      "treatment_variant": "phase15b_r2_claude"
+    },
+    {
+      "absolute_difference": -0.06481481481481477,
+      "baseline_rate": 0.6944444444444444,
+      "baseline_variant": "baseline",
+      "confidence_interval": [
+        -0.1851851851851852,
+        0.05555555555555555
+      ],
+      "cost_delta_ci95_per_observation": [
+        4.181944444444467e-05,
+        0.0017647777777777779
+      ],
+      "cost_delta_usd_per_observation": 0.0010510972222222224,
+      "exploratory": true,
+      "family_cluster_confidence_interval": [
+        -0.20370370370370372,
+        0.06481481481481481
+      ],
+      "latency_delta_ci95": [
+        -6.094113914815858,
+        0.0058909564806393705
+      ],
+      "latency_delta_seconds": -2.771363798147865,
+      "mcnemar": {
+        "baseline_only_success": 4,
+        "discordant_pairs": 5,
+        "p_value": 0.375,
+        "treatment_only_success": 1
+      },
+      "method": "paired task-cluster bootstrap; exact McNemar on task-majority outcomes",
+      "model": "google:gemini-3.6-flash",
+      "p_value": 0.375,
+      "regression_count": 6,
+      "relative_difference": -0.09333333333333327,
+      "sample_size_observations": 216,
+      "sample_size_tasks": 36,
+      "task_changes": {
+        "gained": 4,
+        "regressed": 6,
+        "unchanged": 26
+      },
+      "token_delta": 775.25,
+      "token_delta_ci95": [
+        133.75925925925918,
+        1231.6666666666667
+      ],
+      "treatment_rate": 0.6296296296296297,
+      "treatment_variant": "phase15b_r2_claude"
+    },
+    {
+      "absolute_difference": 0.0,
+      "baseline_rate": 0.5277777777777778,
+      "baseline_variant": "baseline",
+      "confidence_interval": [
+        -0.1388888888888889,
+        0.14814814814814814
+      ],
+      "cost_delta_ci95_per_observation": [
+        0.00021054814814814817,
+        0.00036140370370370376
+      ],
+      "cost_delta_usd_per_observation": 0.0002850888888888889,
+      "exploratory": true,
+      "family_cluster_confidence_interval": [
+        -0.15740740740740738,
+        0.17592592592592593
+      ],
+      "latency_delta_ci95": [
+        -1.6783420009258543,
+        0.1650309259243335
+      ],
+      "latency_delta_seconds": -0.7124688425928642,
+      "mcnemar": {
+        "baseline_only_success": 5,
+        "discordant_pairs": 9,
+        "p_value": 1.0,
+        "treatment_only_success": 4
+      },
+      "method": "paired task-cluster bootstrap; exact McNemar on task-majority outcomes",
+      "model": "openai:gpt-4.1-mini",
+      "p_value": 1.0,
+      "regression_count": 8,
+      "relative_difference": 0.0,
+      "sample_size_observations": 216,
+      "sample_size_tasks": 36,
+      "task_changes": {
+        "gained": 7,
+        "regressed": 8,
+        "unchanged": 21
+      },
+      "token_delta": 738.7777777777778,
+      "token_delta_ci95": [
+        565.0092592592592,
+        920.0833333333333
+      ],
+      "treatment_rate": 0.5277777777777778,
+      "treatment_variant": "phase15b_r2_gemini"
+    },
+    {
+      "absolute_difference": -0.02777777777777779,
+      "baseline_rate": 0.787037037037037,
+      "baseline_variant": "baseline",
+      "confidence_interval": [
+        -0.1388888888888889,
+        0.08333333333333333
+      ],
+      "cost_delta_ci95_per_observation": [
+        0.0005428333333333333,
+        0.0025109444444444446
+      ],
+      "cost_delta_usd_per_observation": 0.0014654629629629618,
+      "exploratory": true,
+      "family_cluster_confidence_interval": [
+        -0.18518518518518515,
+        0.08333333333333336
+      ],
+      "latency_delta_ci95": [
+        -0.6119783203703938,
+        0.9357489175927186
+      ],
+      "latency_delta_seconds": 0.13012078240798353,
+      "mcnemar": {
+        "baseline_only_success": 4,
+        "discordant_pairs": 5,
+        "p_value": 0.375,
+        "treatment_only_success": 1
+      },
+      "method": "paired task-cluster bootstrap; exact McNemar on task-majority outcomes",
+      "model": "anthropic:claude-sonnet-5",
+      "p_value": 0.375,
+      "regression_count": 7,
+      "relative_difference": -0.035294117647058844,
+      "sample_size_observations": 216,
+      "sample_size_tasks": 36,
+      "task_changes": {
+        "gained": 6,
+        "regressed": 7,
+        "unchanged": 23
+      },
+      "token_delta": 1254.175925925926,
+      "token_delta_ci95": [
+        874.8148148148148,
+        1693.5092592592594
+      ],
+      "treatment_rate": 0.7592592592592592,
+      "treatment_variant": "phase15b_r2_gemini"
+    }
+  ],
+  "experiment_id": "4462ff36-259f-4c4c-8f6c-cbf548fc0718",
+  "methods": {
+    "binary_effect": "paired task-cluster bootstrap with repetitions preserved within task",
+    "cell_interval": "task-cluster bootstrap; Wilson observation interval also retained",
+    "continuous_effects": "paired task-cluster bootstrap",
+    "exact_test": "exact McNemar on task-majority outcomes",
+    "multiple_comparisons": "exploratory; all preregistered comparisons reported",
+    "sensitivity": "family-cluster bootstrap"
+  },
+  "model_specific_advantage": [
+    {
+      "absolute_difference": -0.02777777777777768,
+      "baseline_rate": 0.5462962962962963,
+      "baseline_variant": "phase15b_r2_general",
+      "confidence_interval": [
+        -0.1388888888888889,
+        0.07407407407407407
+      ],
+      "cost_delta_ci95_per_observation": [
+        -7.672962962962963e-05,
+        4.479999999999998e-05
+      ],
+      "cost_delta_usd_per_observation": -1.8048148148148155e-05,
+      "exploratory": true,
+      "family_cluster_confidence_interval": [
+        -0.16666666666666666,
+        0.08333333333333334
+      ],
+      "latency_delta_ci95": [
+        -0.3688892194438301,
+        1.9136022759262739
+      ],
+      "latency_delta_seconds": 0.682445746296489,
+      "mcnemar": {
+        "baseline_only_success": 5,
+        "discordant_pairs": 8,
+        "p_value": 0.7265625,
+        "treatment_only_success": 3
+      },
+      "method": "paired task-cluster bootstrap; exact McNemar on task-majority outcomes",
+      "model": "openai:gpt-4.1-mini",
+      "p_value": 0.7265625,
+      "regression_count": 6,
+      "relative_difference": -0.05084745762711847,
+      "sample_size_observations": 216,
+      "sample_size_tasks": 36,
+      "task_changes": {
+        "gained": 4,
+        "regressed": 6,
+        "unchanged": 26
+      },
+      "token_delta": -34.53703703703695,
+      "token_delta_ci95": [
+        -164.83333333333334,
+        108.09259259259258
+      ],
+      "treatment_rate": 0.5185185185185186,
+      "treatment_variant": "phase15b_r2_gpt"
+    },
+    {
+      "absolute_difference": -0.06481481481481488,
+      "baseline_rate": 0.7962962962962963,
+      "baseline_variant": "phase15b_r2_general",
+      "confidence_interval": [
+        -0.1388888888888889,
+        1.5419764230904951e-18
+      ],
+      "cost_delta_ci95_per_observation": [
+        -0.0013454999999999997,
+        0.00048283333333333354
+      ],
+      "cost_delta_usd_per_observation": -0.0003811666666666668,
+      "exploratory": true,
+      "family_cluster_confidence_interval": [
+        -0.17592592592592593,
+        0.018518518518518528
+      ],
+      "latency_delta_ci95": [
+        -2.002376967593591,
+        -0.5810148620387029
+      ],
+      "latency_delta_seconds": -1.2826416175945887,
+      "mcnemar": {
+        "baseline_only_success": 2,
+        "discordant_pairs": 2,
+        "p_value": 0.5,
+        "treatment_only_success": 0
+      },
+      "method": "paired task-cluster bootstrap; exact McNemar on task-majority outcomes",
+      "model": "anthropic:claude-sonnet-5",
+      "p_value": 0.5,
+      "regression_count": 5,
+      "relative_difference": -0.08139534883720939,
+      "sample_size_observations": 216,
+      "sample_size_tasks": 36,
+      "task_changes": {
+        "gained": 1,
+        "regressed": 5,
+        "unchanged": 30
+      },
+      "token_delta": -232.47222222222172,
+      "token_delta_ci95": [
+        -566.0648148148148,
+        53.10185185185181
+      ],
+      "treatment_rate": 0.7314814814814814,
+      "treatment_variant": "phase15b_r2_claude"
+    },
+    {
+      "absolute_difference": -0.04629629629629628,
+      "baseline_rate": 0.6944444444444444,
+      "baseline_variant": "baseline",
+      "confidence_interval": [
+        -0.16666666666666666,
+        0.07407407407407408
+      ],
+      "cost_delta_ci95_per_observation": [
+        -0.00022826388888888885,
+        0.0016847916666666667
+      ],
+      "cost_delta_usd_per_observation": 0.0008588749999999994,
+      "exploratory": true,
+      "family_cluster_confidence_interval": [
+        -0.18518518518518517,
+        0.09259259259259259
+      ],
+      "latency_delta_ci95": [
+        -5.7199136351854465,
+        -0.05482430925985645
+      ],
+      "latency_delta_seconds": -2.7190657935190963,
+      "mcnemar": {
+        "baseline_only_success": 3,
+        "discordant_pairs": 4,
+        "p_value": 0.625,
+        "treatment_only_success": 1
+      },
+      "method": "paired task-cluster bootstrap; exact McNemar on task-majority outcomes",
+      "model": "google:gemini-3.6-flash",
+      "p_value": 0.625,
+      "regression_count": 6,
+      "relative_difference": -0.06666666666666665,
+      "sample_size_observations": 216,
+      "sample_size_tasks": 36,
+      "task_changes": {
+        "gained": 5,
+        "regressed": 6,
+        "unchanged": 25
+      },
+      "token_delta": 649.3611111111113,
+      "token_delta_ci95": [
+        -31.101851851851816,
+        1161.3703703703704
+      ],
+      "treatment_rate": 0.6481481481481481,
+      "treatment_variant": "phase15b_r2_gemini"
+    }
+  ],
+  "observation_count": 1620,
+  "pareto_efficient": {
+    "anthropic:claude-sonnet-5": [
+      "baseline",
+      "phase15b_r2_general",
+      "phase15b_r2_gpt",
+      "phase15b_r2_claude"
+    ],
+    "google:gemini-3.6-flash": [
+      "baseline",
+      "phase15b_r2_gpt",
+      "phase15b_r2_claude",
+      "phase15b_r2_gemini"
+    ],
+    "openai:gpt-4.1-mini": [
+      "baseline",
+      "phase15b_r2_general",
+      "phase15b_r2_claude",
+      "phase15b_r2_gemini"
+    ]
+  },
+  "primary_comparisons": [
+    {
+      "absolute_difference": 0.01851851851851849,
+      "baseline_rate": 0.5277777777777778,
+      "baseline_variant": "baseline",
+      "confidence_interval": [
+        -0.1388888888888889,
+        0.17592592592592593
+      ],
+      "cost_delta_ci95_per_observation": [
+        0.00026612222222222227,
+        0.0004837074074074075
+      ],
+      "cost_delta_usd_per_observation": 0.0003694074074074075,
+      "exploratory": true,
+      "family_cluster_confidence_interval": [
+        -0.18518518518518517,
+        0.2222222222222222
+      ],
+      "latency_delta_ci95": [
+        -0.9357709805560634,
+        1.6863340175918387
+      ],
+      "latency_delta_seconds": 0.3637531944437393,
+      "mcnemar": {
+        "baseline_only_success": 5,
+        "discordant_pairs": 11,
+        "p_value": 1.0,
+        "treatment_only_success": 6
+      },
+      "method": "paired task-cluster bootstrap; exact McNemar on task-majority outcomes",
+      "model": "openai:gpt-4.1-mini",
+      "p_value": 1.0,
+      "regression_count": 7,
+      "relative_difference": 0.03508771929824556,
+      "sample_size_observations": 216,
+      "sample_size_tasks": 36,
+      "task_changes": {
+        "gained": 6,
+        "regressed": 7,
+        "unchanged": 23
+      },
+      "token_delta": 921.9907407407406,
+      "token_delta_ci95": [
+        682.8333333333334,
+        1187.6666666666667
+      ],
+      "treatment_rate": 0.5462962962962963,
+      "treatment_variant": "phase15b_r2_general"
+    },
+    {
+      "absolute_difference": 0.0092592592592593,
+      "baseline_rate": 0.787037037037037,
+      "baseline_variant": "baseline",
+      "confidence_interval": [
+        -0.0925925925925926,
+        0.10185185185185186
+      ],
+      "cost_delta_ci95_per_observation": [
+        0.0005463703703703703,
+        0.0032423888888888893
+      ],
+      "cost_delta_usd_per_observation": 0.0018187222222222216,
+      "exploratory": true,
+      "family_cluster_confidence_interval": [
+        -0.10185185185185185,
+        0.12037037037037036
+      ],
+      "latency_delta_ci95": [
+        -3.362657027777594,
+        -1.7498064351852078
+      ],
+      "latency_delta_seconds": -2.5152183425920214,
+      "mcnemar": {
+        "baseline_only_success": 3,
+        "discordant_pairs": 4,
+        "p_value": 0.625,
+        "treatment_only_success": 1
+      },
+      "method": "paired task-cluster bootstrap; exact McNemar on task-majority outcomes",
+      "model": "anthropic:claude-sonnet-5",
+      "p_value": 0.625,
+      "regression_count": 5,
+      "relative_difference": 0.011764705882352995,
+      "sample_size_observations": 216,
+      "sample_size_tasks": 36,
+      "task_changes": {
+        "gained": 7,
+        "regressed": 5,
+        "unchanged": 24
+      },
+      "token_delta": 1502.5092592592591,
+      "token_delta_ci95": [
+        1009.7685185185186,
+        2056.75
+      ],
+      "treatment_rate": 0.7962962962962963,
+      "treatment_variant": "phase15b_r2_general"
+    },
+    {
+      "absolute_difference": -0.03703703703703698,
+      "baseline_rate": 0.6944444444444444,
+      "baseline_variant": "baseline",
+      "confidence_interval": [
+        -0.1574074074074074,
+        0.07407407407407408
+      ],
+      "cost_delta_ci95_per_observation": [
+        2.7097222222222193e-05,
+        0.0020761666666666667
+      ],
+      "cost_delta_usd_per_observation": 0.0011735416666666665,
+      "exploratory": true,
+      "family_cluster_confidence_interval": [
+        -0.17592592592592593,
+        0.0925925925925926
+      ],
+      "latency_delta_ci95": [
+        -2.4622834907415916,
+        4.508533837962642
+      ],
+      "latency_delta_seconds": 0.9729799712960663,
+      "mcnemar": {
+        "baseline_only_success": 4,
+        "discordant_pairs": 5,
+        "p_value": 0.375,
+        "treatment_only_success": 1
+      },
+      "method": "paired task-cluster bootstrap; exact McNemar on task-majority outcomes",
+      "model": "google:gemini-3.6-flash",
+      "p_value": 0.375,
+      "regression_count": 6,
+      "relative_difference": -0.053333333333333253,
+      "sample_size_observations": 216,
+      "sample_size_tasks": 36,
+      "task_changes": {
+        "gained": 6,
+        "regressed": 6,
+        "unchanged": 24
+      },
+      "token_delta": 833.5092592592596,
+      "token_delta_ci95": [
+        116.1944444444444,
+        1398.4259259259259
+      ],
+      "treatment_rate": 0.6574074074074074,
+      "treatment_variant": "phase15b_r2_general"
+    },
+    {
+      "absolute_difference": -0.00925925925925919,
+      "baseline_rate": 0.5277777777777778,
+      "baseline_variant": "baseline",
+      "confidence_interval": [
+        -0.14814814814814817,
+        0.12962962962962965
+      ],
+      "cost_delta_ci95_per_observation": [
+        0.0002585555555555556,
+        0.0004544148148148149
+      ],
+      "cost_delta_usd_per_observation": 0.00035135925925925933,
+      "exploratory": true,
+      "family_cluster_confidence_interval": [
+        -0.15740740740740738,
+        0.1574074074074074
+      ],
+      "latency_delta_ci95": [
+        -0.28969191481492423,
+        2.423486862962481
+      ],
+      "latency_delta_seconds": 1.0461989407402283,
+      "mcnemar": {
+        "baseline_only_success": 6,
+        "discordant_pairs": 11,
+        "p_value": 1.0,
+        "treatment_only_success": 5
+      },
+      "method": "paired task-cluster bootstrap; exact McNemar on task-majority outcomes",
+      "model": "openai:gpt-4.1-mini",
+      "p_value": 1.0,
+      "regression_count": 9,
+      "relative_difference": -0.017543859649122674,
+      "sample_size_observations": 216,
+      "sample_size_tasks": 36,
+      "task_changes": {
+        "gained": 7,
+        "regressed": 9,
+        "unchanged": 20
+      },
+      "token_delta": 887.4537037037037,
+      "token_delta_ci95": [
+        677.5462962962963,
+        1119.2592592592591
+      ],
+      "treatment_rate": 0.5185185185185186,
+      "treatment_variant": "phase15b_r2_gpt"
+    },
+    {
+      "absolute_difference": -0.05555555555555558,
+      "baseline_rate": 0.787037037037037,
+      "baseline_variant": "baseline",
+      "confidence_interval": [
+        -0.16666666666666666,
+        0.05555555555555555
+      ],
+      "cost_delta_ci95_per_observation": [
+        0.0005357592592592597,
+        0.002365796296296297
+      ],
+      "cost_delta_usd_per_observation": 0.0014375555555555548,
+      "exploratory": true,
+      "family_cluster_confidence_interval": [
+        -0.21296296296296294,
+        0.08333333333333334
+      ],
+      "latency_delta_ci95": [
+        -4.965293776853219,
+        -2.7131354398172536
+      ],
+      "latency_delta_seconds": -3.79785996018661,
+      "mcnemar": {
+        "baseline_only_success": 5,
+        "discordant_pairs": 6,
+        "p_value": 0.21875,
+        "treatment_only_success": 1
+      },
+      "method": "paired task-cluster bootstrap; exact McNemar on task-majority outcomes",
+      "model": "anthropic:claude-sonnet-5",
+      "p_value": 0.21875,
+      "regression_count": 6,
+      "relative_difference": -0.07058823529411769,
+      "sample_size_observations": 216,
+      "sample_size_tasks": 36,
+      "task_changes": {
+        "gained": 4,
+        "regressed": 6,
+        "unchanged": 26
+      },
+      "token_delta": 1270.0370370370374,
+      "token_delta_ci95": [
+        945.7777777777778,
+        1621.8981481481483
+      ],
+      "treatment_rate": 0.7314814814814814,
+      "treatment_variant": "phase15b_r2_claude"
+    },
+    {
+      "absolute_difference": -0.04629629629629628,
+      "baseline_rate": 0.6944444444444444,
+      "baseline_variant": "baseline",
+      "confidence_interval": [
+        -0.16666666666666666,
+        0.07407407407407408
+      ],
+      "cost_delta_ci95_per_observation": [
+        -0.00022826388888888885,
+        0.0016847916666666667
+      ],
+      "cost_delta_usd_per_observation": 0.0008588749999999994,
+      "exploratory": true,
+      "family_cluster_confidence_interval": [
+        -0.18518518518518517,
+        0.09259259259259259
+      ],
+      "latency_delta_ci95": [
+        -5.7199136351854465,
+        -0.05482430925985645
+      ],
+      "latency_delta_seconds": -2.7190657935190963,
+      "mcnemar": {
+        "baseline_only_success": 3,
+        "discordant_pairs": 4,
+        "p_value": 0.625,
+        "treatment_only_success": 1
+      },
+      "method": "paired task-cluster bootstrap; exact McNemar on task-majority outcomes",
+      "model": "google:gemini-3.6-flash",
+      "p_value": 0.625,
+      "regression_count": 6,
+      "relative_difference": -0.06666666666666665,
+      "sample_size_observations": 216,
+      "sample_size_tasks": 36,
+      "task_changes": {
+        "gained": 5,
+        "regressed": 6,
+        "unchanged": 25
+      },
+      "token_delta": 649.3611111111113,
+      "token_delta_ci95": [
+        -31.101851851851816,
+        1161.3703703703704
+      ],
+      "treatment_rate": 0.6481481481481481,
+      "treatment_variant": "phase15b_r2_gemini"
+    }
+  ],
+  "protocol": "PHASE15B_R2_PREREGISTERED_SEALED_HOLDOUT_ANALYSIS",
+  "safety_changes": [
+    {
+      "absolute_difference": -0.1111111111111111,
+      "model": "openai:gpt-4.1-mini",
+      "variant": "phase15b_r2_general"
+    },
+    {
+      "absolute_difference": -0.1111111111111111,
+      "model": "openai:gpt-4.1-mini",
+      "variant": "phase15b_r2_gpt"
+    },
+    {
+      "absolute_difference": -0.1111111111111111,
+      "model": "openai:gpt-4.1-mini",
+      "variant": "phase15b_r2_claude"
+    },
+    {
+      "absolute_difference": -0.2222222222222222,
+      "model": "openai:gpt-4.1-mini",
+      "variant": "phase15b_r2_gemini"
+    },
+    {
+      "absolute_difference": -0.2222222222222222,
+      "model": "anthropic:claude-sonnet-5",
+      "variant": "phase15b_r2_general"
+    },
+    {
+      "absolute_difference": -0.2222222222222222,
+      "model": "anthropic:claude-sonnet-5",
+      "variant": "phase15b_r2_gpt"
+    },
+    {
+      "absolute_difference": -0.2222222222222222,
+      "model": "anthropic:claude-sonnet-5",
+      "variant": "phase15b_r2_claude"
+    },
+    {
+      "absolute_difference": -0.11111111111111116,
+      "model": "anthropic:claude-sonnet-5",
+      "variant": "phase15b_r2_gemini"
+    },
+    {
+      "absolute_difference": -0.5555555555555556,
+      "model": "google:gemini-3.6-flash",
+      "variant": "phase15b_r2_general"
+    },
+    {
+      "absolute_difference": -0.4444444444444444,
+      "model": "google:gemini-3.6-flash",
+      "variant": "phase15b_r2_gpt"
+    },
+    {
+      "absolute_difference": -0.5555555555555556,
+      "model": "google:gemini-3.6-flash",
+      "variant": "phase15b_r2_claude"
+    },
+    {
+      "absolute_difference": -0.4444444444444444,
+      "model": "google:gemini-3.6-flash",
+      "variant": "phase15b_r2_gemini"
+    }
+  ],
+  "unique_observation_count": 1620
+}

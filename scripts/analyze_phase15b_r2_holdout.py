@@ -30,6 +30,7 @@ from sqlalchemy.orm import selectinload
 ROOT = Path(__file__).resolve().parents[1]
 R2_ROOT = ROOT / "artifacts" / "phase15b_r2"
 OUTPUT_ROOT = R2_ROOT / "sealed_holdout_results"
+EXECUTION_STATE_PATH = R2_ROOT / "sealed_holdout_runtime" / "execution_state.json"
 VARIANTS = (
     "baseline",
     "phase15b_r2_general",
@@ -392,15 +393,15 @@ def _report(analysis: dict[str, Any]) -> str:
             "",
             "## Explicit answers",
             "",
-            f"- Did V2-General outperform V0 on unseen task families? {q['general']} ",
-            f"- Did V2-GPT outperform V0 for GPT? {q['gpt']} ",
-            f"- Did V2-Claude outperform V0 for Claude? {q['claude']} ",
-            f"- Did V2-Gemini outperform V0 for Gemini? {q['gemini']} ",
-            f"- Did each model-specific interface outperform V2-General for its intended model? {q['specific_over_general']} ",
-            f"- How well did model-specific interfaces transfer? {q['transfer']} ",
-            f"- Is there credible evidence of different interface optima by model family? {q['different_optima']} ",
-            f"- Were reliability improvements worth token/cost/latency changes? {q['efficiency']} ",
-            f"- Did optimized interfaces introduce safety regressions? {q['safety']} ",
+            f"- Did V2-General outperform V0 on unseen task families? {q['general']}",
+            f"- Did V2-GPT outperform V0 for GPT? {q['gpt']}",
+            f"- Did V2-Claude outperform V0 for Claude? {q['claude']}",
+            f"- Did V2-Gemini outperform V0 for Gemini? {q['gemini']}",
+            f"- Did each model-specific interface outperform V2-General for its intended model? {q['specific_over_general']}",
+            f"- How well did model-specific interfaces transfer? {q['transfer']}",
+            f"- Is there credible evidence of different interface optima by model family? {q['different_optima']}",
+            f"- Were reliability improvements worth token/cost/latency changes? {q['efficiency']}",
+            f"- Did optimized interfaces introduce safety regressions? {q['safety']}",
             "",
             "## Conclusion",
             "",
@@ -583,6 +584,27 @@ def main() -> None:
     report = _report(analysis)
     (OUTPUT_ROOT / "report.md").write_text(report, encoding="utf-8")
     (ROOT / "docs" / "phase15b_r2_sealed_holdout_results.md").write_text(report, encoding="utf-8")
+    runtime_state = json.loads(EXECUTION_STATE_PATH.read_text(encoding="utf-8"))
+    execution_summary = {
+        "protocol": runtime_state["protocol"],
+        "experiment_id": runtime_state["experiment_id"],
+        "status": runtime_state["status"],
+        "created_at": runtime_state["created_at"],
+        "completed_at": runtime_state.get("completed_at"),
+        "verification": runtime_state["verification"],
+        "provider_credit_preflight": [
+            {"model": row["model"], "status": row["status"]}
+            for row in runtime_state["credit_preflight"]["providers"]
+        ],
+        "launches": runtime_state["launches"],
+        "completed_observations": len(rows),
+        "unique_observations": len(unique_keys),
+        "actual_cost_usd": sum(row["cost_usd"] for row in rows),
+        "outcomes_inspected_before_completion": False,
+    }
+    (OUTPUT_ROOT / "execution_summary.json").write_text(
+        json.dumps(execution_summary, indent=2, sort_keys=True), encoding="utf-8"
+    )
     reproducibility = {
         "experiment_id": args.experiment_id,
         "database": str(
@@ -593,7 +615,7 @@ def main() -> None:
         "holdout_manifest": "artifacts/phase15b_r2/frozen_benchmark/holdout_manifest.json",
         "interface_manifest": "artifacts/phase15b_r2/frozen_interfaces/manifest.json",
         "preregistration": "artifacts/phase15b_r2/preregistration.json",
-        "execution_state": "artifacts/phase15b_r2/sealed_holdout_runtime/execution_state.json",
+        "execution_summary": "artifacts/phase15b_r2/sealed_holdout_results/execution_summary.json",
         "analysis_script": "scripts/analyze_phase15b_r2_holdout.py",
         "raw_rows": 1620,
         "raw_dataset_sha256": __import__("hashlib")
