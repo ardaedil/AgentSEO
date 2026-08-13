@@ -292,17 +292,22 @@ def verify_frozen_state(*, allow_existing_holdout: bool) -> dict[str, Any]:
 
 
 def _classify_exception(exc: Exception) -> str:
-    if isinstance(exc, httpx.HTTPStatusError):
-        status = exc.response.status_code
-        body = exc.response.text.lower()
-        credit_markers = ("credit", "billing", "insufficient", "quota exceeded")
-        if status == 402 or any(marker in body for marker in credit_markers):
-            return "CREDIT_EXHAUSTED"
-        if status == 429 or status >= 500:
+    current: BaseException | None = exc
+    visited: set[int] = set()
+    while current is not None and id(current) not in visited:
+        visited.add(id(current))
+        if isinstance(current, httpx.HTTPStatusError):
+            status = current.response.status_code
+            body = current.response.text.lower()
+            credit_markers = ("credit", "billing", "insufficient", "quota exceeded")
+            if status == 402 or any(marker in body for marker in credit_markers):
+                return "CREDIT_EXHAUSTED"
+            if status == 429 or status >= 500:
+                return "TRANSIENT_PROVIDER_ERROR"
+            return "NONRETRYABLE_PROVIDER_ERROR"
+        if isinstance(current, (httpx.TimeoutException, httpx.NetworkError)):
             return "TRANSIENT_PROVIDER_ERROR"
-        return "NONRETRYABLE_PROVIDER_ERROR"
-    if isinstance(exc, (httpx.TimeoutException, httpx.NetworkError)):
-        return "TRANSIENT_PROVIDER_ERROR"
+        current = current.__cause__ or current.__context__
     return "INFRASTRUCTURE_ERROR"
 
 
