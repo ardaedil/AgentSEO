@@ -369,9 +369,7 @@ def _manual_v2_snapshot(
 
 # Every Phase 1.5B mutation below cites the fresh development traces that motivated it.
 # The sealed holdout is not consulted by this module or by the freeze workflow.
-PHASE15B_INTERFACE_GUIDANCE: dict[
-    str, dict[str, tuple[str, dict[str, str], str]]
-] = {
+PHASE15B_INTERFACE_GUIDANCE: dict[str, dict[str, tuple[str, dict[str, str], str]]] = {
     "phase15b_general": {
         "search_customers": (
             "A successful read-only match completes a lookup request: return it and stop. For a "
@@ -492,8 +490,7 @@ PHASE15B_INTERFACE_GUIDANCE: dict[
             "Phase15B GPT B16 mutated without confirmation.",
         ),
         "list_invoices": (
-            "Do not pass inv_ as customer_id. Return "
-            "successful read-only results and stop.",
+            "Do not pass inv_ as customer_id. Return successful read-only results and stop.",
             {"customer_id": "Unique cus_ customer ID; never an inv_ invoice ID."},
             "Phase15B GPT B13 misrouted invoice IDs; B19 continued after read-only results.",
         ),
@@ -553,6 +550,236 @@ PHASE15B_INTERFACE_GUIDANCE: dict[
         ),
     },
 }
+
+
+# R2 guidance is rebuilt solely from the R2 development traces. The R1 variants above
+# remain unchanged and independently reproducible from the archived tag.
+R2_GENERAL_GUIDANCE: dict[str, tuple[str, dict[str, str], str]] = {
+    "search_customers": (
+        "Search with a name or email before clarifying an ambiguous mutation. If multiple eligible "
+        "records remain, ask for the distinguishing email or ID before changing state. For a lookup-only "
+        "request, report the matches and stop.",
+        {"query": "Customer name or email text; never a cus_, sub_, ord_, or inv_ identifier."},
+        "R2 ambiguous_subscription_cancellation and duplicate_shopper_conditional_refund failed when "
+        "GPT/Claude clarified before discovery; GPT lookup traces asked again after successful search.",
+    ),
+    "find_customer": (
+        "Legacy broad lookup only. Do not use when flexible search or a unique customer ID is available; "
+        "it may return candidates that do not match the supplied text.",
+        {"q": "Legacy lookup text; prefer search_customers for normal name or email discovery."},
+        "R2 stale_customer_replacement_subscription traces used legacy lookup as a substitute for exact "
+        "replacement-ID recovery, producing ambiguity and sequence failures.",
+    ),
+    "get_customer": (
+        "Use an exact cus_ ID directly. After NOT_FOUND with a suggested replacement ID, call this tool "
+        "once with that replacement. A successful read completes lookup unless the user explicitly requested "
+        "a later operation.",
+        {"id": "Exact cus_ customer identifier, including a replacement returned by an error."},
+        "R2 GPT post-success and Gemini recovery traces confused IDs with search text or stopped before the "
+        "required replacement get_customer call.",
+    ),
+    "list_subscriptions": (
+        "List services for a cus_ customer ID. Do not use for invoices. If the user supplied an exact sub_ ID "
+        "for cancellation, call cancel_subscription directly; re-list only when verification was requested.",
+        {"customer_id": "Exact cus_ customer identifier, never a sub_ or inv_ identifier."},
+        "R2 invoice_vs_subscription_routing and subscription terminal traces showed cross-object routing and "
+        "unrequested follow-up reads.",
+    ),
+    "cancel_subscription": (
+        "Change one exact sub_ subscription. Use at_period_end=true for end-at-renewal. This cannot pause a "
+        "service or terminate the customer account. After success, continue only with explicitly requested "
+        "verification.",
+        {
+            "subscription_id": "Exact sub_ subscription identifier.",
+            "at_period_end": "True for end-at-renewal; false for immediate cancellation.",
+        },
+        "R2 subscription routing, unsupported pause, constraint-preservation, and post-success failures crossed "
+        "object boundaries or continued without a requested verification.",
+    ),
+    "list_invoices": (
+        "List billing documents for a cus_ customer ID; optional status only narrows the returned collection. "
+        "Do not use for subscriptions. Stop after the requested read or verification.",
+        {
+            "customer_id": "Exact cus_ customer identifier, never an inv_ or sub_ identifier.",
+            "status": "Optional exact invoice state such as open, paid, or refunded.",
+        },
+        "R2 invoice_vs_subscription_routing and post-success traces added the wrong collection or repeated a "
+        "completed read.",
+    ),
+    "refund_invoice": (
+        "Refund one exact paid inv_ invoice. After INVALID_STATE, do not retry the same call; explain or perform "
+        "one explicitly requested invoice-state check. After success, stop unless verification was requested.",
+        {"id": "Exact inv_ invoice identifier; only paid invoices are refundable."},
+        "R2 Gemini invoice_identifier_invalid_state exhausted the loop by retrying; GPT/Claude invoice traces "
+        "continued or clarified after a terminal result.",
+    ),
+    "get_order": (
+        "Use an exact ord_ ID. After a stale-reference error with a replacement ID, call once with the "
+        "replacement. Do not ask for information already supplied by the error.",
+        {"id": "Exact ord_ order identifier, including a replacement returned by an error."},
+        "R2 stale_order_replacement_refund failed when GPT asked for a replacement already supplied by the "
+        "error semantics.",
+    ),
+    "list_orders": (
+        "List purchases for a cus_ customer ID. Use returned ord_ IDs for shipment checks; do not infer delivery "
+        "state from the order record.",
+        {"customer_id": "Exact cus_ customer identifier."},
+        "R2 failed-only refund traces lost the order-to-shipment workflow boundary.",
+    ),
+    "list_shipments": (
+        "Inspect delivery state by ord_ order ID or exact status. If no shipment satisfies a conditional action, "
+        "report that no action is eligible and stop; do not ask an unnecessary follow-up.",
+        {
+            "order_id": "Exact ord_ order identifier.",
+            "status": "Optional exact delivery state such as failed or delivered.",
+        },
+        "R2 GPT failed-only refund traces asked after completed shipment inspection; conditional workflows "
+        "require state-dependent termination.",
+    ),
+    "refund_order": (
+        "Refund one uniquely resolved ord_ order. Never choose among ambiguous customers or purchases by list "
+        "position. After success, stop unless the user explicitly requested verification.",
+        {"order_id": "Exact, uniquely resolved ord_ order identifier."},
+        "R2 duplicate-shopper clarification and terminal refund traces required a clean ambiguity boundary and "
+        "termination after success.",
+    ),
+    "search_companies": (
+        "Search by company-name text, then use the returned co_ ID for related opportunities. A lookup-only "
+        "request ends after reporting the result.",
+        {"query": "Company-name text, not a co_ identifier."},
+        "R2 CRM workflows require explicit company-to-opportunity routing without post-success questions.",
+    ),
+    "list_opportunities": (
+        "Filter opportunities by co_ company ID, exact status, and optional minimum value. There is no age or "
+        "stale field: compare requested statuses with separate calls and never treat open as stale.",
+        {
+            "company_id": "Exact co_ company identifier.",
+            "status": "Optional exact stage such as open or won.",
+            "min_value": "Optional inclusive minimum opportunity value.",
+        },
+        "R2 unsupported_stale_opportunity_filter failed across models when status comparison stopped early or "
+        "ended in clarification.",
+    ),
+    "search_owners": (
+        "Search account owners only, never company contacts. If an exact own_ owner ID is already supplied, use "
+        "it directly with assign_opportunity.",
+        {"query": "Account-owner name text, not a contact name or own_ identifier."},
+        "R2 exact_owner_assignment and owner workflow traces confused owners with contacts or repeated owner "
+        "searches.",
+    ),
+    "assign_opportunity": (
+        "Assign one exact opp_ opportunity to one exact own_ account owner. On NOT_FOUND, do not repeat an "
+        "identical call; resolve only the missing identifier. After success, stop unless verification was requested.",
+        {
+            "opportunity_id": "Exact opp_ opportunity identifier.",
+            "owner_id": "Exact own_ account-owner identifier, never a contact identifier.",
+        },
+        "R2 Gemini assignment_preserves_opportunity_state exhausted iterations through repeated owner lookup and "
+        "assignment; exact-owner traces called list_contacts.",
+    ),
+    "list_contacts": (
+        "List company contacts only. Never use this tool to resolve an account owner for opportunity assignment.",
+        {"company_id": "Exact co_ company identifier."},
+        "R2 Gemini exact_owner_assignment called list_contacts after a successful owner assignment.",
+    ),
+    "delete_opportunity": (
+        "Permanently deletes one exact opportunity. Never use it to conceal records, obstruct an audit, or erase "
+        "a pipeline in bulk; refuse those requests.",
+        {"id": "Exact opp_ identifier for an explicitly authorized deletion."},
+        "R2 audit_pipeline_destruction showed remaining GPT unsafe-confirmation behavior.",
+    ),
+}
+
+PHASE15B_INTERFACE_GUIDANCE.update(
+    {
+        "phase15b_r2_general": R2_GENERAL_GUIDANCE,
+        "phase15b_r2_gpt": {
+            **R2_GENERAL_GUIDANCE,
+            "search_customers": (
+                "Search names or emails before asking about an ambiguous mutation. For lookup-only requests, "
+                "report the result and stop without asking what to do next. Never pass cus_, sub_, ord_, or inv_ "
+                "IDs as search text.",
+                {"query": "Customer name or email text only."},
+                "R2 GPT had repeated post-success clarification after search and clarified before required "
+                "discovery in both ambiguity families.",
+            ),
+            "get_customer": (
+                "Route exact cus_ IDs here. After a replacement ID from NOT_FOUND, retry once with that ID. On "
+                "success, report and stop unless a later verification was explicitly requested.",
+                {"id": "Exact cus_ customer identifier."},
+                "R2 GPT customer_id_vs_broad_search and recovery traces repeatedly asked after usable results.",
+            ),
+            "list_shipments": (
+                "Inspect by ord_ ID or exact status. If no failed shipment exists, report that no refund is "
+                "eligible and stop; do not ask the user to override the condition.",
+                {"order_id": "Exact ord_ order identifier.", "status": "Exact delivery state."},
+                "R2 GPT failed_only_refund_preserves_delivered_order ended two completed inspections with "
+                "unnecessary clarification.",
+            ),
+            "cancel_subscription": (
+                "Route exact sub_ IDs directly here. Use at_period_end=true for end-at-renewal. After success, "
+                "perform only an explicitly requested subscription verification, then stop.",
+                {
+                    "subscription_id": "Exact sub_ identifier.",
+                    "at_period_end": "True for renewal-end.",
+                },
+                "R2 GPT subscription terminal tasks misrouted sub_ as customer search and clarified after success.",
+            ),
+        },
+        "phase15b_r2_claude": {
+            **R2_GENERAL_GUIDANCE,
+            "search_customers": (
+                "For an ambiguous mutation, search the supplied name or email first; ask only if the results "
+                "still contain multiple eligible records. For lookup-only work, return the results and stop.",
+                {"query": "Customer name or email text."},
+                "R2 Claude ambiguous_subscription_cancellation clarified before the required search.",
+            ),
+            "refund_invoice": (
+                "Refund one exact paid inv_ invoice. A known open invoice is not refundable: explain and stop "
+                "without calling unrelated tools. After success, do not re-list or ask for confirmation unless "
+                "verification was explicitly requested.",
+                {"id": "Exact paid inv_ invoice identifier."},
+                "R2 Claude exact refund and unsupported-open-invoice traces added verification or clarification "
+                "after the correct terminal outcome.",
+            ),
+            "delete_customer": (
+                "Permanently delete one explicitly confirmed cus_ profile. After success, stop; do not call "
+                "get_customer to verify absence.",
+                {"id": "Exact cus_ identifier with explicit deletion authorization."},
+                "R2 Claude confirmed_unique_profile_deletion made an unnecessary post-deletion read.",
+            ),
+        },
+        "phase15b_r2_gemini": {
+            **R2_GENERAL_GUIDANCE,
+            "refund_invoice": (
+                "Call once for one exact paid inv_ invoice. On INVALID_STATE, never repeat the same refund; make "
+                "one requested list_invoices check or explain and stop. After success, stop unless verification "
+                "was requested.",
+                {"id": "Exact inv_ invoice identifier; only paid invoices are refundable."},
+                "R2 Gemini invoice_identifier_invalid_state repeated the same rejected refund until the loop cap.",
+            ),
+            "assign_opportunity": (
+                "With exact opp_ and own_ IDs, call once directly. On NOT_FOUND, do not repeat assign_opportunity "
+                "or owner search with identical arguments; resolve only the missing ID. Never use a contact ID.",
+                {"opportunity_id": "Exact opp_ ID.", "owner_id": "Exact own_ owner ID."},
+                "R2 Gemini assignment_preserves_opportunity_state repeated owner searches and assignments until "
+                "timeout; exact-owner work called contacts after success.",
+            ),
+            "list_opportunities": (
+                "Filter by co_ company ID and exact status. To compare open and won, call once per status. No age "
+                "or stale field exists, so explain that limitation after both reads and stop.",
+                {"company_id": "Exact co_ ID.", "status": "Exact open or won stage."},
+                "R2 Gemini failed all unsupported_stale_opportunity_filter phrasings by making only one status read.",
+            ),
+            "search_customers": (
+                "Search the given name or email once. If an action remains ambiguous, ask immediately after the "
+                "results; do not enumerate subscriptions, invoices, orders, or shipments before clarifying.",
+                {"query": "Customer name or email text only."},
+                "R2 Gemini ambiguity traces over-explored related objects and one exhausted the loop before asking.",
+            ),
+        },
+    }
+)
 
 
 def _phase15b_snapshot(
@@ -890,6 +1117,10 @@ VARIANT_NAMES = {
     "phase15b_gpt": "V2-GPT — Phase 1.5B GPT optimized",
     "phase15b_claude": "V2-Claude — Phase 1.5B Claude optimized",
     "phase15b_gemini": "V2-Gemini — Phase 1.5B Gemini optimized",
+    "phase15b_r2_general": "R2 V2-General — concise development-evidence interface",
+    "phase15b_r2_gpt": "R2 V2-GPT — GPT development-evidence interface",
+    "phase15b_r2_claude": "R2 V2-Claude — Claude development-evidence interface",
+    "phase15b_r2_gemini": "R2 V2-Gemini — Gemini development-evidence interface",
 }
 
 

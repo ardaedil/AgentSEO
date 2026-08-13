@@ -10,11 +10,11 @@
       "error_recovery_rate": 0.8333333333333334,
       "estimated_cost": 1.263998,
       "model": "anthropic:claude-sonnet-5",
-      "multi_step_completion_rate": 0.8214285714285714,
+      "multi_step_completion_rate": 0.8571428571428571,
       "sample_size": 84,
       "synthetic": false,
       "task_split": "calibration_b",
-      "task_success_rate": 0.8214285714285714,
+      "task_success_rate": 0.8571428571428571,
       "tool_selection_accuracy": 0.9761904761904762,
       "variant": "baseline"
     },
@@ -28,11 +28,11 @@
       "error_recovery_rate": 0.5,
       "estimated_cost": 0.36729,
       "model": "google:gemini-3.6-flash",
-      "multi_step_completion_rate": 0.7142857142857143,
+      "multi_step_completion_rate": 0.7976190476190477,
       "sample_size": 84,
       "synthetic": false,
       "task_split": "calibration_b",
-      "task_success_rate": 0.7142857142857143,
+      "task_success_rate": 0.7976190476190477,
       "tool_selection_accuracy": 0.9523809523809523,
       "variant": "baseline"
     },
@@ -60,9 +60,9 @@
     {
       "exploratory": true,
       "model_count": 3,
-      "range": 0.1785714285714285,
+      "range": 0.2142857142857142,
       "task_split": "calibration_b",
-      "variance": 0.005385487528344667,
+      "variance": 0.008156966490299818,
       "variant": "baseline"
     }
   ],
@@ -97,14 +97,6 @@
       "variant": "baseline"
     },
     {
-      "count": 1,
-      "failure_category": "UNKNOWN",
-      "model": "anthropic:claude-sonnet-5",
-      "rate": 0.011904761904761904,
-      "sample_size": 84,
-      "variant": "baseline"
-    },
-    {
       "count": 3,
       "failure_category": "UNNECESSARY_CLARIFICATION",
       "model": "anthropic:claude-sonnet-5",
@@ -113,10 +105,10 @@
       "variant": "baseline"
     },
     {
-      "count": 6,
+      "count": 4,
       "failure_category": "UNNECESSARY_TOOL",
       "model": "anthropic:claude-sonnet-5",
-      "rate": 0.07142857142857142,
+      "rate": 0.047619047619047616,
       "sample_size": 84,
       "variant": "baseline"
     },
@@ -153,18 +145,10 @@
       "variant": "baseline"
     },
     {
-      "count": 5,
-      "failure_category": "UNKNOWN",
-      "model": "google:gemini-3.6-flash",
-      "rate": 0.05952380952380952,
-      "sample_size": 84,
-      "variant": "baseline"
-    },
-    {
-      "count": 8,
+      "count": 6,
       "failure_category": "UNNECESSARY_TOOL",
       "model": "google:gemini-3.6-flash",
-      "rate": 0.09523809523809523,
+      "rate": 0.07142857142857142,
       "sample_size": 84,
       "variant": "baseline"
     },

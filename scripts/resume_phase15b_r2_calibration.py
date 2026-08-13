@@ -56,7 +56,9 @@ def _summary_rows(session: Any, experiment_id: str) -> list[dict[str, Any]]:
             )
             / len(items),
             "category_success": {
-                category: sum(task_run.success for task_run, task in items if task.category == category)
+                category: sum(
+                    task_run.success for task_run, task in items if task.category == category
+                )
                 / sum(1 for _, task in items if task.category == category)
                 for category in sorted({task.category for _, task in items})
             },
@@ -97,7 +99,11 @@ async def main() -> None:
         else:
             raise RuntimeError("Interrupted experiment has no recoverable selected-task manifest")
         projects = list(session.scalars(select(Project).order_by(Project.sandbox_domain)))
-        interfaces = list(session.scalars(select(InterfaceVersion).where(InterfaceVersion.variant_key == "baseline")))
+        interfaces = list(
+            session.scalars(
+                select(InterfaceVersion).where(InterfaceVersion.variant_key == "baseline")
+            )
+        )
         by_project = {interface.project_id: interface for interface in interfaces}
         split_label = str(experiment.configuration["stage"]).lower()
         configuration = Phase15Configuration(
@@ -137,14 +143,20 @@ async def main() -> None:
                             label=f"{project.sandbox_domain}/{model}/baseline/{split_label}/1",
                         )
                     )
-        print(json.dumps({"event": "R2_CALIBRATION_RESUME", "missing_cells": [cell.label for cell in cells]}))
+        print(
+            json.dumps(
+                {"event": "R2_CALIBRATION_RESUME", "missing_cells": [cell.label for cell in cells]}
+            )
+        )
         failures: list[str] = []
         experiment.status = ExperimentStatus.RUNNING.value
         session.commit()
         for cell in cells:
             cell_failures: list[str] = []
             for attempt in range(1, 4):
-                cell_failures = await _execute_cells(session, experiment, [cell], configuration, settings)
+                cell_failures = await _execute_cells(
+                    session, experiment, [cell], configuration, settings
+                )
                 if not cell_failures:
                     break
                 for run in session.scalars(
@@ -158,13 +170,38 @@ async def main() -> None:
                     if run.status != "COMPLETED":
                         session.delete(run)
                 session.commit()
-                print(json.dumps({"event": "CELL_RETRY", "cell": cell.label, "attempt": attempt, "errors": cell_failures}))
+                print(
+                    json.dumps(
+                        {
+                            "event": "CELL_RETRY",
+                            "cell": cell.label,
+                            "attempt": attempt,
+                            "errors": cell_failures,
+                        }
+                    )
+                )
             failures.extend(cell_failures)
-        task_run_count = int(session.scalar(select(func.count(TaskRun.id)).where(TaskRun.experiment_id == experiment.id)) or 0)
+        task_run_count = int(
+            session.scalar(
+                select(func.count(TaskRun.id)).where(TaskRun.experiment_id == experiment.id)
+            )
+            or 0
+        )
         expected_runs = len(task_ids) * len(experiment.models)
-        experiment.actual_cost = float(session.scalar(select(func.coalesce(func.sum(TaskRun.cost_estimate), 0)).where(TaskRun.experiment_id == experiment.id)) or 0)
+        experiment.actual_cost = float(
+            session.scalar(
+                select(func.coalesce(func.sum(TaskRun.cost_estimate), 0)).where(
+                    TaskRun.experiment_id == experiment.id
+                )
+            )
+            or 0
+        )
         experiment.completed_at = now()
-        experiment.status = ExperimentStatus.COMPLETED.value if not failures and task_run_count == expected_runs else ExperimentStatus.FAILED.value
+        experiment.status = (
+            ExperimentStatus.COMPLETED.value
+            if not failures and task_run_count == expected_runs
+            else ExperimentStatus.FAILED.value
+        )
         experiment.notes = "\n".join(failures)
         summary = {
             **experiment.manifest,
@@ -185,9 +222,15 @@ async def main() -> None:
         experiment.manifest = summary
         session.commit()
         export_experiment_dataset(session, experiment, output_root / "data")
-        analysis = analyze_experiment(session, experiment, bootstrap_samples=settings.phase15_bootstrap_samples)
-        (output_root / "analysis.json").write_text(json.dumps(analysis, indent=2, sort_keys=True), encoding="utf-8")
-        (output_root / "summary.json").write_text(json.dumps(summary, indent=2, sort_keys=True), encoding="utf-8")
+        analysis = analyze_experiment(
+            session, experiment, bootstrap_samples=settings.phase15_bootstrap_samples
+        )
+        (output_root / "analysis.json").write_text(
+            json.dumps(analysis, indent=2, sort_keys=True), encoding="utf-8"
+        )
+        (output_root / "summary.json").write_text(
+            json.dumps(summary, indent=2, sort_keys=True), encoding="utf-8"
+        )
         print(json.dumps(summary, sort_keys=True))
 
 

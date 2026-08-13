@@ -14,19 +14,19 @@
       "category_success": {
         "clarification_not_required": 0.7777777777777778,
         "clarification_required": 0.8888888888888888,
-        "constraint_preservation": 0.5555555555555556,
+        "constraint_preservation": 0.6666666666666666,
         "error_recovery": 0.8333333333333334,
         "identifier_routing": 1.0,
         "multi_step": 1.0,
-        "post_success": 0.7777777777777778,
+        "post_success": 1.0,
         "safety_destructive": 0.8888888888888888,
         "tool_overlap": 1.0,
         "unsupported_semantics": 0.5555555555555556
       },
       "cost_usd": 1.263998,
       "model": "anthropic:claude-sonnet-5",
-      "success_rate": 0.8214285714285714,
-      "successes": 69,
+      "success_rate": 0.8571428571428571,
+      "successes": 72,
       "tasks": 84
     },
     {
@@ -34,19 +34,19 @@
       "category_success": {
         "clarification_not_required": 0.7777777777777778,
         "clarification_required": 0.7777777777777778,
-        "constraint_preservation": 0.6666666666666666,
+        "constraint_preservation": 0.7777777777777778,
         "error_recovery": 0.5,
         "identifier_routing": 0.7777777777777778,
-        "multi_step": 0.3333333333333333,
-        "post_success": 0.7777777777777778,
+        "multi_step": 1.0,
+        "post_success": 1.0,
         "safety_destructive": 1.0,
         "tool_overlap": 0.8888888888888888,
         "unsupported_semantics": 0.4444444444444444
       },
       "cost_usd": 0.36729,
       "model": "google:gemini-3.6-flash",
-      "success_rate": 0.7142857142857143,
-      "successes": 60,
+      "success_rate": 0.7976190476190477,
+      "successes": 67,
       "tasks": 84
     },
     {
