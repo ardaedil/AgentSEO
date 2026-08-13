@@ -1,0 +1,299 @@
+{
+  "freeze_manifest_sha256": "f469233071819519c76ab5410bbf888525302c9d601856b3b9d2a76e5616f3c3",
+  "holdout_task_runs_at_freeze": 0,
+  "immutable": true,
+  "interfaces": [
+    {
+      "complexity": {
+        "average_description_length": 43.333333333333336,
+        "max_semantic_overlap_jaccard": 0.23076923076923078,
+        "mean_semantic_overlap_jaccard": 0.05585903294236627,
+        "number_of_clarification_instructions": 0,
+        "number_of_examples": 1,
+        "number_of_negative_instructions": 1,
+        "number_of_recovery_instructions": 0,
+        "number_of_tools": 9,
+        "total_description_tokens": 58
+      },
+      "domain": "billing",
+      "interface_id": "238a607c-d263-49e3-a5e5-3332b636e627",
+      "snapshot_path": "artifacts/phase15b/frozen_interfaces/billing/baseline.json",
+      "snapshot_sha256": "dba68e89a058c7ea8730773c0327d80fa3ae9f3c1a4826ca7b2a683a5d95d699",
+      "variant_key": "baseline"
+    },
+    {
+      "complexity": {
+        "average_description_length": 135.11111111111111,
+        "max_semantic_overlap_jaccard": 0.23809523809523808,
+        "mean_semantic_overlap_jaccard": 0.0785289646090648,
+        "number_of_clarification_instructions": 4,
+        "number_of_examples": 1,
+        "number_of_negative_instructions": 2,
+        "number_of_recovery_instructions": 2,
+        "number_of_tools": 9,
+        "total_description_tokens": 171
+      },
+      "domain": "billing",
+      "interface_id": "6e581963-d699-416b-8109-58fe4ee42992",
+      "snapshot_path": "artifacts/phase15b/frozen_interfaces/billing/phase15b_general.json",
+      "snapshot_sha256": "d085d476fc38f64714ec39c63ef5f284e76fc4aab51a37fddbc07d80db322045",
+      "variant_key": "phase15b_general"
+    },
+    {
+      "complexity": {
+        "average_description_length": 118.11111111111111,
+        "max_semantic_overlap_jaccard": 0.25,
+        "mean_semantic_overlap_jaccard": 0.08010537161849923,
+        "number_of_clarification_instructions": 6,
+        "number_of_examples": 1,
+        "number_of_negative_instructions": 4,
+        "number_of_recovery_instructions": 2,
+        "number_of_tools": 9,
+        "total_description_tokens": 160
+      },
+      "domain": "billing",
+      "interface_id": "30f23f6c-fd2e-4703-baf7-8de49fee951a",
+      "snapshot_path": "artifacts/phase15b/frozen_interfaces/billing/phase15b_gpt.json",
+      "snapshot_sha256": "b9fc546833b8ba3cb6f47926fee60f64df04ffac73617d5c919bd057c9830d19",
+      "variant_key": "phase15b_gpt"
+    },
+    {
+      "complexity": {
+        "average_description_length": 60.333333333333336,
+        "max_semantic_overlap_jaccard": 0.23076923076923078,
+        "mean_semantic_overlap_jaccard": 0.05679620640109146,
+        "number_of_clarification_instructions": 1,
+        "number_of_examples": 1,
+        "number_of_negative_instructions": 1,
+        "number_of_recovery_instructions": 0,
+        "number_of_tools": 9,
+        "total_description_tokens": 80
+      },
+      "domain": "billing",
+      "interface_id": "18cf90c0-38fc-47f3-87e3-95c44c696e98",
+      "snapshot_path": "artifacts/phase15b/frozen_interfaces/billing/phase15b_claude.json",
+      "snapshot_sha256": "c9a3d49f80b98a4139bf11acfeb2cf442863cf8310a414566311d72240bfbb41",
+      "variant_key": "phase15b_claude"
+    },
+    {
+      "complexity": {
+        "average_description_length": 79.33333333333333,
+        "max_semantic_overlap_jaccard": 0.23076923076923078,
+        "mean_semantic_overlap_jaccard": 0.056624293677642004,
+        "number_of_clarification_instructions": 3,
+        "number_of_examples": 1,
+        "number_of_negative_instructions": 2,
+        "number_of_recovery_instructions": 3,
+        "number_of_tools": 9,
+        "total_description_tokens": 102
+      },
+      "domain": "billing",
+      "interface_id": "c77a5395-e114-468e-a5e8-96d15d86dfad",
+      "snapshot_path": "artifacts/phase15b/frozen_interfaces/billing/phase15b_gemini.json",
+      "snapshot_sha256": "dbc7f9a7366eff48aca319a4fb0b71a8dc1d671cd947ba9bdead0e65734f8c3a",
+      "variant_key": "phase15b_gemini"
+    },
+    {
+      "complexity": {
+        "average_description_length": 28.285714285714285,
+        "max_semantic_overlap_jaccard": 0.5,
+        "mean_semantic_overlap_jaccard": 0.057428021713736,
+        "number_of_clarification_instructions": 0,
+        "number_of_examples": 0,
+        "number_of_negative_instructions": 0,
+        "number_of_recovery_instructions": 0,
+        "number_of_tools": 7,
+        "total_description_tokens": 31
+      },
+      "domain": "crm",
+      "interface_id": "12c5cc51-c29b-444f-a36a-fb627d1fd7e5",
+      "snapshot_path": "artifacts/phase15b/frozen_interfaces/crm/baseline.json",
+      "snapshot_sha256": "250a18c09b261fc22fd02973bfbc8fc854ea7ba8d37a27c3b477ca893f3db0ea",
+      "variant_key": "baseline"
+    },
+    {
+      "complexity": {
+        "average_description_length": 64.28571428571429,
+        "max_semantic_overlap_jaccard": 0.5,
+        "mean_semantic_overlap_jaccard": 0.0628367497004607,
+        "number_of_clarification_instructions": 2,
+        "number_of_examples": 0,
+        "number_of_negative_instructions": 0,
+        "number_of_recovery_instructions": 0,
+        "number_of_tools": 7,
+        "total_description_tokens": 65
+      },
+      "domain": "crm",
+      "interface_id": "01d9e0bd-6696-4753-818b-c217d0ef609d",
+      "snapshot_path": "artifacts/phase15b/frozen_interfaces/crm/phase15b_general.json",
+      "snapshot_sha256": "c3398b9bd799b6a468dfc3045f5a6637006ee6056dc0ec28f55b7cda148ab26f",
+      "variant_key": "phase15b_general"
+    },
+    {
+      "complexity": {
+        "average_description_length": 102.42857142857143,
+        "max_semantic_overlap_jaccard": 0.2631578947368421,
+        "mean_semantic_overlap_jaccard": 0.08671521924952809,
+        "number_of_clarification_instructions": 1,
+        "number_of_examples": 0,
+        "number_of_negative_instructions": 1,
+        "number_of_recovery_instructions": 0,
+        "number_of_tools": 7,
+        "total_description_tokens": 107
+      },
+      "domain": "crm",
+      "interface_id": "f2d0ccd7-9097-41a6-81b4-ef922e48c2bc",
+      "snapshot_path": "artifacts/phase15b/frozen_interfaces/crm/phase15b_gpt.json",
+      "snapshot_sha256": "9af754c16a1a8edc92a598fd5ed1eee7fea2ca8b517919e0645f963c0963f1aa",
+      "variant_key": "phase15b_gpt"
+    },
+    {
+      "complexity": {
+        "average_description_length": 36.285714285714285,
+        "max_semantic_overlap_jaccard": 0.5,
+        "mean_semantic_overlap_jaccard": 0.054938136870909975,
+        "number_of_clarification_instructions": 0,
+        "number_of_examples": 0,
+        "number_of_negative_instructions": 0,
+        "number_of_recovery_instructions": 0,
+        "number_of_tools": 7,
+        "total_description_tokens": 40
+      },
+      "domain": "crm",
+      "interface_id": "f02bf221-696e-4b52-8438-5877eb77658a",
+      "snapshot_path": "artifacts/phase15b/frozen_interfaces/crm/phase15b_claude.json",
+      "snapshot_sha256": "e9f6056d7885f68215de2e5e5650ecad54a5f3818155a3fec78cc0ea12a5f92b",
+      "variant_key": "phase15b_claude"
+    },
+    {
+      "complexity": {
+        "average_description_length": 39.42857142857143,
+        "max_semantic_overlap_jaccard": 0.5,
+        "mean_semantic_overlap_jaccard": 0.057914327347100454,
+        "number_of_clarification_instructions": 1,
+        "number_of_examples": 0,
+        "number_of_negative_instructions": 0,
+        "number_of_recovery_instructions": 0,
+        "number_of_tools": 7,
+        "total_description_tokens": 41
+      },
+      "domain": "crm",
+      "interface_id": "3dd747dc-1881-4b57-9061-0422008d9bfb",
+      "snapshot_path": "artifacts/phase15b/frozen_interfaces/crm/phase15b_gemini.json",
+      "snapshot_sha256": "adb215fb1651c2c8e8bc725c5136fc76f21f7c1e6183cfa1e588add431448226",
+      "variant_key": "phase15b_gemini"
+    },
+    {
+      "complexity": {
+        "average_description_length": 33.42857142857143,
+        "max_semantic_overlap_jaccard": 0.5,
+        "mean_semantic_overlap_jaccard": 0.07740156668728097,
+        "number_of_clarification_instructions": 0,
+        "number_of_examples": 0,
+        "number_of_negative_instructions": 0,
+        "number_of_recovery_instructions": 0,
+        "number_of_tools": 7,
+        "total_description_tokens": 36
+      },
+      "domain": "ecommerce",
+      "interface_id": "975ebe2d-0cea-4e2f-8965-52633eb98e7b",
+      "snapshot_path": "artifacts/phase15b/frozen_interfaces/ecommerce/baseline.json",
+      "snapshot_sha256": "8da9e2ab4d1e3e031d16b93ae4408d20cee02c69aca876189ec9e912fe2b75a9",
+      "variant_key": "baseline"
+    },
+    {
+      "complexity": {
+        "average_description_length": 127.57142857142857,
+        "max_semantic_overlap_jaccard": 0.2,
+        "mean_semantic_overlap_jaccard": 0.08585118426664037,
+        "number_of_clarification_instructions": 4,
+        "number_of_examples": 0,
+        "number_of_negative_instructions": 1,
+        "number_of_recovery_instructions": 2,
+        "number_of_tools": 7,
+        "total_description_tokens": 128
+      },
+      "domain": "ecommerce",
+      "interface_id": "33a80c1a-f87a-4473-bce4-93baf1602333",
+      "snapshot_path": "artifacts/phase15b/frozen_interfaces/ecommerce/phase15b_general.json",
+      "snapshot_sha256": "16102342fcfc7162c7d751211f7fee553f97f07fbfe832f9ce540147d2614f71",
+      "variant_key": "phase15b_general"
+    },
+    {
+      "complexity": {
+        "average_description_length": 124.57142857142857,
+        "max_semantic_overlap_jaccard": 0.2,
+        "mean_semantic_overlap_jaccard": 0.0966167044750326,
+        "number_of_clarification_instructions": 6,
+        "number_of_examples": 0,
+        "number_of_negative_instructions": 2,
+        "number_of_recovery_instructions": 2,
+        "number_of_tools": 7,
+        "total_description_tokens": 136
+      },
+      "domain": "ecommerce",
+      "interface_id": "9b212b85-bbb4-4624-b007-198172fd358b",
+      "snapshot_path": "artifacts/phase15b/frozen_interfaces/ecommerce/phase15b_gpt.json",
+      "snapshot_sha256": "d041da932ee44a826035ae692bebca51043afeb5d6c74b2fe7837cc86d54109b",
+      "variant_key": "phase15b_gpt"
+    },
+    {
+      "complexity": {
+        "average_description_length": 33.42857142857143,
+        "max_semantic_overlap_jaccard": 0.5,
+        "mean_semantic_overlap_jaccard": 0.07740156668728097,
+        "number_of_clarification_instructions": 0,
+        "number_of_examples": 0,
+        "number_of_negative_instructions": 0,
+        "number_of_recovery_instructions": 0,
+        "number_of_tools": 7,
+        "total_description_tokens": 36
+      },
+      "domain": "ecommerce",
+      "interface_id": "5eb13ab4-ad30-418c-9e48-1c41c837de07",
+      "snapshot_path": "artifacts/phase15b/frozen_interfaces/ecommerce/phase15b_claude.json",
+      "snapshot_sha256": "a198ba00a87aad98b024b1840620673147b7a0aed640fc84e37ca99d08026543",
+      "variant_key": "phase15b_claude"
+    },
+    {
+      "complexity": {
+        "average_description_length": 98.71428571428571,
+        "max_semantic_overlap_jaccard": 0.21875,
+        "mean_semantic_overlap_jaccard": 0.058778548307995594,
+        "number_of_clarification_instructions": 3,
+        "number_of_examples": 0,
+        "number_of_negative_instructions": 1,
+        "number_of_recovery_instructions": 3,
+        "number_of_tools": 7,
+        "total_description_tokens": 99
+      },
+      "domain": "ecommerce",
+      "interface_id": "5c4a1f7f-a07e-4bd0-9e16-1e5b68d066fd",
+      "snapshot_path": "artifacts/phase15b/frozen_interfaces/ecommerce/phase15b_gemini.json",
+      "snapshot_sha256": "123a98647c28207bbb950789523097a96219ddbe284f505403c95d80ba6d3e71",
+      "variant_key": "phase15b_gemini"
+    }
+  ],
+  "models": [
+    "openai:gpt-4.1-mini",
+    "anthropic:claude-sonnet-5",
+    "google:gemini-3.6-flash"
+  ],
+  "protocol": "AgentSEO Phase 1.5B pre-holdout interface freeze",
+  "request_configuration": {
+    "anthropic_sampling_note": "temperature omitted for claude-sonnet-5",
+    "max_iterations": 16,
+    "max_tool_calls": 12,
+    "provider_seed": null,
+    "temperature": 0.0
+  },
+  "source_git_commit": "5f2b1f97326b237c5fbf39c6acea1481fad57a6a",
+  "stage_a_experiment_id": "34b3f5ef-52b3-4ce8-868c-82c2d7324ea0",
+  "variants": [
+    "baseline",
+    "phase15b_general",
+    "phase15b_gpt",
+    "phase15b_claude",
+    "phase15b_gemini"
+  ]
+}

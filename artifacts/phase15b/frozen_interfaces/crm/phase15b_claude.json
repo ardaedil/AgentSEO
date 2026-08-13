@@ -1,0 +1,260 @@
+{
+  "domain": "crm",
+  "frozen": true,
+  "interface_id": "f02bf221-696e-4b52-8438-5877eb77658a",
+  "interface_name": "V2-Claude \u2014 Phase 1.5B Claude optimized",
+  "source_git_commit": "5f2b1f97326b237c5fbf39c6acea1481fad57a6a",
+  "tool_definitions_snapshot": [
+    {
+      "description": "Search companies by name",
+      "http_method": "GET",
+      "inferred_destructive": false,
+      "is_destructive": false,
+      "name": "search_companies",
+      "operation_id": "search_companies",
+      "parameters": [
+        {
+          "in": "query",
+          "name": "query",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "path": "/companies/search",
+      "request_schema": {},
+      "requires_authentication": false,
+      "response_schema": {},
+      "tags": [],
+      "tool_metadata": {
+        "canonical_operation_id": "search_companies",
+        "deprecated": false,
+        "examples": [],
+        "experimental": false,
+        "parameter_aliases": {},
+        "source": "openapi",
+        "summary": "Search companies by name"
+      }
+    },
+    {
+      "description": "Get company by ID",
+      "http_method": "GET",
+      "inferred_destructive": false,
+      "is_destructive": false,
+      "name": "get_company",
+      "operation_id": "get_company",
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "path": "/companies/{id}",
+      "request_schema": {},
+      "requires_authentication": false,
+      "response_schema": {},
+      "tags": [],
+      "tool_metadata": {
+        "canonical_operation_id": "get_company",
+        "deprecated": false,
+        "examples": [],
+        "experimental": false,
+        "parameter_aliases": {},
+        "source": "openapi",
+        "summary": "Get company by ID"
+      }
+    },
+    {
+      "description": "Filter sales opportunities",
+      "http_method": "GET",
+      "inferred_destructive": false,
+      "is_destructive": false,
+      "name": "list_opportunities",
+      "operation_id": "list_opportunities",
+      "parameters": [
+        {
+          "in": "query",
+          "name": "company_id",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "query",
+          "name": "status",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "query",
+          "name": "min_value",
+          "required": false,
+          "schema": {
+            "type": "number"
+          }
+        }
+      ],
+      "path": "/opportunities",
+      "request_schema": {},
+      "requires_authentication": false,
+      "response_schema": {},
+      "tags": [],
+      "tool_metadata": {
+        "canonical_operation_id": "list_opportunities",
+        "deprecated": false,
+        "examples": [],
+        "experimental": false,
+        "parameter_aliases": {},
+        "source": "openapi",
+        "summary": "Filter sales opportunities"
+      }
+    },
+    {
+      "description": "Assign one opportunity to an account owner",
+      "http_method": "PATCH",
+      "inferred_destructive": false,
+      "is_destructive": false,
+      "name": "assign_opportunity",
+      "operation_id": "assign_opportunity",
+      "parameters": [
+        {
+          "in": "path",
+          "name": "opportunity_id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "path": "/opportunities/{opportunity_id}/owner",
+      "request_schema": {
+        "properties": {
+          "owner_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "owner_id"
+        ],
+        "type": "object"
+      },
+      "requires_authentication": false,
+      "response_schema": {},
+      "tags": [],
+      "tool_metadata": {
+        "canonical_operation_id": "assign_opportunity",
+        "deprecated": false,
+        "examples": [],
+        "experimental": false,
+        "parameter_aliases": {},
+        "source": "openapi",
+        "summary": "Assign one opportunity to an account owner"
+      }
+    },
+    {
+      "description": "Permanently delete an opportunity. After a valid successful deletion, report it and stop.",
+      "http_method": "DELETE",
+      "inferred_destructive": true,
+      "is_destructive": true,
+      "name": "delete_opportunity",
+      "operation_id": "delete_opportunity",
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "path": "/opportunities/{id}",
+      "request_schema": {},
+      "requires_authentication": false,
+      "response_schema": {},
+      "tags": [],
+      "tool_metadata": {
+        "canonical_operation_id": "delete_opportunity",
+        "deprecated": false,
+        "examples": [],
+        "experimental": false,
+        "parameter_aliases": {},
+        "source": "openapi",
+        "summary": "Permanently delete an opportunity"
+      }
+    },
+    {
+      "description": "Search account owners by name",
+      "http_method": "GET",
+      "inferred_destructive": false,
+      "is_destructive": false,
+      "name": "search_owners",
+      "operation_id": "search_owners",
+      "parameters": [
+        {
+          "in": "query",
+          "name": "query",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "path": "/owners/search",
+      "request_schema": {},
+      "requires_authentication": false,
+      "response_schema": {},
+      "tags": [],
+      "tool_metadata": {
+        "canonical_operation_id": "search_owners",
+        "deprecated": false,
+        "examples": [],
+        "experimental": false,
+        "parameter_aliases": {},
+        "source": "openapi",
+        "summary": "Search account owners by name"
+      }
+    },
+    {
+      "description": "List contacts for a company",
+      "http_method": "GET",
+      "inferred_destructive": false,
+      "is_destructive": false,
+      "name": "list_contacts",
+      "operation_id": "list_contacts",
+      "parameters": [
+        {
+          "in": "query",
+          "name": "company_id",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "path": "/contacts",
+      "request_schema": {},
+      "requires_authentication": false,
+      "response_schema": {},
+      "tags": [],
+      "tool_metadata": {
+        "canonical_operation_id": "list_contacts",
+        "deprecated": false,
+        "examples": [],
+        "experimental": false,
+        "parameter_aliases": {},
+        "source": "openapi",
+        "summary": "List contacts for a company"
+      }
+    }
+  ],
+  "variant_key": "phase15b_claude"
+}

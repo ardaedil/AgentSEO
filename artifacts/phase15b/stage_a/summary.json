@@ -1,0 +1,9 @@
+{
+  "actual_cost_usd": 2.2101356,
+  "event": "STAGE_A_RESUME_COMPLETE",
+  "experiment_id": "34b3f5ef-52b3-4ce8-868c-82c2d7324ea0",
+  "failed_cells": [],
+  "holdout_task_runs": 0,
+  "status": "COMPLETED",
+  "task_runs": 480
+}

@@ -1,0 +1,9 @@
+{
+  "actual_cost_usd": 2.2101356,
+  "completed_at": "2026-08-13T11:16:49.392783+00:00",
+  "completed_task_runs_preserved": 439,
+  "failed_cells": [],
+  "interrupted_cells_removed": 0,
+  "resumed": true,
+  "task_runs": 480
+}

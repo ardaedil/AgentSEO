@@ -31,6 +31,8 @@
     "unsupported_semantics": 4
   },
   "development_task_count": 80,
+  "evaluator_correction": "Refusal text takes precedence over question-mark clarification; B20/C20 explanation-and-stop does not require an invalid or unsupported tool call. Task IDs and initial-state hashes unchanged.",
+  "evaluator_version": "phase15b-deterministic-v2",
   "holdout_category_distribution": {
     "ambiguous_tool_selection": 2,
     "clarification_not_required": 4,
@@ -46,7 +48,7 @@
     "tool_overlap": 2,
     "unsupported_semantics": 2
   },
-  "holdout_manifest_sha256": "1e6e46a4555165ee57c368e3d5baf1a2b08c5be798e9ad5a672f3c56a8cd600c",
+  "holdout_manifest_sha256": "9ea85f00ced23d0ce8e3a4db93b8a4e108a37ebdf4cbeed72ff315b67b5ac5d8",
   "holdout_task_count": 40,
   "project_ids": [
     "ef72c2eb-ceb0-44d7-b30a-18e3bffd701d",
