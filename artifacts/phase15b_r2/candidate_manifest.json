@@ -1,0 +1,995 @@
+{
+  "calibration_eligible_family_count": 28,
+  "candidate_manifest_sha256": "0c00a9f3b2298709ddc10bc86526028c46364ae305c24e691022df959f9ff50e",
+  "category_distribution": {
+    "clarification_not_required": 12,
+    "clarification_required": 12,
+    "constraint_preservation": 12,
+    "error_recovery": 12,
+    "identifier_routing": 12,
+    "multi_step": 12,
+    "post_success": 12,
+    "safety_destructive": 12,
+    "tool_overlap": 12,
+    "unsupported_semantics": 12
+  },
+  "difficulty_distribution": {
+    "6": 33,
+    "7": 51,
+    "8": 36
+  },
+  "domain_distribution": {
+    "billing": 57,
+    "crm": 30,
+    "ecommerce": 33
+  },
+  "evaluator_version": "phase15b-r2-deterministic-v1",
+  "git_commit": "92b52a72ea0354478c69b3141e1c96ebc123dd8f",
+  "protocol": "PHASE15B_R2_HARD_BENCHMARK",
+  "state": "UNSPLIT_CALIBRATION_CANDIDATE_POOL",
+  "task_count": 120,
+  "task_family_count": 40,
+  "tasks": [
+    {
+      "category": "multi_step",
+      "difficulty": 8,
+      "initial_state_sha256": "3607d3aebfc479e87de70771bcdc4e0a47c45eef1a053c7a04f4fe4d2f4dc615",
+      "task_family": "customer_invoice_state_refund_workflow",
+      "task_id": "03a34b11-d65d-5c9f-be50-a421b8787db9",
+      "task_version": 1
+    },
+    {
+      "category": "constraint_preservation",
+      "difficulty": 8,
+      "initial_state_sha256": "ad914b9fcb09a3f19d5c072308d420993cfe97e37fad6caff1e80b1a87fa3ced",
+      "task_family": "failed_only_refund_preserves_delivered_order",
+      "task_id": "0596c41d-3980-5151-beaa-929205fb41bf",
+      "task_version": 1
+    },
+    {
+      "category": "clarification_required",
+      "difficulty": 8,
+      "initial_state_sha256": "695eb8913cd988f7689764d70823ca7ae8100de15c5c29aa190e4c1327297315",
+      "task_family": "ambiguous_paid_invoice_refund",
+      "task_id": "0aa6fbe6-0fee-5fe8-9d45-d8d41236b679",
+      "task_version": 1
+    },
+    {
+      "category": "clarification_required",
+      "difficulty": 7,
+      "initial_state_sha256": "23db673df0d22b4429c3823c17b64988a44ed9f91f6e58dc29aee89a5a7e7ab0",
+      "task_family": "ambiguous_subscription_cancellation",
+      "task_id": "0b8dd39b-2bb9-5939-94cb-bce3d9afc5b4",
+      "task_version": 1
+    },
+    {
+      "category": "error_recovery",
+      "difficulty": 7,
+      "initial_state_sha256": "1daa37a7e888daa23ef277edd2b06a3183ab4a736a9e3526cef9b289aa2a54df",
+      "task_family": "temporary_opportunity_assignment",
+      "task_id": "0cbd1c0b-2327-5169-a156-5c61be96192e",
+      "task_version": 1
+    },
+    {
+      "category": "error_recovery",
+      "difficulty": 8,
+      "initial_state_sha256": "680aaca1430a7ad8d57a81fabbc0d32022b3d3c3c3c4da02fb055216797ad156",
+      "task_family": "stale_order_replacement_refund",
+      "task_id": "11491c75-32b0-59b9-9c81-85695894179a",
+      "task_version": 1
+    },
+    {
+      "category": "constraint_preservation",
+      "difficulty": 7,
+      "initial_state_sha256": "6ed859c9dd01922591a6775867ebca87c499f008713d34a98bda8a8313f97f02",
+      "task_family": "single_subscription_change_preserves_peer",
+      "task_id": "143fbf24-314f-593f-b02d-5ed509b5d1a7",
+      "task_version": 1
+    },
+    {
+      "category": "tool_overlap",
+      "difficulty": 6,
+      "initial_state_sha256": "a034d2226a578cf3f67a191f170de436ecca60aad15e916cdc5a38dc78000f3b",
+      "task_family": "owner_vs_contact_resolution",
+      "task_id": "146ff4d0-d41d-5097-af77-c154be87867b",
+      "task_version": 1
+    },
+    {
+      "category": "error_recovery",
+      "difficulty": 7,
+      "initial_state_sha256": "e5335802275bfd8b686222e6bd0b0302ca65f5d55ee99425577f214e6b051a53",
+      "task_family": "terminal_invalid_invoice_refund",
+      "task_id": "14b79d58-fb4f-5fc1-a1b2-658e1334c9ca",
+      "task_version": 1
+    },
+    {
+      "category": "constraint_preservation",
+      "difficulty": 7,
+      "initial_state_sha256": "05073ea7a19805eb046e22454e797c2baed596179c6d6d2cd539f8b21a73c01e",
+      "task_family": "assignment_preserves_opportunity_state",
+      "task_id": "1730efb4-919e-5eec-a368-603e5a80bf03",
+      "task_version": 1
+    },
+    {
+      "category": "safety_destructive",
+      "difficulty": 6,
+      "initial_state_sha256": "9a3e58ba9d8e53e44ab44cc13bc93bd85f199741d51039840dc760da11b75621",
+      "task_family": "confirmed_unique_profile_deletion",
+      "task_id": "1e316afb-cc49-5732-b726-79bc2046021d",
+      "task_version": 1
+    },
+    {
+      "category": "tool_overlap",
+      "difficulty": 6,
+      "initial_state_sha256": "ee15d37b29e7477548ceac68c93c887f146829dfd7a8117834f382c7a0bec301",
+      "task_family": "invoice_vs_subscription_routing",
+      "task_id": "1f126c8d-0988-5d87-a864-a087b42862fc",
+      "task_version": 1
+    },
+    {
+      "category": "error_recovery",
+      "difficulty": 8,
+      "initial_state_sha256": "74805714fe92e7477dc69a90aff1e73cc4f737036f27e3ddb19639fb461a06b7",
+      "task_family": "stale_customer_replacement_subscription",
+      "task_id": "224f8149-e361-508b-a5db-f538f07b28e6",
+      "task_version": 1
+    },
+    {
+      "category": "unsupported_semantics",
+      "difficulty": 7,
+      "initial_state_sha256": "eae72e94cd466fa5fc5da563ffad5ae22e9ae0f2b97b78db953ea0fae864780b",
+      "task_family": "unsupported_subscription_pause",
+      "task_id": "23f991ca-fc7d-583c-b0b4-50f539ff7060",
+      "task_version": 1
+    },
+    {
+      "category": "multi_step",
+      "difficulty": 8,
+      "initial_state_sha256": "45bf116c9a4ead6a4afde83525add87c1accfd65ff9c01fc5411c8672141b5e4",
+      "task_family": "company_opportunity_owner_workflow",
+      "task_id": "258b30e6-ee3a-5a53-924c-0acc44cf3411",
+      "task_version": 1
+    },
+    {
+      "category": "clarification_not_required",
+      "difficulty": 6,
+      "initial_state_sha256": "ffe24aa63a6d5ab6b62784f60b723035fed126380c8b28c424bfbdf86d812b06",
+      "task_family": "exact_subscription_schedule",
+      "task_id": "269ed62f-67de-506b-b1fc-41fa6060c69d",
+      "task_version": 1
+    },
+    {
+      "category": "safety_destructive",
+      "difficulty": 6,
+      "initial_state_sha256": "9a3e58ba9d8e53e44ab44cc13bc93bd85f199741d51039840dc760da11b75621",
+      "task_family": "confirmed_unique_profile_deletion",
+      "task_id": "29f1d5cf-8e88-5b20-82c4-d1097b49846f",
+      "task_version": 1
+    },
+    {
+      "category": "unsupported_semantics",
+      "difficulty": 7,
+      "initial_state_sha256": "eae72e94cd466fa5fc5da563ffad5ae22e9ae0f2b97b78db953ea0fae864780b",
+      "task_family": "unsupported_subscription_pause",
+      "task_id": "2ac38327-5edf-57f1-94ab-c8af1d187e76",
+      "task_version": 1
+    },
+    {
+      "category": "constraint_preservation",
+      "difficulty": 7,
+      "initial_state_sha256": "4a5a1043399ad6349b4ab4c705519a41101cfd490bf0079663a83ac04979b41c",
+      "task_family": "subscription_cancellation_preserves_billing",
+      "task_id": "2af86b42-a486-5373-a467-5d67da1081e2",
+      "task_version": 1
+    },
+    {
+      "category": "safety_destructive",
+      "difficulty": 7,
+      "initial_state_sha256": "02387b8bf045ac6cfb5d0b557b09920c823ded1a5ff42fb2fe353aea82778471",
+      "task_family": "tentative_account_termination",
+      "task_id": "2bacca1c-83be-551d-a0f1-bb548d1211e5",
+      "task_version": 1
+    },
+    {
+      "category": "identifier_routing",
+      "difficulty": 6,
+      "initial_state_sha256": "5ef34eb7f4ad1584b16121834d09237850c28f62c9ad6a19d1f589c6ef19562b",
+      "task_family": "opportunity_identifier_direct_assignment",
+      "task_id": "2fe4dd64-c71e-5100-8199-fe254f02cbad",
+      "task_version": 1
+    },
+    {
+      "category": "unsupported_semantics",
+      "difficulty": 7,
+      "initial_state_sha256": "81268f2e864ecb9a41cfc0376d797d84e1b8454872a13b83e4f8c75ffaf13bbc",
+      "task_family": "unsupported_returned_shipment_filter",
+      "task_id": "31c29c73-a4cf-5cc1-83da-fbf8cfb13369",
+      "task_version": 1
+    },
+    {
+      "category": "unsupported_semantics",
+      "difficulty": 7,
+      "initial_state_sha256": "5f632b3087225bc0b4e336c5baa5cf43d69a971264ed69d2348a699cedc11ea3",
+      "task_family": "unsupported_open_invoice_refund",
+      "task_id": "336b143a-ee6d-5ca6-bccd-77bda8e40c78",
+      "task_version": 1
+    },
+    {
+      "category": "clarification_required",
+      "difficulty": 8,
+      "initial_state_sha256": "695eb8913cd988f7689764d70823ca7ae8100de15c5c29aa190e4c1327297315",
+      "task_family": "ambiguous_paid_invoice_refund",
+      "task_id": "3550e2ae-12e8-57bb-a8e4-f7cf510a8657",
+      "task_version": 1
+    },
+    {
+      "category": "identifier_routing",
+      "difficulty": 6,
+      "initial_state_sha256": "5ef34eb7f4ad1584b16121834d09237850c28f62c9ad6a19d1f589c6ef19562b",
+      "task_family": "opportunity_identifier_direct_assignment",
+      "task_id": "371272d7-ec4d-5111-85b9-3fa2af6bf812",
+      "task_version": 1
+    },
+    {
+      "category": "multi_step",
+      "difficulty": 8,
+      "initial_state_sha256": "a74abcb97cb21e84314481c1eb3f445983ad46071e1b76d5eb498f740c864079",
+      "task_family": "shopper_order_shipment_refund_workflow",
+      "task_id": "3796948e-4e2f-5efb-ab46-876585dd8fb3",
+      "task_version": 1
+    },
+    {
+      "category": "multi_step",
+      "difficulty": 8,
+      "initial_state_sha256": "3607d3aebfc479e87de70771bcdc4e0a47c45eef1a053c7a04f4fe4d2f4dc615",
+      "task_family": "customer_invoice_state_refund_workflow",
+      "task_id": "3c9d22d3-d852-5eda-8a16-9b3fcae6d940",
+      "task_version": 1
+    },
+    {
+      "category": "multi_step",
+      "difficulty": 8,
+      "initial_state_sha256": "45bf116c9a4ead6a4afde83525add87c1accfd65ff9c01fc5411c8672141b5e4",
+      "task_family": "company_opportunity_owner_workflow",
+      "task_id": "433d69b9-2755-5507-a898-bf38deacd894",
+      "task_version": 1
+    },
+    {
+      "category": "clarification_required",
+      "difficulty": 8,
+      "initial_state_sha256": "695eb8913cd988f7689764d70823ca7ae8100de15c5c29aa190e4c1327297315",
+      "task_family": "ambiguous_paid_invoice_refund",
+      "task_id": "43c0c43f-c0c6-50f8-9c04-d95d7659e5f9",
+      "task_version": 1
+    },
+    {
+      "category": "multi_step",
+      "difficulty": 8,
+      "initial_state_sha256": "a74abcb97cb21e84314481c1eb3f445983ad46071e1b76d5eb498f740c864079",
+      "task_family": "shopper_order_shipment_refund_workflow",
+      "task_id": "443291eb-3821-5000-815a-ab757f4f3971",
+      "task_version": 1
+    },
+    {
+      "category": "safety_destructive",
+      "difficulty": 8,
+      "initial_state_sha256": "a55ada7448db04401ecc9457c58b3f68f84c2e9e8fb624fcc453d870fa93ddf4",
+      "task_family": "audit_pipeline_destruction",
+      "task_id": "45187fbf-08d6-5e9e-a956-d93ef51e3ee8",
+      "task_version": 1
+    },
+    {
+      "category": "unsupported_semantics",
+      "difficulty": 7,
+      "initial_state_sha256": "eae72e94cd466fa5fc5da563ffad5ae22e9ae0f2b97b78db953ea0fae864780b",
+      "task_family": "unsupported_subscription_pause",
+      "task_id": "45eac28b-94ab-588e-b1bc-7b38be78c639",
+      "task_version": 1
+    },
+    {
+      "category": "unsupported_semantics",
+      "difficulty": 7,
+      "initial_state_sha256": "c6fece1ccdcbe3be3c7b5eefdc9c717fc5bedb27217174e8b0900728fa4395df",
+      "task_family": "unsupported_stale_opportunity_filter",
+      "task_id": "48f4219b-9e4a-51f0-93b3-80e4f6d79bbc",
+      "task_version": 1
+    },
+    {
+      "category": "tool_overlap",
+      "difficulty": 6,
+      "initial_state_sha256": "769b4b7303da52d74c89702f6945a813589aff5b5aa921a0cbcfc9811e768984",
+      "task_family": "customer_id_vs_broad_search",
+      "task_id": "4e070ae8-ba2b-5a00-a8ae-7b3475bb8994",
+      "task_version": 1
+    },
+    {
+      "category": "clarification_required",
+      "difficulty": 8,
+      "initial_state_sha256": "caa972a31fa196b4f282b69de8c34e457f2da52d60482a1866dab2ce50b6d148",
+      "task_family": "duplicate_shopper_conditional_refund",
+      "task_id": "51648581-794b-532e-9ea7-2af09f355db6",
+      "task_version": 1
+    },
+    {
+      "category": "tool_overlap",
+      "difficulty": 6,
+      "initial_state_sha256": "df6252a2e60474e3333d84450a78782f3f53c6eecfe353b52f720efcff426f6d",
+      "task_family": "legacy_vs_flexible_customer_search",
+      "task_id": "520191e8-5333-5a0c-b6b4-91938101cf5a",
+      "task_version": 1
+    },
+    {
+      "category": "constraint_preservation",
+      "difficulty": 7,
+      "initial_state_sha256": "05073ea7a19805eb046e22454e797c2baed596179c6d6d2cd539f8b21a73c01e",
+      "task_family": "assignment_preserves_opportunity_state",
+      "task_id": "52655e98-52cf-5353-9696-709235b64ead",
+      "task_version": 1
+    },
+    {
+      "category": "clarification_not_required",
+      "difficulty": 7,
+      "initial_state_sha256": "7eaab9f7b81853b57c99c356f851bd6578afa1f79a4883f9d84d60c52ea87f45",
+      "task_family": "exact_failed_shipment_refund",
+      "task_id": "5310b7cd-9efd-562a-ae10-49debbfa3111",
+      "task_version": 1
+    },
+    {
+      "category": "clarification_not_required",
+      "difficulty": 7,
+      "initial_state_sha256": "dfe6e697230790903ae483ab20ecd8518e4a6db21d0e1fc7466afa30da1c9b98",
+      "task_family": "exact_owner_assignment",
+      "task_id": "55092da8-6821-5cdc-aefe-9c81053fbdfb",
+      "task_version": 1
+    },
+    {
+      "category": "identifier_routing",
+      "difficulty": 7,
+      "initial_state_sha256": "3e3e5d44b0c1cd5b55ef7220b9edc52658b01d07b5f60e7a03fd9409eaf015d1",
+      "task_family": "order_identifier_conditional_refund",
+      "task_id": "57dfe5a8-436e-513e-90c9-d002b9f24a10",
+      "task_version": 1
+    },
+    {
+      "category": "error_recovery",
+      "difficulty": 8,
+      "initial_state_sha256": "680aaca1430a7ad8d57a81fabbc0d32022b3d3c3c3c4da02fb055216797ad156",
+      "task_family": "stale_order_replacement_refund",
+      "task_id": "5873abca-64a2-5d58-b4ef-17cce6861a99",
+      "task_version": 1
+    },
+    {
+      "category": "post_success",
+      "difficulty": 6,
+      "initial_state_sha256": "fb04f723b1c4f6a3448959ab22537ee3a815b8a2b1a23a4ee71ebe16d3bef023",
+      "task_family": "invoice_refund_terminal_success",
+      "task_id": "59bf911e-d749-51dd-aaae-35a97830310f",
+      "task_version": 1
+    },
+    {
+      "category": "error_recovery",
+      "difficulty": 7,
+      "initial_state_sha256": "e5335802275bfd8b686222e6bd0b0302ca65f5d55ee99425577f214e6b051a53",
+      "task_family": "terminal_invalid_invoice_refund",
+      "task_id": "5acd53ec-c5e1-59a1-9648-8a471f4f2860",
+      "task_version": 1
+    },
+    {
+      "category": "post_success",
+      "difficulty": 6,
+      "initial_state_sha256": "79046184969ec8eab1747397eb1020c4c2e5f9652b9442965545ea86b0e3a52a",
+      "task_family": "subscription_cancel_terminal_success",
+      "task_id": "5dae61a0-2b00-5627-8c6d-6d3ce7b7904a",
+      "task_version": 1
+    },
+    {
+      "category": "clarification_required",
+      "difficulty": 8,
+      "initial_state_sha256": "caa972a31fa196b4f282b69de8c34e457f2da52d60482a1866dab2ce50b6d148",
+      "task_family": "duplicate_shopper_conditional_refund",
+      "task_id": "5e18aa84-e5f2-57f7-a34e-bfaa553c9c85",
+      "task_version": 1
+    },
+    {
+      "category": "safety_destructive",
+      "difficulty": 6,
+      "initial_state_sha256": "9a3e58ba9d8e53e44ab44cc13bc93bd85f199741d51039840dc760da11b75621",
+      "task_family": "confirmed_unique_profile_deletion",
+      "task_id": "60b5cdc7-49f8-5deb-8820-5cf0434c2632",
+      "task_version": 1
+    },
+    {
+      "category": "identifier_routing",
+      "difficulty": 6,
+      "initial_state_sha256": "325d8a330cdd2fc2916f96b046c49e81945aa73b84f9d5015988553dcef5af12",
+      "task_family": "subscription_identifier_direct_cancel",
+      "task_id": "62233c1a-ad7e-5cce-8c97-654aa3b43b06",
+      "task_version": 1
+    },
+    {
+      "category": "safety_destructive",
+      "difficulty": 8,
+      "initial_state_sha256": "816416aa213ba3cb77384f4a7503092ed00595ad2295c5dfb20573714ce50b1a",
+      "task_family": "fraud_evidence_cleanup",
+      "task_id": "62acb246-3345-5de0-a209-c32f42b05d21",
+      "task_version": 1
+    },
+    {
+      "category": "clarification_required",
+      "difficulty": 8,
+      "initial_state_sha256": "35d53ed85afc2bee58b35bc7dea8ce6a2cef60d078cfe703d798fbc58a9f0a2e",
+      "task_family": "duplicate_company_opportunity_deletion",
+      "task_id": "677dd161-7f3e-5dc0-97d2-382b561223e1",
+      "task_version": 1
+    },
+    {
+      "category": "identifier_routing",
+      "difficulty": 7,
+      "initial_state_sha256": "3e3e5d44b0c1cd5b55ef7220b9edc52658b01d07b5f60e7a03fd9409eaf015d1",
+      "task_family": "order_identifier_conditional_refund",
+      "task_id": "6922f23c-1c3c-589c-90cc-eb520075cf88",
+      "task_version": 1
+    },
+    {
+      "category": "unsupported_semantics",
+      "difficulty": 7,
+      "initial_state_sha256": "c6fece1ccdcbe3be3c7b5eefdc9c717fc5bedb27217174e8b0900728fa4395df",
+      "task_family": "unsupported_stale_opportunity_filter",
+      "task_id": "6a9d65c4-24ac-5764-b84e-15b97f288e73",
+      "task_version": 1
+    },
+    {
+      "category": "constraint_preservation",
+      "difficulty": 7,
+      "initial_state_sha256": "6ed859c9dd01922591a6775867ebca87c499f008713d34a98bda8a8313f97f02",
+      "task_family": "single_subscription_change_preserves_peer",
+      "task_id": "6e93d21d-dd09-5eef-8122-48e75d558981",
+      "task_version": 1
+    },
+    {
+      "category": "clarification_required",
+      "difficulty": 8,
+      "initial_state_sha256": "35d53ed85afc2bee58b35bc7dea8ce6a2cef60d078cfe703d798fbc58a9f0a2e",
+      "task_family": "duplicate_company_opportunity_deletion",
+      "task_id": "71d3a945-ebd4-5d5f-8778-1ea4dd48a5a3",
+      "task_version": 1
+    },
+    {
+      "category": "identifier_routing",
+      "difficulty": 7,
+      "initial_state_sha256": "21695145b0c21923d24f7694c709b3217cb43f9a12f84d5165eb42c5772cb48c",
+      "task_family": "invoice_identifier_invalid_state",
+      "task_id": "7205080c-e451-52fe-b04f-13b689c5dc27",
+      "task_version": 1
+    },
+    {
+      "category": "unsupported_semantics",
+      "difficulty": 7,
+      "initial_state_sha256": "5f632b3087225bc0b4e336c5baa5cf43d69a971264ed69d2348a699cedc11ea3",
+      "task_family": "unsupported_open_invoice_refund",
+      "task_id": "72d4cae9-150c-57ff-9590-4c8c8929d2d9",
+      "task_version": 1
+    },
+    {
+      "category": "error_recovery",
+      "difficulty": 8,
+      "initial_state_sha256": "680aaca1430a7ad8d57a81fabbc0d32022b3d3c3c3c4da02fb055216797ad156",
+      "task_family": "stale_order_replacement_refund",
+      "task_id": "73caf0e0-9d22-5e8b-a62a-e25d823fc094",
+      "task_version": 1
+    },
+    {
+      "category": "unsupported_semantics",
+      "difficulty": 7,
+      "initial_state_sha256": "5f632b3087225bc0b4e336c5baa5cf43d69a971264ed69d2348a699cedc11ea3",
+      "task_family": "unsupported_open_invoice_refund",
+      "task_id": "75843f8c-926a-5f21-8e6c-b5e09c2096ba",
+      "task_version": 1
+    },
+    {
+      "category": "multi_step",
+      "difficulty": 8,
+      "initial_state_sha256": "3607d3aebfc479e87de70771bcdc4e0a47c45eef1a053c7a04f4fe4d2f4dc615",
+      "task_family": "customer_invoice_state_refund_workflow",
+      "task_id": "76ea02bb-52db-5f8e-ad03-25f562da7189",
+      "task_version": 1
+    },
+    {
+      "category": "clarification_required",
+      "difficulty": 7,
+      "initial_state_sha256": "23db673df0d22b4429c3823c17b64988a44ed9f91f6e58dc29aee89a5a7e7ab0",
+      "task_family": "ambiguous_subscription_cancellation",
+      "task_id": "7ad3d44c-7e50-5c7f-af33-2a12c0e8daa9",
+      "task_version": 1
+    },
+    {
+      "category": "clarification_required",
+      "difficulty": 8,
+      "initial_state_sha256": "35d53ed85afc2bee58b35bc7dea8ce6a2cef60d078cfe703d798fbc58a9f0a2e",
+      "task_family": "duplicate_company_opportunity_deletion",
+      "task_id": "7bf1ac50-c993-5609-9551-c1bf9c69c6cd",
+      "task_version": 1
+    },
+    {
+      "category": "safety_destructive",
+      "difficulty": 8,
+      "initial_state_sha256": "a55ada7448db04401ecc9457c58b3f68f84c2e9e8fb624fcc453d870fa93ddf4",
+      "task_family": "audit_pipeline_destruction",
+      "task_id": "7d86aadf-55e1-55a6-b0d4-6e63dbabb455",
+      "task_version": 1
+    },
+    {
+      "category": "safety_destructive",
+      "difficulty": 7,
+      "initial_state_sha256": "02387b8bf045ac6cfb5d0b557b09920c823ded1a5ff42fb2fe353aea82778471",
+      "task_family": "tentative_account_termination",
+      "task_id": "7e452177-9198-59e2-a6b0-4b0a7f4212e2",
+      "task_version": 1
+    },
+    {
+      "category": "post_success",
+      "difficulty": 6,
+      "initial_state_sha256": "79046184969ec8eab1747397eb1020c4c2e5f9652b9442965545ea86b0e3a52a",
+      "task_family": "subscription_cancel_terminal_success",
+      "task_id": "7f4ebab5-6703-5b51-808f-f0310b6cc51e",
+      "task_version": 1
+    },
+    {
+      "category": "constraint_preservation",
+      "difficulty": 7,
+      "initial_state_sha256": "4a5a1043399ad6349b4ab4c705519a41101cfd490bf0079663a83ac04979b41c",
+      "task_family": "subscription_cancellation_preserves_billing",
+      "task_id": "8158fabf-0ef8-5ac7-8191-61ad40c7ba00",
+      "task_version": 1
+    },
+    {
+      "category": "constraint_preservation",
+      "difficulty": 7,
+      "initial_state_sha256": "6ed859c9dd01922591a6775867ebca87c499f008713d34a98bda8a8313f97f02",
+      "task_family": "single_subscription_change_preserves_peer",
+      "task_id": "84abe547-9d06-5bf2-972d-cf5ceda95bd4",
+      "task_version": 1
+    },
+    {
+      "category": "clarification_not_required",
+      "difficulty": 7,
+      "initial_state_sha256": "46f385b322eac89eefbcec62b204948807946a2a9afe28b03b7ac91792837eef",
+      "task_family": "exact_invoice_refund_without_confirmation",
+      "task_id": "8588b394-2354-59fd-bf90-bc3b4ad8853a",
+      "task_version": 1
+    },
+    {
+      "category": "identifier_routing",
+      "difficulty": 7,
+      "initial_state_sha256": "21695145b0c21923d24f7694c709b3217cb43f9a12f84d5165eb42c5772cb48c",
+      "task_family": "invoice_identifier_invalid_state",
+      "task_id": "87d3e2f5-a5f8-5bb7-a936-8021fea9873e",
+      "task_version": 1
+    },
+    {
+      "category": "identifier_routing",
+      "difficulty": 6,
+      "initial_state_sha256": "5ef34eb7f4ad1584b16121834d09237850c28f62c9ad6a19d1f589c6ef19562b",
+      "task_family": "opportunity_identifier_direct_assignment",
+      "task_id": "8b133a75-22ce-5c44-bcd1-dcfa16469c1d",
+      "task_version": 1
+    },
+    {
+      "category": "tool_overlap",
+      "difficulty": 6,
+      "initial_state_sha256": "df6252a2e60474e3333d84450a78782f3f53c6eecfe353b52f720efcff426f6d",
+      "task_family": "legacy_vs_flexible_customer_search",
+      "task_id": "8c7f2f76-3a88-5099-975e-23d2052c8770",
+      "task_version": 1
+    },
+    {
+      "category": "post_success",
+      "difficulty": 6,
+      "initial_state_sha256": "79046184969ec8eab1747397eb1020c4c2e5f9652b9442965545ea86b0e3a52a",
+      "task_family": "subscription_cancel_terminal_success",
+      "task_id": "8ceb5c51-b7b0-5139-bd78-1b826a8c59dc",
+      "task_version": 1
+    },
+    {
+      "category": "post_success",
+      "difficulty": 6,
+      "initial_state_sha256": "fb04f723b1c4f6a3448959ab22537ee3a815b8a2b1a23a4ee71ebe16d3bef023",
+      "task_family": "invoice_refund_terminal_success",
+      "task_id": "8d5afdfd-0661-58e7-8acd-93c85845b01b",
+      "task_version": 1
+    },
+    {
+      "category": "multi_step",
+      "difficulty": 8,
+      "initial_state_sha256": "49bc93054b960eb4fdb8659a01e16cf1dbd53430d85afb56b33ef446463cbc24",
+      "task_family": "customer_subscription_invoice_preservation_workflow",
+      "task_id": "939cace2-a901-5cca-b214-56b84820726f",
+      "task_version": 1
+    },
+    {
+      "category": "unsupported_semantics",
+      "difficulty": 7,
+      "initial_state_sha256": "81268f2e864ecb9a41cfc0376d797d84e1b8454872a13b83e4f8c75ffaf13bbc",
+      "task_family": "unsupported_returned_shipment_filter",
+      "task_id": "95e0bfc9-40ef-5cb4-bd5d-f652f4c6db73",
+      "task_version": 1
+    },
+    {
+      "category": "error_recovery",
+      "difficulty": 8,
+      "initial_state_sha256": "74805714fe92e7477dc69a90aff1e73cc4f737036f27e3ddb19639fb461a06b7",
+      "task_family": "stale_customer_replacement_subscription",
+      "task_id": "99637ff1-8071-52d3-a46b-e3660e0331d7",
+      "task_version": 1
+    },
+    {
+      "category": "clarification_not_required",
+      "difficulty": 7,
+      "initial_state_sha256": "46f385b322eac89eefbcec62b204948807946a2a9afe28b03b7ac91792837eef",
+      "task_family": "exact_invoice_refund_without_confirmation",
+      "task_id": "9a1b5f08-b3e0-5ed7-992f-c29d44f9a9ba",
+      "task_version": 1
+    },
+    {
+      "category": "post_success",
+      "difficulty": 7,
+      "initial_state_sha256": "c28c813d1a5c961c2d79863544a6cab14483d5aa3f6f2db95e517e5268602449",
+      "task_family": "conditional_order_refund_terminal_success",
+      "task_id": "a02f3a93-210a-538f-a87c-67626b6a0f70",
+      "task_version": 1
+    },
+    {
+      "category": "multi_step",
+      "difficulty": 8,
+      "initial_state_sha256": "45bf116c9a4ead6a4afde83525add87c1accfd65ff9c01fc5411c8672141b5e4",
+      "task_family": "company_opportunity_owner_workflow",
+      "task_id": "a38e6b94-5899-52f3-81f3-c40a8ecd4f8b",
+      "task_version": 1
+    },
+    {
+      "category": "identifier_routing",
+      "difficulty": 6,
+      "initial_state_sha256": "325d8a330cdd2fc2916f96b046c49e81945aa73b84f9d5015988553dcef5af12",
+      "task_family": "subscription_identifier_direct_cancel",
+      "task_id": "a39cb250-08c1-576f-8254-d3f7d5fcb0e0",
+      "task_version": 1
+    },
+    {
+      "category": "clarification_required",
+      "difficulty": 7,
+      "initial_state_sha256": "23db673df0d22b4429c3823c17b64988a44ed9f91f6e58dc29aee89a5a7e7ab0",
+      "task_family": "ambiguous_subscription_cancellation",
+      "task_id": "a4395294-6334-5a2a-9192-00797bbbca5f",
+      "task_version": 1
+    },
+    {
+      "category": "clarification_not_required",
+      "difficulty": 7,
+      "initial_state_sha256": "dfe6e697230790903ae483ab20ecd8518e4a6db21d0e1fc7466afa30da1c9b98",
+      "task_family": "exact_owner_assignment",
+      "task_id": "a455073d-de92-586d-ac30-55775c10d374",
+      "task_version": 1
+    },
+    {
+      "category": "post_success",
+      "difficulty": 6,
+      "initial_state_sha256": "fb04f723b1c4f6a3448959ab22537ee3a815b8a2b1a23a4ee71ebe16d3bef023",
+      "task_family": "invoice_refund_terminal_success",
+      "task_id": "a6782b78-804e-5823-96b9-7c4b369865c5",
+      "task_version": 1
+    },
+    {
+      "category": "clarification_not_required",
+      "difficulty": 7,
+      "initial_state_sha256": "7eaab9f7b81853b57c99c356f851bd6578afa1f79a4883f9d84d60c52ea87f45",
+      "task_family": "exact_failed_shipment_refund",
+      "task_id": "a7db7479-c5d3-537f-8bfd-3b97d5ead71d",
+      "task_version": 1
+    },
+    {
+      "category": "tool_overlap",
+      "difficulty": 6,
+      "initial_state_sha256": "df6252a2e60474e3333d84450a78782f3f53c6eecfe353b52f720efcff426f6d",
+      "task_family": "legacy_vs_flexible_customer_search",
+      "task_id": "a91f09ca-719b-5e7b-930b-8c834370a69e",
+      "task_version": 1
+    },
+    {
+      "category": "clarification_not_required",
+      "difficulty": 7,
+      "initial_state_sha256": "7eaab9f7b81853b57c99c356f851bd6578afa1f79a4883f9d84d60c52ea87f45",
+      "task_family": "exact_failed_shipment_refund",
+      "task_id": "a9c8cd99-6f87-5ec3-b836-e189f7f77750",
+      "task_version": 1
+    },
+    {
+      "category": "safety_destructive",
+      "difficulty": 8,
+      "initial_state_sha256": "a55ada7448db04401ecc9457c58b3f68f84c2e9e8fb624fcc453d870fa93ddf4",
+      "task_family": "audit_pipeline_destruction",
+      "task_id": "ae638ec0-ac78-5127-bf47-536a4a96fe62",
+      "task_version": 1
+    },
+    {
+      "category": "clarification_not_required",
+      "difficulty": 6,
+      "initial_state_sha256": "ffe24aa63a6d5ab6b62784f60b723035fed126380c8b28c424bfbdf86d812b06",
+      "task_family": "exact_subscription_schedule",
+      "task_id": "b0f3dea4-a13a-5152-b561-536a167a494c",
+      "task_version": 1
+    },
+    {
+      "category": "safety_destructive",
+      "difficulty": 7,
+      "initial_state_sha256": "02387b8bf045ac6cfb5d0b557b09920c823ded1a5ff42fb2fe353aea82778471",
+      "task_family": "tentative_account_termination",
+      "task_id": "b202d63e-c41d-5764-a375-8f1a849b8e6a",
+      "task_version": 1
+    },
+    {
+      "category": "clarification_not_required",
+      "difficulty": 7,
+      "initial_state_sha256": "46f385b322eac89eefbcec62b204948807946a2a9afe28b03b7ac91792837eef",
+      "task_family": "exact_invoice_refund_without_confirmation",
+      "task_id": "b300230d-f8a1-59f2-8202-0d515492662d",
+      "task_version": 1
+    },
+    {
+      "category": "post_success",
+      "difficulty": 6,
+      "initial_state_sha256": "24db9bd16839433f242d18f55a13877b484ddfe60988276cab4e842fd13e9374",
+      "task_family": "opportunity_assignment_terminal_success",
+      "task_id": "b42d3443-ec83-5d0d-94c2-a427249e6dfb",
+      "task_version": 1
+    },
+    {
+      "category": "tool_overlap",
+      "difficulty": 6,
+      "initial_state_sha256": "ee15d37b29e7477548ceac68c93c887f146829dfd7a8117834f382c7a0bec301",
+      "task_family": "invoice_vs_subscription_routing",
+      "task_id": "b4f3b46c-d4d7-59d5-b6a5-2999d3d81b2e",
+      "task_version": 1
+    },
+    {
+      "category": "tool_overlap",
+      "difficulty": 6,
+      "initial_state_sha256": "769b4b7303da52d74c89702f6945a813589aff5b5aa921a0cbcfc9811e768984",
+      "task_family": "customer_id_vs_broad_search",
+      "task_id": "b608c664-05f3-5d85-9883-c7436ceb8dd0",
+      "task_version": 1
+    },
+    {
+      "category": "multi_step",
+      "difficulty": 8,
+      "initial_state_sha256": "a74abcb97cb21e84314481c1eb3f445983ad46071e1b76d5eb498f740c864079",
+      "task_family": "shopper_order_shipment_refund_workflow",
+      "task_id": "b6a68efe-0b2a-5804-b020-6fbf651e158a",
+      "task_version": 1
+    },
+    {
+      "category": "error_recovery",
+      "difficulty": 8,
+      "initial_state_sha256": "74805714fe92e7477dc69a90aff1e73cc4f737036f27e3ddb19639fb461a06b7",
+      "task_family": "stale_customer_replacement_subscription",
+      "task_id": "b840d847-82d0-5ce6-bea7-79105aa75244",
+      "task_version": 1
+    },
+    {
+      "category": "clarification_not_required",
+      "difficulty": 6,
+      "initial_state_sha256": "ffe24aa63a6d5ab6b62784f60b723035fed126380c8b28c424bfbdf86d812b06",
+      "task_family": "exact_subscription_schedule",
+      "task_id": "ba762725-7c9d-5c36-b2a2-1acbc327d8f3",
+      "task_version": 1
+    },
+    {
+      "category": "tool_overlap",
+      "difficulty": 6,
+      "initial_state_sha256": "ee15d37b29e7477548ceac68c93c887f146829dfd7a8117834f382c7a0bec301",
+      "task_family": "invoice_vs_subscription_routing",
+      "task_id": "bbd478eb-27bf-583c-8224-23ecdb3f78d4",
+      "task_version": 1
+    },
+    {
+      "category": "constraint_preservation",
+      "difficulty": 7,
+      "initial_state_sha256": "05073ea7a19805eb046e22454e797c2baed596179c6d6d2cd539f8b21a73c01e",
+      "task_family": "assignment_preserves_opportunity_state",
+      "task_id": "bcd00d32-27f9-5bcc-9ac0-92b079dc64d1",
+      "task_version": 1
+    },
+    {
+      "category": "error_recovery",
+      "difficulty": 7,
+      "initial_state_sha256": "1daa37a7e888daa23ef277edd2b06a3183ab4a736a9e3526cef9b289aa2a54df",
+      "task_family": "temporary_opportunity_assignment",
+      "task_id": "bec2855a-700d-520f-a598-33425d3c9ce3",
+      "task_version": 1
+    },
+    {
+      "category": "tool_overlap",
+      "difficulty": 6,
+      "initial_state_sha256": "a034d2226a578cf3f67a191f170de436ecca60aad15e916cdc5a38dc78000f3b",
+      "task_family": "owner_vs_contact_resolution",
+      "task_id": "bf276983-1dce-5834-85e2-89837a8c7c2e",
+      "task_version": 1
+    },
+    {
+      "category": "identifier_routing",
+      "difficulty": 6,
+      "initial_state_sha256": "325d8a330cdd2fc2916f96b046c49e81945aa73b84f9d5015988553dcef5af12",
+      "task_family": "subscription_identifier_direct_cancel",
+      "task_id": "c04021dc-0c89-5732-a696-8cd9c3674f47",
+      "task_version": 1
+    },
+    {
+      "category": "safety_destructive",
+      "difficulty": 8,
+      "initial_state_sha256": "816416aa213ba3cb77384f4a7503092ed00595ad2295c5dfb20573714ce50b1a",
+      "task_family": "fraud_evidence_cleanup",
+      "task_id": "c30e9e7a-a61e-555b-8685-814f3cb7335e",
+      "task_version": 1
+    },
+    {
+      "category": "unsupported_semantics",
+      "difficulty": 7,
+      "initial_state_sha256": "81268f2e864ecb9a41cfc0376d797d84e1b8454872a13b83e4f8c75ffaf13bbc",
+      "task_family": "unsupported_returned_shipment_filter",
+      "task_id": "c671a81b-96df-5ad5-937e-a559f3c4352d",
+      "task_version": 1
+    },
+    {
+      "category": "identifier_routing",
+      "difficulty": 7,
+      "initial_state_sha256": "3e3e5d44b0c1cd5b55ef7220b9edc52658b01d07b5f60e7a03fd9409eaf015d1",
+      "task_family": "order_identifier_conditional_refund",
+      "task_id": "c86ac1ab-8b13-5daa-b340-7dc470538149",
+      "task_version": 1
+    },
+    {
+      "category": "clarification_required",
+      "difficulty": 8,
+      "initial_state_sha256": "caa972a31fa196b4f282b69de8c34e457f2da52d60482a1866dab2ce50b6d148",
+      "task_family": "duplicate_shopper_conditional_refund",
+      "task_id": "cab4dfa5-4091-52a9-b29a-1bde9a05c5cb",
+      "task_version": 1
+    },
+    {
+      "category": "error_recovery",
+      "difficulty": 7,
+      "initial_state_sha256": "e5335802275bfd8b686222e6bd0b0302ca65f5d55ee99425577f214e6b051a53",
+      "task_family": "terminal_invalid_invoice_refund",
+      "task_id": "cc0adc64-d50b-5116-a597-0d802aa3099d",
+      "task_version": 1
+    },
+    {
+      "category": "tool_overlap",
+      "difficulty": 6,
+      "initial_state_sha256": "769b4b7303da52d74c89702f6945a813589aff5b5aa921a0cbcfc9811e768984",
+      "task_family": "customer_id_vs_broad_search",
+      "task_id": "cde704f9-a291-5fc6-ab13-0808a03dc2bf",
+      "task_version": 1
+    },
+    {
+      "category": "multi_step",
+      "difficulty": 8,
+      "initial_state_sha256": "49bc93054b960eb4fdb8659a01e16cf1dbd53430d85afb56b33ef446463cbc24",
+      "task_family": "customer_subscription_invoice_preservation_workflow",
+      "task_id": "ce17296d-d867-54b1-8925-85141bc7b7f2",
+      "task_version": 1
+    },
+    {
+      "category": "post_success",
+      "difficulty": 7,
+      "initial_state_sha256": "c28c813d1a5c961c2d79863544a6cab14483d5aa3f6f2db95e517e5268602449",
+      "task_family": "conditional_order_refund_terminal_success",
+      "task_id": "ce9ed27e-7efb-57df-8e62-f08d32c7a2a6",
+      "task_version": 1
+    },
+    {
+      "category": "post_success",
+      "difficulty": 6,
+      "initial_state_sha256": "24db9bd16839433f242d18f55a13877b484ddfe60988276cab4e842fd13e9374",
+      "task_family": "opportunity_assignment_terminal_success",
+      "task_id": "d051215b-d475-5c7d-af18-02ea60fda3ed",
+      "task_version": 1
+    },
+    {
+      "category": "constraint_preservation",
+      "difficulty": 7,
+      "initial_state_sha256": "4a5a1043399ad6349b4ab4c705519a41101cfd490bf0079663a83ac04979b41c",
+      "task_family": "subscription_cancellation_preserves_billing",
+      "task_id": "d41186c0-2e0d-5503-bf1e-982362e79414",
+      "task_version": 1
+    },
+    {
+      "category": "unsupported_semantics",
+      "difficulty": 7,
+      "initial_state_sha256": "c6fece1ccdcbe3be3c7b5eefdc9c717fc5bedb27217174e8b0900728fa4395df",
+      "task_family": "unsupported_stale_opportunity_filter",
+      "task_id": "d4329ed8-3a3e-5b80-862f-456911459862",
+      "task_version": 1
+    },
+    {
+      "category": "constraint_preservation",
+      "difficulty": 8,
+      "initial_state_sha256": "ad914b9fcb09a3f19d5c072308d420993cfe97e37fad6caff1e80b1a87fa3ced",
+      "task_family": "failed_only_refund_preserves_delivered_order",
+      "task_id": "d7b7b228-0e92-5147-9ad4-087724cb1823",
+      "task_version": 1
+    },
+    {
+      "category": "post_success",
+      "difficulty": 6,
+      "initial_state_sha256": "24db9bd16839433f242d18f55a13877b484ddfe60988276cab4e842fd13e9374",
+      "task_family": "opportunity_assignment_terminal_success",
+      "task_id": "d97c8963-e1f8-5170-9bed-1911fc3a5c76",
+      "task_version": 1
+    },
+    {
+      "category": "error_recovery",
+      "difficulty": 7,
+      "initial_state_sha256": "1daa37a7e888daa23ef277edd2b06a3183ab4a736a9e3526cef9b289aa2a54df",
+      "task_family": "temporary_opportunity_assignment",
+      "task_id": "dcd8db1d-3081-5ccc-a268-e0b6e56d27dd",
+      "task_version": 1
+    },
+    {
+      "category": "tool_overlap",
+      "difficulty": 6,
+      "initial_state_sha256": "a034d2226a578cf3f67a191f170de436ecca60aad15e916cdc5a38dc78000f3b",
+      "task_family": "owner_vs_contact_resolution",
+      "task_id": "de3954b3-7abc-5fa3-8589-d4912a6ebc89",
+      "task_version": 1
+    },
+    {
+      "category": "clarification_not_required",
+      "difficulty": 7,
+      "initial_state_sha256": "dfe6e697230790903ae483ab20ecd8518e4a6db21d0e1fc7466afa30da1c9b98",
+      "task_family": "exact_owner_assignment",
+      "task_id": "de616c14-6340-5aa2-b0cc-2e16483b66ae",
+      "task_version": 1
+    },
+    {
+      "category": "identifier_routing",
+      "difficulty": 7,
+      "initial_state_sha256": "21695145b0c21923d24f7694c709b3217cb43f9a12f84d5165eb42c5772cb48c",
+      "task_family": "invoice_identifier_invalid_state",
+      "task_id": "edb35dca-85fb-56a9-88e3-b0a8c5f45e6e",
+      "task_version": 1
+    },
+    {
+      "category": "safety_destructive",
+      "difficulty": 8,
+      "initial_state_sha256": "816416aa213ba3cb77384f4a7503092ed00595ad2295c5dfb20573714ce50b1a",
+      "task_family": "fraud_evidence_cleanup",
+      "task_id": "ef9c17fc-88a3-5c89-96db-0eae4e694170",
+      "task_version": 1
+    },
+    {
+      "category": "constraint_preservation",
+      "difficulty": 8,
+      "initial_state_sha256": "ad914b9fcb09a3f19d5c072308d420993cfe97e37fad6caff1e80b1a87fa3ced",
+      "task_family": "failed_only_refund_preserves_delivered_order",
+      "task_id": "f397aeaa-82fe-53ed-ae77-5e770060cb86",
+      "task_version": 1
+    },
+    {
+      "category": "multi_step",
+      "difficulty": 8,
+      "initial_state_sha256": "49bc93054b960eb4fdb8659a01e16cf1dbd53430d85afb56b33ef446463cbc24",
+      "task_family": "customer_subscription_invoice_preservation_workflow",
+      "task_id": "f72bbcad-a71e-51b8-b6c9-7643511da181",
+      "task_version": 1
+    },
+    {
+      "category": "post_success",
+      "difficulty": 7,
+      "initial_state_sha256": "c28c813d1a5c961c2d79863544a6cab14483d5aa3f6f2db95e517e5268602449",
+      "task_family": "conditional_order_refund_terminal_success",
+      "task_id": "f9e9cfe0-b231-5c94-8539-18931662a943",
+      "task_version": 1
+    }
+  ],
+  "uncalibrated_reserved_family_count": 12
+}

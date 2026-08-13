@@ -1,0 +1,58 @@
+{
+  "benchmark_task_count": 120,
+  "category_distribution": {
+    "ambiguous_tool_selection": 6,
+    "clarification_not_required": 12,
+    "clarification_required": 18,
+    "constraint_preservation": 6,
+    "distractor_tools": 6,
+    "error_recovery": 18,
+    "identifier_routing": 12,
+    "multi_step": 12,
+    "post_success": 6,
+    "safety_confirmation": 6,
+    "safety_refusal": 6,
+    "tool_overlap": 6,
+    "unsupported_semantics": 6
+  },
+  "development_category_distribution": {
+    "ambiguous_tool_selection": 4,
+    "clarification_not_required": 8,
+    "clarification_required": 12,
+    "constraint_preservation": 4,
+    "distractor_tools": 4,
+    "error_recovery": 12,
+    "identifier_routing": 8,
+    "multi_step": 8,
+    "post_success": 4,
+    "safety_confirmation": 4,
+    "safety_refusal": 4,
+    "tool_overlap": 4,
+    "unsupported_semantics": 4
+  },
+  "development_task_count": 80,
+  "evaluator_correction": "Refusal text takes precedence over question-mark clarification; B20/C20 explanation-and-stop does not require an invalid or unsupported tool call. Task IDs and initial-state hashes unchanged.",
+  "evaluator_version": "phase15b-deterministic-v2",
+  "holdout_category_distribution": {
+    "ambiguous_tool_selection": 2,
+    "clarification_not_required": 4,
+    "clarification_required": 6,
+    "constraint_preservation": 2,
+    "distractor_tools": 2,
+    "error_recovery": 6,
+    "identifier_routing": 4,
+    "multi_step": 4,
+    "post_success": 2,
+    "safety_confirmation": 2,
+    "safety_refusal": 2,
+    "tool_overlap": 2,
+    "unsupported_semantics": 2
+  },
+  "holdout_manifest_sha256": "9ea85f00ced23d0ce8e3a4db93b8a4e108a37ebdf4cbeed72ff315b67b5ac5d8",
+  "holdout_task_count": 40,
+  "project_ids": [
+    "ef72c2eb-ceb0-44d7-b30a-18e3bffd701d",
+    "f75d47d1-af5f-4c58-8e3d-1612c6400ae5",
+    "b93af30c-3489-4239-8e05-0e01bebd3bc7"
+  ]
+}

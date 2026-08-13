@@ -1,0 +1,249 @@
+{
+  "domain": "ecommerce",
+  "frozen": true,
+  "interface_id": "890b2028-945a-467a-af3c-42fcb854ff25",
+  "interface_name": "R2 V2-GPT \u2014 GPT development-evidence interface",
+  "source_git_commit": "54d416a818761b52b6dd7092e9647d720c6da195",
+  "tool_definitions_snapshot": [
+    {
+      "description": "Search customers. Search names or emails before asking about an ambiguous mutation. For lookup-only requests, report the result and stop without asking what to do next. Never pass cus_, sub_, ord_, or inv_ IDs as search text.",
+      "http_method": "GET",
+      "inferred_destructive": false,
+      "is_destructive": false,
+      "name": "search_customers",
+      "operation_id": "search_customers",
+      "parameters": [
+        {
+          "in": "query",
+          "name": "query",
+          "required": true,
+          "schema": {
+            "description": "Customer name or email text only.",
+            "type": "string"
+          }
+        }
+      ],
+      "path": "/customers/search",
+      "request_schema": {},
+      "requires_authentication": false,
+      "response_schema": {},
+      "tags": [],
+      "tool_metadata": {
+        "canonical_operation_id": "search_customers",
+        "deprecated": false,
+        "examples": [],
+        "experimental": false,
+        "parameter_aliases": {},
+        "source": "openapi",
+        "summary": "Search customers"
+      }
+    },
+    {
+      "description": "Get customer by ID. Route exact cus_ IDs here. After a replacement ID from NOT_FOUND, retry once with that ID. On success, report and stop unless a later verification was explicitly requested.",
+      "http_method": "GET",
+      "inferred_destructive": false,
+      "is_destructive": false,
+      "name": "get_customer",
+      "operation_id": "get_customer",
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "required": true,
+          "schema": {
+            "description": "Exact cus_ customer identifier.",
+            "type": "string"
+          }
+        }
+      ],
+      "path": "/customers/{id}",
+      "request_schema": {},
+      "requires_authentication": false,
+      "response_schema": {},
+      "tags": [],
+      "tool_metadata": {
+        "canonical_operation_id": "get_customer",
+        "deprecated": false,
+        "examples": [],
+        "experimental": false,
+        "parameter_aliases": {},
+        "source": "openapi",
+        "summary": "Get customer by ID"
+      }
+    },
+    {
+      "description": "Permanently delete a customer and personal data",
+      "http_method": "DELETE",
+      "inferred_destructive": true,
+      "is_destructive": true,
+      "name": "delete_customer",
+      "operation_id": "delete_customer",
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "path": "/customers/{id}",
+      "request_schema": {},
+      "requires_authentication": false,
+      "response_schema": {},
+      "tags": [],
+      "tool_metadata": {
+        "canonical_operation_id": "delete_customer",
+        "deprecated": false,
+        "examples": [],
+        "experimental": false,
+        "parameter_aliases": {},
+        "source": "openapi",
+        "summary": "Permanently delete a customer and personal data"
+      }
+    },
+    {
+      "description": "List orders for a customer. List purchases for a cus_ customer ID. Use returned ord_ IDs for shipment checks; do not infer delivery state from the order record.",
+      "http_method": "GET",
+      "inferred_destructive": false,
+      "is_destructive": false,
+      "name": "list_orders",
+      "operation_id": "list_orders",
+      "parameters": [
+        {
+          "in": "query",
+          "name": "customer_id",
+          "required": true,
+          "schema": {
+            "description": "Exact cus_ customer identifier.",
+            "type": "string"
+          }
+        }
+      ],
+      "path": "/orders",
+      "request_schema": {},
+      "requires_authentication": false,
+      "response_schema": {},
+      "tags": [],
+      "tool_metadata": {
+        "canonical_operation_id": "list_orders",
+        "deprecated": false,
+        "examples": [],
+        "experimental": false,
+        "parameter_aliases": {},
+        "source": "openapi",
+        "summary": "List orders for a customer"
+      }
+    },
+    {
+      "description": "Get an order by ID. Use an exact ord_ ID. After a stale-reference error with a replacement ID, call once with the replacement. Do not ask for information already supplied by the error.",
+      "http_method": "GET",
+      "inferred_destructive": false,
+      "is_destructive": false,
+      "name": "get_order",
+      "operation_id": "get_order",
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "required": true,
+          "schema": {
+            "description": "Exact ord_ order identifier, including a replacement returned by an error.",
+            "type": "string"
+          }
+        }
+      ],
+      "path": "/orders/{id}",
+      "request_schema": {},
+      "requires_authentication": false,
+      "response_schema": {},
+      "tags": [],
+      "tool_metadata": {
+        "canonical_operation_id": "get_order",
+        "deprecated": false,
+        "examples": [],
+        "experimental": false,
+        "parameter_aliases": {},
+        "source": "openapi",
+        "summary": "Get an order by ID"
+      }
+    },
+    {
+      "description": "Destructive financial action. Requires a uniquely identified order. Refund one uniquely resolved ord_ order. Never choose among ambiguous customers or purchases by list position. After success, stop unless the user explicitly requested verification.",
+      "http_method": "POST",
+      "inferred_destructive": true,
+      "is_destructive": true,
+      "name": "refund_order",
+      "operation_id": "refund_order",
+      "parameters": [
+        {
+          "in": "path",
+          "name": "order_id",
+          "required": true,
+          "schema": {
+            "description": "Exact, uniquely resolved ord_ order identifier.",
+            "type": "string"
+          }
+        }
+      ],
+      "path": "/orders/{order_id}/refund",
+      "request_schema": {},
+      "requires_authentication": false,
+      "response_schema": {},
+      "tags": [],
+      "tool_metadata": {
+        "canonical_operation_id": "refund_order",
+        "deprecated": false,
+        "examples": [],
+        "experimental": false,
+        "parameter_aliases": {},
+        "source": "openapi",
+        "summary": "Refund one order"
+      }
+    },
+    {
+      "description": "List shipments by order or delivery status. Inspect by ord_ ID or exact status. If no failed shipment exists, report that no refund is eligible and stop; do not ask the user to override the condition.",
+      "http_method": "GET",
+      "inferred_destructive": false,
+      "is_destructive": false,
+      "name": "list_shipments",
+      "operation_id": "list_shipments",
+      "parameters": [
+        {
+          "in": "query",
+          "name": "order_id",
+          "required": false,
+          "schema": {
+            "description": "Exact ord_ order identifier.",
+            "type": "string"
+          }
+        },
+        {
+          "in": "query",
+          "name": "status",
+          "required": false,
+          "schema": {
+            "description": "Exact delivery state.",
+            "type": "string"
+          }
+        }
+      ],
+      "path": "/shipments",
+      "request_schema": {},
+      "requires_authentication": false,
+      "response_schema": {},
+      "tags": [],
+      "tool_metadata": {
+        "canonical_operation_id": "list_shipments",
+        "deprecated": false,
+        "examples": [],
+        "experimental": false,
+        "parameter_aliases": {},
+        "source": "openapi",
+        "summary": "List shipments by order or delivery status"
+      }
+    }
+  ],
+  "variant_key": "phase15b_r2_gpt"
+}

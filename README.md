@@ -112,6 +112,29 @@ GOOGLE_API_KEY=...
 Provider identifiers use `openai:model`, `anthropic:model`, and `google:model`. API calls and costs
 are bounded but can still incur provider charges.
 
+## Phase 1.5 experimental validation
+
+Phase 1.5 is a controlled research framework, not the Phase 2 optimizer. It mutates frozen agent-facing interface snapshots while translating every call back to the same canonical sandbox operation.
+
+```bash
+# Uses configured real-provider keys; unavailable providers are skipped.
+agentseo experiment phase15 --project billing --project ecommerce --project crm --repetitions 3
+
+# Exact model IDs plus isolated mutation attribution.
+agentseo experiment phase15 \
+  --models openai:gpt-model-id \
+  --models anthropic:claude-model-id \
+  --models google:gemini-model-id \
+  --include-attribution
+
+agentseo experiment analyze EXPERIMENT_ID
+agentseo experiment report EXPERIMENT_ID
+```
+
+The CLI prints a guarded cost estimate before execution and stops when `PHASE15_MAX_COST_USD` would be exceeded. With no real provider keys it runs a clearly labeled MockAgent system-validation matrix; synthetic results are excluded from GO/NO-GO conclusions.
+
+See [the methodology](docs/PHASE15_METHODOLOGY.md), [benchmark audit](docs/phase15_benchmark_audit.md), and [manual optimization log](docs/phase15_manual_optimization_log.md).
+
 ## Tests and quality checks
 
 ```bash

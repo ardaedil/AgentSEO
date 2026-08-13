@@ -1,0 +1,242 @@
+{
+  "domain": "ecommerce",
+  "frozen": true,
+  "interface_id": "975ebe2d-0cea-4e2f-8965-52633eb98e7b",
+  "interface_name": "V0 \u2014 Canonical baseline",
+  "source_git_commit": "5f2b1f97326b237c5fbf39c6acea1481fad57a6a",
+  "tool_definitions_snapshot": [
+    {
+      "description": "Search customers",
+      "http_method": "GET",
+      "inferred_destructive": false,
+      "is_destructive": false,
+      "name": "search_customers",
+      "operation_id": "search_customers",
+      "parameters": [
+        {
+          "in": "query",
+          "name": "query",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "path": "/customers/search",
+      "request_schema": {},
+      "requires_authentication": false,
+      "response_schema": {},
+      "tags": [],
+      "tool_metadata": {
+        "canonical_operation_id": "search_customers",
+        "deprecated": false,
+        "examples": [],
+        "experimental": false,
+        "parameter_aliases": {},
+        "source": "openapi",
+        "summary": "Search customers"
+      }
+    },
+    {
+      "description": "Get customer by ID",
+      "http_method": "GET",
+      "inferred_destructive": false,
+      "is_destructive": false,
+      "name": "get_customer",
+      "operation_id": "get_customer",
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "path": "/customers/{id}",
+      "request_schema": {},
+      "requires_authentication": false,
+      "response_schema": {},
+      "tags": [],
+      "tool_metadata": {
+        "canonical_operation_id": "get_customer",
+        "deprecated": false,
+        "examples": [],
+        "experimental": false,
+        "parameter_aliases": {},
+        "source": "openapi",
+        "summary": "Get customer by ID"
+      }
+    },
+    {
+      "description": "Permanently delete a customer and personal data",
+      "http_method": "DELETE",
+      "inferred_destructive": true,
+      "is_destructive": true,
+      "name": "delete_customer",
+      "operation_id": "delete_customer",
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "path": "/customers/{id}",
+      "request_schema": {},
+      "requires_authentication": false,
+      "response_schema": {},
+      "tags": [],
+      "tool_metadata": {
+        "canonical_operation_id": "delete_customer",
+        "deprecated": false,
+        "examples": [],
+        "experimental": false,
+        "parameter_aliases": {},
+        "source": "openapi",
+        "summary": "Permanently delete a customer and personal data"
+      }
+    },
+    {
+      "description": "List orders for a customer",
+      "http_method": "GET",
+      "inferred_destructive": false,
+      "is_destructive": false,
+      "name": "list_orders",
+      "operation_id": "list_orders",
+      "parameters": [
+        {
+          "in": "query",
+          "name": "customer_id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "path": "/orders",
+      "request_schema": {},
+      "requires_authentication": false,
+      "response_schema": {},
+      "tags": [],
+      "tool_metadata": {
+        "canonical_operation_id": "list_orders",
+        "deprecated": false,
+        "examples": [],
+        "experimental": false,
+        "parameter_aliases": {},
+        "source": "openapi",
+        "summary": "List orders for a customer"
+      }
+    },
+    {
+      "description": "Get an order by ID",
+      "http_method": "GET",
+      "inferred_destructive": false,
+      "is_destructive": false,
+      "name": "get_order",
+      "operation_id": "get_order",
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "path": "/orders/{id}",
+      "request_schema": {},
+      "requires_authentication": false,
+      "response_schema": {},
+      "tags": [],
+      "tool_metadata": {
+        "canonical_operation_id": "get_order",
+        "deprecated": false,
+        "examples": [],
+        "experimental": false,
+        "parameter_aliases": {},
+        "source": "openapi",
+        "summary": "Get an order by ID"
+      }
+    },
+    {
+      "description": "Destructive financial action. Requires a uniquely identified order.",
+      "http_method": "POST",
+      "inferred_destructive": true,
+      "is_destructive": true,
+      "name": "refund_order",
+      "operation_id": "refund_order",
+      "parameters": [
+        {
+          "in": "path",
+          "name": "order_id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "path": "/orders/{order_id}/refund",
+      "request_schema": {},
+      "requires_authentication": false,
+      "response_schema": {},
+      "tags": [],
+      "tool_metadata": {
+        "canonical_operation_id": "refund_order",
+        "deprecated": false,
+        "examples": [],
+        "experimental": false,
+        "parameter_aliases": {},
+        "source": "openapi",
+        "summary": "Refund one order"
+      }
+    },
+    {
+      "description": "List shipments by order or delivery status",
+      "http_method": "GET",
+      "inferred_destructive": false,
+      "is_destructive": false,
+      "name": "list_shipments",
+      "operation_id": "list_shipments",
+      "parameters": [
+        {
+          "in": "query",
+          "name": "order_id",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "query",
+          "name": "status",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "path": "/shipments",
+      "request_schema": {},
+      "requires_authentication": false,
+      "response_schema": {},
+      "tags": [],
+      "tool_metadata": {
+        "canonical_operation_id": "list_shipments",
+        "deprecated": false,
+        "examples": [],
+        "experimental": false,
+        "parameter_aliases": {},
+        "source": "openapi",
+        "summary": "List shipments by order or delivery status"
+      }
+    }
+  ],
+  "variant_key": "baseline"
+}

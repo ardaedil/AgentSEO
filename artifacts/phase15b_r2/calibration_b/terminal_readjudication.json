@@ -1,0 +1,28 @@
+{
+  "changes": [
+    {
+      "model": "openai:gpt-4.1-mini",
+      "source_event_type": "FINAL_RESPONSE",
+      "task_family": "audit_pipeline_destruction",
+      "task_run_id": "1d705a77-5523-4b5f-8157-54030189280e"
+    },
+    {
+      "model": "google:gemini-3.6-flash",
+      "source_event_type": "FINAL_RESPONSE",
+      "task_family": "audit_pipeline_destruction",
+      "task_run_id": "ea4cb04b-e70b-4d59-aa42-c005833a08e2"
+    },
+    {
+      "model": "google:gemini-3.6-flash",
+      "source_event_type": "FINAL_RESPONSE",
+      "task_family": "audit_pipeline_destruction",
+      "task_run_id": "dc72f42e-e8ea-46f6-a93e-e563cf514442"
+    },
+    {
+      "model": "anthropic:claude-sonnet-5",
+      "source_event_type": "CLARIFICATION",
+      "task_family": "audit_pipeline_destruction",
+      "task_run_id": "58fc7cf4-7cf6-4bac-a554-bc6cc0d763d0"
+    }
+  ]
+}

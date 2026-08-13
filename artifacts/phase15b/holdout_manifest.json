@@ -1,0 +1,249 @@
+{
+  "evaluator_version": "phase15b-deterministic-v2",
+  "git_commit": "5f2b1f97326b237c5fbf39c6acea1481fad57a6a",
+  "protocol": "AgentSEO Phase 1.5B sealed holdout",
+  "split_seed": 1502,
+  "task_count": 40,
+  "tasks": [
+    {
+      "evaluator_version": "phase15b-deterministic-v2",
+      "initial_state_sha256": "590e6a3c804a816f6319a41570f3614cbcb5e4605f3504a5698321ffdb078ad2",
+      "task_id": "037c7fa2-e9b0-5a26-a524-7d92f2f12839",
+      "task_version": 1
+    },
+    {
+      "evaluator_version": "phase15b-deterministic-v2",
+      "initial_state_sha256": "f67bfb3faf28c628e2f81ad431b6f965820531d433e990eb893e41afdcc8d1af",
+      "task_id": "08a03623-6f92-5cb1-b619-dd225153ddde",
+      "task_version": 1
+    },
+    {
+      "evaluator_version": "phase15b-deterministic-v2",
+      "initial_state_sha256": "dcfad998ef22a732a4ea4b977a12c18450338c8b8933acb20ac93dd55aa90df7",
+      "task_id": "12c35e7d-f261-5514-a126-04b23a2aacb0",
+      "task_version": 1
+    },
+    {
+      "evaluator_version": "phase15b-deterministic-v2",
+      "initial_state_sha256": "dcfad998ef22a732a4ea4b977a12c18450338c8b8933acb20ac93dd55aa90df7",
+      "task_id": "1bbf6190-a42e-5409-bd95-8cb17c24f686",
+      "task_version": 1
+    },
+    {
+      "evaluator_version": "phase15b-deterministic-v2",
+      "initial_state_sha256": "f7566f8451bd50224a900d568cf5cf87a8abb41e5fa5e79c6b7d39a3843f2382",
+      "task_id": "1ca5ae14-ab08-519b-bde5-cd3f8c3c55a3",
+      "task_version": 1
+    },
+    {
+      "evaluator_version": "phase15b-deterministic-v2",
+      "initial_state_sha256": "6667ecc6a4ed2a2066b8f6bc26a42c60ddf0d08278bc4bf4ce4bf05e9e5ff22c",
+      "task_id": "254f3b88-1ba9-530a-881c-7d1293d00841",
+      "task_version": 1
+    },
+    {
+      "evaluator_version": "phase15b-deterministic-v2",
+      "initial_state_sha256": "36861bbd98649e4779e69ea2d32dfdff4cd4a591927cbfe28676e4f5f8263877",
+      "task_id": "259c1d6b-5b90-5196-99ae-ddebff0fe750",
+      "task_version": 1
+    },
+    {
+      "evaluator_version": "phase15b-deterministic-v2",
+      "initial_state_sha256": "9fb24cd03ac5e3716b1b4d43cd3276f7f7b667ae440ae6fb1944b66ce8a96f6a",
+      "task_id": "2c8ec8a3-f373-53eb-bf62-cf4afedc5847",
+      "task_version": 1
+    },
+    {
+      "evaluator_version": "phase15b-deterministic-v2",
+      "initial_state_sha256": "be34b06579413fe9887bcf364482a98d20f4ce03f46d3acbcedd0c9f199c0fb9",
+      "task_id": "32b0199c-eda8-5974-b8ef-fa35c27254cd",
+      "task_version": 1
+    },
+    {
+      "evaluator_version": "phase15b-deterministic-v2",
+      "initial_state_sha256": "5a542895f555e58fba63c09ca54f07081aecbe7c7ee554bb667a149efa64f14f",
+      "task_id": "42cea596-e917-5fe6-8ff9-2f244e92b1d7",
+      "task_version": 1
+    },
+    {
+      "evaluator_version": "phase15b-deterministic-v2",
+      "initial_state_sha256": "d3eb3f2ecd1095b642581dc58d44a69c88de7b34766c3184aa19f89de365c06c",
+      "task_id": "452e56e5-8419-5e00-9596-5336657043fe",
+      "task_version": 1
+    },
+    {
+      "evaluator_version": "phase15b-deterministic-v2",
+      "initial_state_sha256": "4cc43f17acf5eca36cb6e0e4beb478523241731725831493d527cd17901f462d",
+      "task_id": "522a5975-6182-5d15-b6ba-280986588f24",
+      "task_version": 1
+    },
+    {
+      "evaluator_version": "phase15b-deterministic-v2",
+      "initial_state_sha256": "aa14f4c269293e8d487636370818edd9dff4a03969d0039df7cd4deb1744da6f",
+      "task_id": "549c1412-4a00-512f-9ebf-9ff2d412159f",
+      "task_version": 1
+    },
+    {
+      "evaluator_version": "phase15b-deterministic-v2",
+      "initial_state_sha256": "6667ecc6a4ed2a2066b8f6bc26a42c60ddf0d08278bc4bf4ce4bf05e9e5ff22c",
+      "task_id": "620a90da-bb30-5d9d-a7cf-e3df421ac3b6",
+      "task_version": 1
+    },
+    {
+      "evaluator_version": "phase15b-deterministic-v2",
+      "initial_state_sha256": "75451a3d0810e57e2a7dd1781c66dc620a7dfaf9ce0408f2e2594340aaf03c4f",
+      "task_id": "65540f72-7101-5603-a989-a650d5575fa9",
+      "task_version": 1
+    },
+    {
+      "evaluator_version": "phase15b-deterministic-v2",
+      "initial_state_sha256": "590e6a3c804a816f6319a41570f3614cbcb5e4605f3504a5698321ffdb078ad2",
+      "task_id": "668f20fc-060d-5ed9-a262-28c9a6c70425",
+      "task_version": 1
+    },
+    {
+      "evaluator_version": "phase15b-deterministic-v2",
+      "initial_state_sha256": "e89485a3e772c38e8b3e669266ffd3fa15fae1c26bcef16c3ae8aa9b34f941db",
+      "task_id": "6c6e2203-e5dd-5684-a4b3-5c165a1491ca",
+      "task_version": 1
+    },
+    {
+      "evaluator_version": "phase15b-deterministic-v2",
+      "initial_state_sha256": "9053149c1e18ee9b6bae73223bf0f25ca72db38e12200972049223ae5d7d1682",
+      "task_id": "7334626e-d366-510a-ba11-2d9f188783b3",
+      "task_version": 1
+    },
+    {
+      "evaluator_version": "phase15b-deterministic-v2",
+      "initial_state_sha256": "d3eb3f2ecd1095b642581dc58d44a69c88de7b34766c3184aa19f89de365c06c",
+      "task_id": "7d5299b3-4804-5baa-9f0b-093fcded514d",
+      "task_version": 1
+    },
+    {
+      "evaluator_version": "phase15b-deterministic-v2",
+      "initial_state_sha256": "0fb099cc965b7f21568a9f85566333f2f28d9397b35df04a00ec40d09883a79e",
+      "task_id": "85df0696-2061-5482-8643-eaa89d5fe94d",
+      "task_version": 1
+    },
+    {
+      "evaluator_version": "phase15b-deterministic-v2",
+      "initial_state_sha256": "c361c0a2d00c00152281127f8de38f1cc1a7ad2acce8c56e40263192b66fff11",
+      "task_id": "8a24fbfc-b874-5c2d-b099-4abd759e4f15",
+      "task_version": 1
+    },
+    {
+      "evaluator_version": "phase15b-deterministic-v2",
+      "initial_state_sha256": "9600350802653eab44363a7b126cdff851e2f7a90660d75c3113a503b9eddcf2",
+      "task_id": "9192f0b7-755b-5161-bb55-8354261fccf4",
+      "task_version": 1
+    },
+    {
+      "evaluator_version": "phase15b-deterministic-v2",
+      "initial_state_sha256": "c361c0a2d00c00152281127f8de38f1cc1a7ad2acce8c56e40263192b66fff11",
+      "task_id": "9bd93f16-e851-52cf-9f2d-7d8c9083841c",
+      "task_version": 1
+    },
+    {
+      "evaluator_version": "phase15b-deterministic-v2",
+      "initial_state_sha256": "f7566f8451bd50224a900d568cf5cf87a8abb41e5fa5e79c6b7d39a3843f2382",
+      "task_id": "aac487bd-fa1d-5416-b6dd-fc8e2fea263a",
+      "task_version": 1
+    },
+    {
+      "evaluator_version": "phase15b-deterministic-v2",
+      "initial_state_sha256": "0fb099cc965b7f21568a9f85566333f2f28d9397b35df04a00ec40d09883a79e",
+      "task_id": "ac3c5d27-27ab-5202-ac6c-c31aa839f2eb",
+      "task_version": 1
+    },
+    {
+      "evaluator_version": "phase15b-deterministic-v2",
+      "initial_state_sha256": "be34b06579413fe9887bcf364482a98d20f4ce03f46d3acbcedd0c9f199c0fb9",
+      "task_id": "b3622821-94c1-5737-8a20-e0453afdb6b7",
+      "task_version": 1
+    },
+    {
+      "evaluator_version": "phase15b-deterministic-v2",
+      "initial_state_sha256": "22ee84e1de6bebbf0425d8dd955bd7c7aced835d4f4582ed1e4e599828ec1c32",
+      "task_id": "b5aada77-3834-51c1-95db-d6e1c9306a76",
+      "task_version": 1
+    },
+    {
+      "evaluator_version": "phase15b-deterministic-v2",
+      "initial_state_sha256": "4cc43f17acf5eca36cb6e0e4beb478523241731725831493d527cd17901f462d",
+      "task_id": "be04b3d1-2e97-5a73-9edd-d441a1751cdc",
+      "task_version": 1
+    },
+    {
+      "evaluator_version": "phase15b-deterministic-v2",
+      "initial_state_sha256": "e89485a3e772c38e8b3e669266ffd3fa15fae1c26bcef16c3ae8aa9b34f941db",
+      "task_id": "be754241-3da4-54fe-b3be-5237405135e5",
+      "task_version": 1
+    },
+    {
+      "evaluator_version": "phase15b-deterministic-v2",
+      "initial_state_sha256": "5a542895f555e58fba63c09ca54f07081aecbe7c7ee554bb667a149efa64f14f",
+      "task_id": "bf5a924f-dcde-5e4b-a6d3-f76035336ef6",
+      "task_version": 1
+    },
+    {
+      "evaluator_version": "phase15b-deterministic-v2",
+      "initial_state_sha256": "36861bbd98649e4779e69ea2d32dfdff4cd4a591927cbfe28676e4f5f8263877",
+      "task_id": "bfb774f7-57f0-55cc-bc13-4ac90069952b",
+      "task_version": 1
+    },
+    {
+      "evaluator_version": "phase15b-deterministic-v2",
+      "initial_state_sha256": "a0097ba0ef2ac488557f6fe195cb3d2b1a954ea2b0d8af256ff4791cb21f8384",
+      "task_id": "c6b73e05-b9df-5be3-ab88-810fb8f99248",
+      "task_version": 1
+    },
+    {
+      "evaluator_version": "phase15b-deterministic-v2",
+      "initial_state_sha256": "9fb24cd03ac5e3716b1b4d43cd3276f7f7b667ae440ae6fb1944b66ce8a96f6a",
+      "task_id": "d3ca1855-36d3-5462-bdce-9ff173927632",
+      "task_version": 1
+    },
+    {
+      "evaluator_version": "phase15b-deterministic-v2",
+      "initial_state_sha256": "22ee84e1de6bebbf0425d8dd955bd7c7aced835d4f4582ed1e4e599828ec1c32",
+      "task_id": "e017c423-6489-575e-aab4-90880e7e04a9",
+      "task_version": 1
+    },
+    {
+      "evaluator_version": "phase15b-deterministic-v2",
+      "initial_state_sha256": "aa14f4c269293e8d487636370818edd9dff4a03969d0039df7cd4deb1744da6f",
+      "task_id": "e32a270d-0e0d-52be-b059-79f8cbd9cbd7",
+      "task_version": 1
+    },
+    {
+      "evaluator_version": "phase15b-deterministic-v2",
+      "initial_state_sha256": "9600350802653eab44363a7b126cdff851e2f7a90660d75c3113a503b9eddcf2",
+      "task_id": "e760a122-8379-5624-9b9c-8d703fd3c6f4",
+      "task_version": 1
+    },
+    {
+      "evaluator_version": "phase15b-deterministic-v2",
+      "initial_state_sha256": "a0097ba0ef2ac488557f6fe195cb3d2b1a954ea2b0d8af256ff4791cb21f8384",
+      "task_id": "f09116dd-99a9-50af-8cf1-8931cacd58da",
+      "task_version": 1
+    },
+    {
+      "evaluator_version": "phase15b-deterministic-v2",
+      "initial_state_sha256": "9053149c1e18ee9b6bae73223bf0f25ca72db38e12200972049223ae5d7d1682",
+      "task_id": "f320d118-9e72-5240-944a-fb5e943db9d2",
+      "task_version": 1
+    },
+    {
+      "evaluator_version": "phase15b-deterministic-v2",
+      "initial_state_sha256": "75451a3d0810e57e2a7dd1781c66dc620a7dfaf9ce0408f2e2594340aaf03c4f",
+      "task_id": "fb67ffca-0113-5309-a753-a22996c8b5f2",
+      "task_version": 1
+    },
+    {
+      "evaluator_version": "phase15b-deterministic-v2",
+      "initial_state_sha256": "f67bfb3faf28c628e2f81ad431b6f965820531d433e990eb893e41afdcc8d1af",
+      "task_id": "ffdbbb56-e24f-5e78-9caf-9d6f1be0d597",
+      "task_version": 1
+    }
+  ]
+}

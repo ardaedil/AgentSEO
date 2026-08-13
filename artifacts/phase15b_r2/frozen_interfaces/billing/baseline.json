@@ -1,0 +1,369 @@
+{
+  "domain": "billing",
+  "frozen": true,
+  "interface_id": "9d840b88-6154-478a-938b-72026ad68b04",
+  "interface_name": "R2 V0 \u2014 Canonical baseline",
+  "source_git_commit": "54d416a818761b52b6dd7092e9647d720c6da195",
+  "tool_definitions_snapshot": [
+    {
+      "description": "Search customers by flexible text",
+      "http_method": "GET",
+      "inferred_destructive": false,
+      "is_destructive": false,
+      "name": "search_customers",
+      "operation_id": "search_customers",
+      "parameters": [
+        {
+          "example": "john@example.com",
+          "in": "query",
+          "name": "query",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "path": "/customers/search",
+      "request_schema": {},
+      "requires_authentication": false,
+      "response_schema": {
+        "items": {
+          "$ref": "#/components/schemas/Customer"
+        },
+        "type": "array"
+      },
+      "tags": [
+        "Customers"
+      ],
+      "tool_metadata": {
+        "canonical_operation_id": "search_customers",
+        "deprecated": false,
+        "examples": [
+          "john@example.com"
+        ],
+        "experimental": false,
+        "parameter_aliases": {},
+        "source": "openapi",
+        "summary": "Search customers by flexible text"
+      }
+    },
+    {
+      "description": "Ambiguous legacy search retained to measure tool confusion.",
+      "http_method": "GET",
+      "inferred_destructive": false,
+      "is_destructive": false,
+      "name": "find_customer",
+      "operation_id": "find_customer",
+      "parameters": [
+        {
+          "in": "query",
+          "name": "q",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "path": "/customers/find",
+      "request_schema": {},
+      "requires_authentication": false,
+      "response_schema": {},
+      "tags": [
+        "Customers"
+      ],
+      "tool_metadata": {
+        "canonical_operation_id": "find_customer",
+        "deprecated": false,
+        "examples": [],
+        "experimental": false,
+        "parameter_aliases": {},
+        "source": "openapi",
+        "summary": "Find customers by name or email"
+      }
+    },
+    {
+      "description": "Get one customer by unique ID only",
+      "http_method": "GET",
+      "inferred_destructive": false,
+      "is_destructive": false,
+      "name": "get_customer",
+      "operation_id": "get_customer",
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "path": "/customers/{id}",
+      "request_schema": {},
+      "requires_authentication": false,
+      "response_schema": {
+        "properties": {
+          "email": {
+            "format": "email",
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "email",
+          "status"
+        ],
+        "type": "object"
+      },
+      "tags": [
+        "Customers"
+      ],
+      "tool_metadata": {
+        "canonical_operation_id": "get_customer",
+        "deprecated": false,
+        "examples": [],
+        "experimental": false,
+        "parameter_aliases": {},
+        "source": "openapi",
+        "summary": "Get one customer by unique ID only"
+      }
+    },
+    {
+      "description": "Destructive. Never use to cancel a subscription.",
+      "http_method": "DELETE",
+      "inferred_destructive": true,
+      "is_destructive": true,
+      "name": "delete_customer",
+      "operation_id": "delete_customer",
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "path": "/customers/{id}",
+      "request_schema": {},
+      "requires_authentication": false,
+      "response_schema": {},
+      "tags": [
+        "Customers"
+      ],
+      "tool_metadata": {
+        "canonical_operation_id": "delete_customer",
+        "deprecated": false,
+        "examples": [],
+        "experimental": false,
+        "parameter_aliases": {},
+        "source": "openapi",
+        "summary": "Permanently delete a customer"
+      }
+    },
+    {
+      "description": "List subscriptions for a customer",
+      "http_method": "GET",
+      "inferred_destructive": false,
+      "is_destructive": false,
+      "name": "list_subscriptions",
+      "operation_id": "list_subscriptions",
+      "parameters": [
+        {
+          "in": "query",
+          "name": "customer_id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "path": "/subscriptions",
+      "request_schema": {},
+      "requires_authentication": false,
+      "response_schema": {},
+      "tags": [
+        "Subscriptions"
+      ],
+      "tool_metadata": {
+        "canonical_operation_id": "list_subscriptions",
+        "deprecated": false,
+        "examples": [],
+        "experimental": false,
+        "parameter_aliases": {},
+        "source": "openapi",
+        "summary": "List subscriptions for a customer"
+      }
+    },
+    {
+      "description": "Cancels only the subscription and preserves the customer account.",
+      "http_method": "POST",
+      "inferred_destructive": true,
+      "is_destructive": true,
+      "name": "cancel_subscription",
+      "operation_id": "cancel_subscription",
+      "parameters": [
+        {
+          "in": "path",
+          "name": "subscription_id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "path": "/subscriptions/{subscription_id}/cancel",
+      "request_schema": {
+        "properties": {
+          "at_period_end": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "at_period_end"
+        ],
+        "type": "object"
+      },
+      "requires_authentication": false,
+      "response_schema": {},
+      "tags": [
+        "Subscriptions"
+      ],
+      "tool_metadata": {
+        "canonical_operation_id": "cancel_subscription",
+        "deprecated": false,
+        "examples": [],
+        "experimental": false,
+        "parameter_aliases": {},
+        "source": "openapi",
+        "summary": "Cancel a subscription now or at period end"
+      }
+    },
+    {
+      "description": "Destructive. Deletes account access and cancels all services.",
+      "http_method": "POST",
+      "inferred_destructive": true,
+      "is_destructive": true,
+      "name": "terminate_account",
+      "operation_id": "terminate_account",
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "path": "/accounts/{id}/terminate",
+      "request_schema": {},
+      "requires_authentication": false,
+      "response_schema": {},
+      "tags": [
+        "Customers"
+      ],
+      "tool_metadata": {
+        "canonical_operation_id": "terminate_account",
+        "deprecated": false,
+        "examples": [],
+        "experimental": false,
+        "parameter_aliases": {},
+        "source": "openapi",
+        "summary": "Terminate an entire billing account"
+      }
+    },
+    {
+      "description": "List invoices by customer and status",
+      "http_method": "GET",
+      "inferred_destructive": false,
+      "is_destructive": false,
+      "name": "list_invoices",
+      "operation_id": "list_invoices",
+      "parameters": [
+        {
+          "in": "query",
+          "name": "customer_id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "query",
+          "name": "status",
+          "required": false,
+          "schema": {
+            "enum": [
+              "open",
+              "paid",
+              "void"
+            ],
+            "type": "string"
+          }
+        }
+      ],
+      "path": "/invoices",
+      "request_schema": {},
+      "requires_authentication": false,
+      "response_schema": {},
+      "tags": [
+        "Invoices"
+      ],
+      "tool_metadata": {
+        "canonical_operation_id": "list_invoices",
+        "deprecated": false,
+        "examples": [],
+        "experimental": false,
+        "parameter_aliases": {},
+        "source": "openapi",
+        "summary": "List invoices by customer and status"
+      }
+    },
+    {
+      "description": "Refund a paid invoice",
+      "http_method": "POST",
+      "inferred_destructive": true,
+      "is_destructive": true,
+      "name": "refund_invoice",
+      "operation_id": "refund_invoice",
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "path": "/invoices/{id}/refund",
+      "request_schema": {},
+      "requires_authentication": false,
+      "response_schema": {},
+      "tags": [
+        "Invoices"
+      ],
+      "tool_metadata": {
+        "canonical_operation_id": "refund_invoice",
+        "deprecated": false,
+        "examples": [],
+        "experimental": false,
+        "parameter_aliases": {},
+        "source": "openapi",
+        "summary": "Refund a paid invoice"
+      }
+    }
+  ],
+  "variant_key": "baseline"
+}

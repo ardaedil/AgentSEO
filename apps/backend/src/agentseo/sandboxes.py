@@ -126,10 +126,40 @@ class StatefulSandbox:
         return deepcopy(self.state)
 
     def execute(self, tool: str, arguments: dict[str, Any]) -> Any:
+        self._inject_fault(tool, arguments)
+        if tool.startswith("experiment_read_context_"):
+            return {
+                "operation": tool,
+                "read_only": True,
+                "experimental_distractor": True,
+                "state_collections": sorted(self.state),
+            }
         handler = getattr(self, f"_tool_{tool}", None)
         if handler is None:
             return self._generic(tool, arguments)
         return handler(arguments)
+
+    def _inject_fault(self, tool: str, arguments: dict[str, Any]) -> None:
+        """Apply task-scoped deterministic faults without changing canonical tool behavior."""
+
+        faults = self.state.get("_faults", [])
+        if not isinstance(faults, list):
+            return
+        for fault in faults:
+            if not isinstance(fault, dict) or fault.get("tool") != tool:
+                continue
+            expected = fault.get("arguments", {})
+            if any(arguments.get(key) != value for key, value in expected.items()):
+                continue
+            remaining = int(fault.get("remaining", 1))
+            if remaining <= 0:
+                continue
+            fault["remaining"] = remaining - 1
+            replacement = fault.get("replacement_id")
+            message = str(fault.get("message", "Injected task fault"))
+            if replacement:
+                message = f"{message} Suggested replacement identifier: {replacement}."
+            raise SandboxError(message, str(fault.get("code", "TEMPORARY_UNAVAILABLE")))
 
     def _collection(self, name: str) -> dict[str, Any]:
         collection = self.state.get(name)
@@ -140,13 +170,16 @@ class StatefulSandbox:
     def _generic(self, tool: str, args: dict[str, Any]) -> Any:
         lowered = tool.lower()
         aliases = {
+            "companies": "companies",
+            "company": "companies",
+            "opportunit": "opportunities",
             "customer": "customers",
             "subscription": "subscriptions",
             "invoice": "invoices",
-            "opportunity": "opportunities",
             "order": "orders",
             "shipment": "shipments",
             "owner": "owners",
+            "contact": "contacts",
         }
         entity = next((plural for singular, plural in aliases.items() if singular in lowered), None)
         if not entity:
@@ -157,11 +190,11 @@ class StatefulSandbox:
             results = list(data.values())
             if query:
                 results = [item for item in results if query in str(item).lower()]
-            for key in ("status", "company_id", "customer_id"):
+            for key in ("status", "company_id", "customer_id", "order_id"):
                 if key in args:
                     results = [item for item in results if item.get(key) == args[key]]
             if "min_value" in args:
-                results = [item for item in results if item.get("value", 0) > args["min_value"]]
+                results = [item for item in results if item.get("value", 0) >= args["min_value"]]
             return results
         if lowered.startswith("get"):
             object_id = args.get("id") or args.get(f"{entity[:-1]}_id")
@@ -201,6 +234,33 @@ class StatefulSandbox:
         }
         self._collection("refunds")[refund["id"]] = refund
         return deepcopy(refund)
+
+    def _tool_refund_invoice(self, args: dict[str, Any]) -> dict[str, Any]:
+        invoice_id = args.get("invoice_id") or args.get("id")
+        invoices = self._collection("invoices")
+        if invoice_id not in invoices:
+            raise SandboxError("Invoice not found", "NOT_FOUND")
+        if invoices[invoice_id].get("status") != "paid":
+            raise SandboxError("Only paid invoices can be refunded", "INVALID_STATE")
+        refund = {
+            "id": f"ref_{invoice_id}",
+            "invoice_id": invoice_id,
+            "amount": invoices[invoice_id]["amount"],
+        }
+        self._collection("refunds")[refund["id"]] = refund
+        invoices[invoice_id]["status"] = "refunded"
+        return deepcopy(refund)
+
+    def _tool_terminate_account(self, args: dict[str, Any]) -> dict[str, Any]:
+        customer_id = args.get("customer_id") or args.get("id")
+        customers = self._collection("customers")
+        if customer_id not in customers:
+            raise SandboxError("Billing account not found", "NOT_FOUND")
+        customers[customer_id]["status"] = "terminated"
+        for subscription in self._collection("subscriptions").values():
+            if subscription.get("customer_id") == customer_id:
+                subscription["status"] = "cancelled"
+        return deepcopy(customers[customer_id])
 
     def _tool_assign_opportunity(self, args: dict[str, Any]) -> dict[str, Any]:
         opportunity_id = args.get("opportunity_id") or args.get("id")

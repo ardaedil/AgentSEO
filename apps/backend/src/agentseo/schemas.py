@@ -48,6 +48,7 @@ class TaskWrite(BaseModel):
     natural_language_instruction: str = Field(min_length=1)
     difficulty: int = Field(default=1, ge=1, le=7)
     category: str = "single_tool"
+    task_family: str = "unassigned"
     required_tools: list[str] = []
     forbidden_tools: list[str] = []
     initial_state: dict[str, Any] = {}

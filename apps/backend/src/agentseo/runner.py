@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import asyncio
 import time
+from copy import deepcopy
 from typing import Any
 
 import structlog
@@ -10,6 +11,7 @@ from sqlalchemy.orm import Session
 
 from .config import Settings
 from .evaluation import calculate_metrics, classify_failure, evaluate_task
+from .interfaces import tools_for_task, translate_tool_call
 from .models import (
     BenchmarkRun,
     BenchmarkTask,
@@ -22,10 +24,19 @@ from .models import (
     now,
 )
 from .openapi_parser import NormalizedTool
-from .providers import AgentProvider, create_provider
+from .pricing import estimate_usage_cost
+from .providers import AgentProvider, create_provider, text_is_refusal
 from .sandboxes import SandboxError, create_sandbox
 
 log = structlog.get_logger()
+
+
+def _semantic_value_matches(key: str, actual: Any, expected: Any) -> bool:
+    if key == "query" and isinstance(actual, str) and isinstance(expected, str):
+        actual_normalized = " ".join(actual.lower().split())
+        expected_normalized = " ".join(expected.lower().split())
+        return expected_normalized in actual_normalized or actual_normalized in expected_normalized
+    return bool(actual == expected)
 
 
 def _tool(model: ToolDefinition) -> NormalizedTool:
@@ -63,9 +74,20 @@ async def execute_task(
     tools: list[NormalizedTool],
     provider: AgentProvider,
     settings: Settings,
+    interface: InterfaceVersion | None = None,
 ) -> dict[str, Any]:
     task_run = TaskRun(
-        task_id=task.id, benchmark_run_id=benchmark_run.id, status=RunStatus.RUNNING.value
+        task_id=task.id,
+        benchmark_run_id=benchmark_run.id,
+        status=RunStatus.RUNNING.value,
+        experiment_id=benchmark_run.experiment_id,
+        interface_version_id=benchmark_run.interface_version_id,
+        model_identifier=f"{benchmark_run.provider}:{benchmark_run.model}",
+        task_version=task.version,
+        trial_number=benchmark_run.trial_number,
+        task_split=benchmark_run.task_split or task.phase15_split,
+        temperature=benchmark_run.configuration.get("temperature"),
+        provider_seed=benchmark_run.configuration.get("provider_seed"),
     )
     session.add(task_run)
     session.flush()
@@ -78,10 +100,13 @@ async def execute_task(
         {"role": "user", "content": task.natural_language_instruction},
     )
     sandbox = create_sandbox(session.get(Project, benchmark_run.project_id).sandbox_domain)  # type: ignore[union-attr]
-    before = sandbox.reset(task.initial_state or None)
+    task_state = deepcopy(task.initial_state or {})
+    evaluation_config = task_state.pop("_evaluation", {})
+    before = sandbox.reset(task_state or None)
     history: list[dict[str, Any]] = []
     calls: list[dict[str, Any]] = []
     clarified = False
+    clarification_content = ""
     max_iterations_hit = False
     model_refused = False
     total_tokens = {"input": 0, "output": 0}
@@ -91,13 +116,16 @@ async def execute_task(
     log.info("task_started", run_id=benchmark_run.id, task_id=task.id, model=benchmark_run.model)
 
     async def loop() -> None:
-        nonlocal sequence, clarified, max_iterations_hit, model_refused
+        nonlocal sequence, clarified, clarification_content, max_iterations_hit, model_refused
         for _iteration in range(max_iterations):
             context = {
                 "required_tools": task.required_tools,
                 "forbidden_tools": task.forbidden_tools,
                 "requires_clarification": task.requires_clarification,
                 "difficulty": task.difficulty,
+                "category": task.category,
+                "temperature": benchmark_run.configuration.get("temperature"),
+                "seed": benchmark_run.configuration.get("provider_seed"),
             }
             action = await provider.next_action(
                 task.natural_language_instruction, tools, history, context
@@ -107,13 +135,11 @@ async def execute_task(
             sequence += 1
             if action.kind == "clarification":
                 clarified = True
+                clarification_content = action.content
                 _trace(session, task_run, sequence, "CLARIFICATION", {"content": action.content})
                 return
             if action.kind == "final":
-                model_refused = any(
-                    term in action.content.lower()
-                    for term in ("cannot help", "can't help", "refuse")
-                )
+                model_refused = text_is_refusal(action.content)
                 _trace(session, task_run, sequence, "FINAL_RESPONSE", {"content": action.content})
                 return
             if action.kind != "tool_call" or not action.tool:
@@ -125,24 +151,47 @@ async def execute_task(
                     session, task_run, sequence, "ERROR", {"message": "Maximum tool calls reached"}
                 )
                 return
-            _trace(session, task_run, sequence, "TOOL_SELECTED", {"tool": action.tool})
+            agent_tool = action.tool
+            agent_arguments = action.arguments or {}
+            canonical_tool, arguments = (
+                translate_tool_call(interface, agent_tool, agent_arguments)
+                if interface
+                else (agent_tool, agent_arguments)
+            )
+            _trace(
+                session,
+                task_run,
+                sequence,
+                "TOOL_SELECTED",
+                {"agent_tool": agent_tool, "canonical_tool": canonical_tool},
+            )
             sequence += 1
-            arguments = action.arguments or {}
             _trace(
                 session,
                 task_run,
                 sequence,
                 "TOOL_CALLED",
-                {"tool": action.tool, "arguments": arguments},
+                {
+                    "agent_tool": agent_tool,
+                    "canonical_tool": canonical_tool,
+                    "agent_arguments": agent_arguments,
+                    "canonical_arguments": arguments,
+                },
             )
-            call_record: dict[str, Any] = {"tool": action.tool, "arguments": arguments}
+            call_record: dict[str, Any] = {
+                "tool": canonical_tool,
+                "agent_tool": agent_tool,
+                "arguments": arguments,
+                "agent_arguments": agent_arguments,
+            }
             try:
-                result = sandbox.execute(action.tool, arguments)
+                result = sandbox.execute(canonical_tool, arguments)
                 call_record["result"] = result
                 history.append(
                     {
                         "type": "tool_result",
-                        "tool": action.tool,
+                        "tool": agent_tool,
+                        "canonical_tool": canonical_tool,
                         "arguments": arguments,
                         "result": result,
                     }
@@ -153,16 +202,17 @@ async def execute_task(
                     task_run,
                     sequence,
                     "TOOL_RESULT",
-                    {"tool": action.tool, "result": result},
+                    {"tool": agent_tool, "canonical_tool": canonical_tool, "result": result},
                 )
-                log.info("tool_call", run_id=benchmark_run.id, task_id=task.id, tool=action.tool)
+                log.info("tool_call", run_id=benchmark_run.id, task_id=task.id, tool=canonical_tool)
             except SandboxError as exc:
                 call_record["error_code"] = exc.code
                 call_record["error"] = str(exc)
                 history.append(
                     {
                         "type": "tool_result",
-                        "tool": action.tool,
+                        "tool": agent_tool,
+                        "canonical_tool": canonical_tool,
                         "error_code": exc.code,
                         "error": str(exc),
                     }
@@ -173,7 +223,12 @@ async def execute_task(
                     task_run,
                     sequence,
                     "ERROR",
-                    {"tool": action.tool, "code": exc.code, "message": str(exc)},
+                    {
+                        "tool": agent_tool,
+                        "canonical_tool": canonical_tool,
+                        "code": exc.code,
+                        "message": str(exc),
+                    },
                 )
             calls.append(call_record)
         max_iterations_hit = True
@@ -197,14 +252,127 @@ async def execute_task(
         task.requires_clarification,
         clarified,
     )
+    expected_behavior = str(evaluation_config.get("expected_behavior", "execute"))
+    observed_behavior = "refuse" if model_refused else "clarify" if clarified else "execute"
+    behavior_passed = observed_behavior == expected_behavior
+    evaluation.update(
+        {
+            "behavior_expected": expected_behavior,
+            "behavior_observed": observed_behavior,
+            "behavior_passed": behavior_passed,
+        }
+    )
     selected = [call["tool"] for call in calls]
+    required_sequence = [str(item) for item in evaluation_config.get("required_tool_sequence", [])]
+    sequence_cursor = 0
+    for selected_tool in selected:
+        if sequence_cursor < len(required_sequence) and selected_tool == required_sequence[sequence_cursor]:
+            sequence_cursor += 1
+    required_sequence_passed = sequence_cursor == len(required_sequence)
+    expected_clarification_terms = [
+        str(term).lower() for term in evaluation_config.get("clarification_terms", [])
+    ]
+    targeted_clarification_passed = not expected_clarification_terms or (
+        clarified
+        and any(term in clarification_content.lower() for term in expected_clarification_terms)
+    )
+    expected_max_tool_calls = evaluation_config.get("expected_max_tool_calls")
+    tool_call_limit_passed = (
+        expected_max_tool_calls is None or len(calls) <= int(expected_max_tool_calls)
+    )
     required_ok = all(tool in selected for tool in task.required_tools)
     forbidden_ok = all(tool not in selected for tool in task.forbidden_tools)
     if task.requires_clarification:
-        required_ok = clarified
+        required_ok = clarified and targeted_clarification_passed
+    evaluation.update(
+        {
+            "required_tool_sequence": required_sequence,
+            "required_tool_sequence_passed": required_sequence_passed,
+            "clarification_terms": expected_clarification_terms,
+            "targeted_clarification_passed": targeted_clarification_passed,
+            "expected_max_tool_calls": expected_max_tool_calls,
+            "tool_call_limit_passed": tool_call_limit_passed,
+        }
+    )
     evaluation["tool_requirements_passed"] = required_ok
     evaluation["forbidden_tools_avoided"] = forbidden_ok
-    evaluation["passed"] = evaluation["passed"] and required_ok and forbidden_ok
+    recovered = True
+    if task.category == "error_recovery":
+        error_positions = [index for index, call in enumerate(calls) if call.get("error_code")]
+        recovery_mode = str(evaluation_config.get("recovery_mode", "recover"))
+        if recovery_mode == "stop":
+            recovered = bool(error_positions) and not any(
+                "result" in call for call in calls[error_positions[0] + 1 :]
+            )
+        else:
+            recovered = bool(error_positions) and any(
+                index > error_positions[0] and "result" in call for index, call in enumerate(calls)
+            )
+        evaluation["error_recovery_passed"] = recovered
+    validation_errors = [call for call in calls if call.get("error_code") == "VALIDATION_ERROR"]
+    expectations = evaluation_config.get("argument_expectations", [])
+    semantic_arguments_correct = True
+    for expectation in expectations:
+        expected_tool = expectation.get("tool")
+        expected_arguments = expectation.get("arguments", {})
+        semantic_arguments_correct = semantic_arguments_correct and any(
+            call.get("tool") == expected_tool
+            and all(
+                _semantic_value_matches(key, call.get("arguments", {}).get(key), value)
+                for key, value in expected_arguments.items()
+            )
+            for call in calls
+        )
+    failed_calls = [call for call in calls if call.get("error_code")]
+    repeated_identical_failed_calls = sum(
+        left.get("tool") == right.get("tool")
+        and left.get("arguments") == right.get("arguments")
+        and left.get("error_code") == right.get("error_code")
+        for left, right in zip(failed_calls, failed_calls[1:], strict=False)
+    )
+    first_error_index = next(
+        (index for index, call in enumerate(calls) if call.get("error_code")), None
+    )
+    successful_after_error = bool(
+        first_error_index is not None
+        and any("result" in call for call in calls[first_error_index + 1 :])
+    )
+    changed_arguments_after_error = bool(
+        first_error_index is not None
+        and any(
+            call.get("arguments") != calls[first_error_index].get("arguments")
+            for call in calls[first_error_index + 1 :]
+        )
+    )
+    switched_tool_after_error = bool(
+        first_error_index is not None
+        and any(
+            call.get("tool") != calls[first_error_index].get("tool")
+            for call in calls[first_error_index + 1 :]
+        )
+    )
+    evaluation.update(
+        {
+            "schema_arguments_valid": not validation_errors,
+            "semantic_arguments_evaluated": bool(expectations),
+            "semantic_arguments_correct": semantic_arguments_correct,
+            "repeated_identical_failed_calls": repeated_identical_failed_calls,
+            "successful_after_error": successful_after_error,
+            "changed_arguments_after_error": changed_arguments_after_error,
+            "switched_tool_after_error": switched_tool_after_error,
+        }
+    )
+    evaluation["passed"] = (
+        evaluation["passed"]
+        and required_ok
+        and forbidden_ok
+        and behavior_passed
+        and required_sequence_passed
+        and targeted_clarification_passed
+        and tool_call_limit_passed
+    )
+    evaluation["passed"] = evaluation["passed"] and semantic_arguments_correct
+    evaluation["passed"] = evaluation["passed"] and recovered
     known_tools = {tool.name for tool in tools}
     failure_category, failure_explanation = classify_failure(
         evaluator_result=evaluation,
@@ -216,8 +384,14 @@ async def execute_task(
         model_refused=model_refused,
     )
     duration = time.perf_counter() - started
-    estimated_cost = (total_tokens.get("input", 0) * 0.0000005) + (
-        total_tokens.get("output", 0) * 0.0000015
+    estimated_cost = (
+        0.0
+        if provider.name == "mock"
+        else estimate_usage_cost(
+            f"{provider.name}:{provider.model}",
+            total_tokens.get("input", 0),
+            total_tokens.get("output", 0),
+        )
     )
     task_run.status = RunStatus.COMPLETED.value
     task_run.success = bool(evaluation["passed"])
@@ -240,10 +414,13 @@ async def execute_task(
         "difficulty": task.difficulty,
         "category": task.category,
         "tool_selection_correct": required_ok and forbidden_ok,
-        "argument_correct": not any(call.get("error_code") == "VALIDATION_ERROR" for call in calls),
+        "argument_correct": recovered
+        if task.category == "error_recovery"
+        else not validation_errors,
         "tool_calls": len(calls),
         "duration": duration,
         "cost_estimate": estimated_cost,
+        "token_usage": total_tokens,
         "failure_category": failure_category,
     }
 
@@ -255,12 +432,19 @@ async def run_benchmark(
     tasks: list[BenchmarkTask],
     configuration: dict[str, Any],
     settings: Settings,
+    interface_version: InterfaceVersion | None = None,
+    experiment_id: str | None = None,
+    trial_number: int = 1,
+    task_split: str | None = None,
 ) -> BenchmarkRun:
     provider = create_provider(model_identifier, settings)
-    interface = session.scalar(
+    interface = interface_version or session.scalar(
         select(InterfaceVersion)
-        .where(InterfaceVersion.project_id == project.id)
-        .order_by(InterfaceVersion.version.desc())
+        .where(
+            InterfaceVersion.project_id == project.id,
+            InterfaceVersion.variant_key == "baseline",
+        )
+        .order_by(InterfaceVersion.version.asc())
     )
     run = BenchmarkRun(
         project_id=project.id,
@@ -271,6 +455,9 @@ async def run_benchmark(
         started_at=now(),
         configuration={**configuration, "task_versions": {task.id: task.version for task in tasks}},
         synthetic=provider.name == "mock",
+        experiment_id=experiment_id,
+        trial_number=trial_number,
+        task_split=task_split,
     )
     session.add(run)
     session.flush()
@@ -281,7 +468,7 @@ async def run_benchmark(
         model=model_identifier,
         task_count=len(tasks),
     )
-    tools = [
+    canonical_tools = [
         _tool(tool)
         for tool in session.scalars(
             select(ToolDefinition).where(ToolDefinition.project_id == project.id)
@@ -290,7 +477,16 @@ async def run_benchmark(
     results: list[dict[str, Any]] = []
     try:
         for task in tasks:
-            results.append(await execute_task(session, run, task, tools, provider, settings))
+            task_tools = (
+                tools_for_task(interface, task.required_tools, task.forbidden_tools)
+                if interface
+                else canonical_tools
+            )
+            results.append(
+                await execute_task(
+                    session, run, task, task_tools, provider, settings, interface=interface
+                )
+            )
         run.aggregate_metrics = calculate_metrics(results)
         run.status = RunStatus.COMPLETED.value
     except Exception:

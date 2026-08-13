@@ -1,0 +1,13 @@
+{
+  "analysis_script": "scripts/analyze_phase15b_r2_holdout.py",
+  "database": "artifacts/phase15b_r2/sealed_holdout_runtime/phase15b_r2_holdout.db",
+  "database_committed": false,
+  "execution_summary": "artifacts/phase15b_r2/sealed_holdout_results/execution_summary.json",
+  "experiment_id": "4462ff36-259f-4c4c-8f6c-cbf548fc0718",
+  "frozen_benchmark_manifest": "artifacts/phase15b_r2/frozen_benchmark/protocol_manifest.json",
+  "holdout_manifest": "artifacts/phase15b_r2/frozen_benchmark/holdout_manifest.json",
+  "interface_manifest": "artifacts/phase15b_r2/frozen_interfaces/manifest.json",
+  "preregistration": "artifacts/phase15b_r2/preregistration.json",
+  "raw_dataset_sha256": "69b4b205f44e1e92167e6812f86f404f50c8ca2aee166bec5e3e43112e2ce878",
+  "raw_rows": 1620
+}

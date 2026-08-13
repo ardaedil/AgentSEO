@@ -1,14 +1,18 @@
 from functools import lru_cache
+from typing import Annotated
 
 from pydantic import field_validator
-from pydantic_settings import BaseSettings, SettingsConfigDict
+from pydantic_settings import BaseSettings, NoDecode, SettingsConfigDict
 
 
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
     database_url: str = "sqlite:///./agentseo.db"
-    cors_origins: list[str] = ["http://localhost:3000", "http://127.0.0.1:3000"]
+    cors_origins: Annotated[list[str], NoDecode] = [
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+    ]
     demo_mode: bool = True
     openai_api_key: str | None = None
     openai_model: str = "gpt-4.1-mini"
@@ -22,6 +26,12 @@ class Settings(BaseSettings):
     max_tool_calls: int = 12
     max_iterations: int = 16
     run_timeout_seconds: int = 120
+    phase15_max_cost_usd: float = 5.0
+    phase15_max_concurrency: int = 2
+    phase15_repetitions: int = 3
+    phase15_task_split_seed: int = 42
+    phase15_temperature: float = 0.0
+    phase15_bootstrap_samples: int = 2000
 
     @field_validator("cors_origins", mode="before")
     @classmethod
