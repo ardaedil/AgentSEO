@@ -1,0 +1,171 @@
+{
+  "aggregates": [
+    {
+      "argument_accuracy": 1.0,
+      "average_latency_ms": 11677.084608333038,
+      "average_tokens": 3947.3333333333335,
+      "average_tool_calls": 1.8333333333333333,
+      "clarification_accuracy": null,
+      "destructive_action_safety": 1.0,
+      "error_recovery_rate": 1.0,
+      "estimated_cost": 0.2994,
+      "model": "anthropic:claude-sonnet-5",
+      "multi_step_completion_rate": 0.9583333333333334,
+      "sample_size": 24,
+      "synthetic": false,
+      "task_split": "calibration_a",
+      "task_success_rate": 0.9583333333333334,
+      "tool_selection_accuracy": 0.9583333333333334,
+      "variant": "baseline"
+    },
+    {
+      "argument_accuracy": 1.0,
+      "average_latency_ms": 18913.953924999987,
+      "average_tokens": 2151.2916666666665,
+      "average_tool_calls": 2.5416666666666665,
+      "clarification_accuracy": null,
+      "destructive_action_safety": 0.9583333333333334,
+      "error_recovery_rate": 0.5,
+      "estimated_cost": 0.0974985,
+      "model": "google:gemini-3.6-flash",
+      "multi_step_completion_rate": 0.75,
+      "sample_size": 24,
+      "synthetic": false,
+      "task_split": "calibration_a",
+      "task_success_rate": 0.75,
+      "tool_selection_accuracy": 0.875,
+      "variant": "baseline"
+    },
+    {
+      "argument_accuracy": 1.0,
+      "average_latency_ms": 4774.177512499591,
+      "average_tokens": 991.4583333333334,
+      "average_tool_calls": 1.7916666666666667,
+      "clarification_accuracy": null,
+      "destructive_action_safety": 1.0,
+      "error_recovery_rate": 0.5,
+      "estimated_cost": 0.0121712,
+      "model": "openai:gpt-4.1-mini",
+      "multi_step_completion_rate": 0.625,
+      "sample_size": 24,
+      "synthetic": false,
+      "task_split": "calibration_a",
+      "task_success_rate": 0.625,
+      "tool_selection_accuracy": 0.75,
+      "variant": "baseline"
+    }
+  ],
+  "comparisons": [],
+  "cross_model_variance": [
+    {
+      "exploratory": true,
+      "model_count": 3,
+      "range": 0.33333333333333337,
+      "task_split": "calibration_a",
+      "variance": 0.018904320987654325,
+      "variant": "baseline"
+    }
+  ],
+  "decision": "DO NOT PROCEED YET",
+  "decision_reasons": [
+    "Degradation effect (0.0 percentage points) and optimized hidden lift (0.0 percentage points) do not meet the stated heuristics.",
+    "Additional evidence or benchmark repair is required before optimizer development."
+  ],
+  "difficulty_lifts": [],
+  "domains": [
+    "billing",
+    "crm",
+    "ecommerce"
+  ],
+  "executive_summary": "Real-provider observations were analyzed with paired methods. The evidence-based decision is DO NOT PROCEED YET.",
+  "exploratory": true,
+  "failure_analysis": [
+    {
+      "count": 1,
+      "failure_category": "WRONG_TOOL",
+      "model": "anthropic:claude-sonnet-5",
+      "rate": 0.041666666666666664,
+      "sample_size": 24,
+      "variant": "baseline"
+    },
+    {
+      "count": 1,
+      "failure_category": "DESTRUCTIVE_ACTION_ERROR",
+      "model": "google:gemini-3.6-flash",
+      "rate": 0.041666666666666664,
+      "sample_size": 24,
+      "variant": "baseline"
+    },
+    {
+      "count": 1,
+      "failure_category": "FAILED_TO_CLARIFY",
+      "model": "google:gemini-3.6-flash",
+      "rate": 0.041666666666666664,
+      "sample_size": 24,
+      "variant": "baseline"
+    },
+    {
+      "count": 1,
+      "failure_category": "MAX_ITERATIONS",
+      "model": "google:gemini-3.6-flash",
+      "rate": 0.041666666666666664,
+      "sample_size": 24,
+      "variant": "baseline"
+    },
+    {
+      "count": 1,
+      "failure_category": "TOOL_SEQUENCE_ERROR",
+      "model": "google:gemini-3.6-flash",
+      "rate": 0.041666666666666664,
+      "sample_size": 24,
+      "variant": "baseline"
+    },
+    {
+      "count": 1,
+      "failure_category": "UNNECESSARY_TOOL",
+      "model": "google:gemini-3.6-flash",
+      "rate": 0.041666666666666664,
+      "sample_size": 24,
+      "variant": "baseline"
+    },
+    {
+      "count": 1,
+      "failure_category": "WRONG_TOOL",
+      "model": "google:gemini-3.6-flash",
+      "rate": 0.041666666666666664,
+      "sample_size": 24,
+      "variant": "baseline"
+    },
+    {
+      "count": 6,
+      "failure_category": "POST_SUCCESS_CLARIFICATION",
+      "model": "openai:gpt-4.1-mini",
+      "rate": 0.25,
+      "sample_size": 24,
+      "variant": "baseline"
+    },
+    {
+      "count": 1,
+      "failure_category": "UNNECESSARY_TOOL",
+      "model": "openai:gpt-4.1-mini",
+      "rate": 0.041666666666666664,
+      "sample_size": 24,
+      "variant": "baseline"
+    },
+    {
+      "count": 2,
+      "failure_category": "WRONG_TOOL",
+      "model": "openai:gpt-4.1-mini",
+      "rate": 0.08333333333333333,
+      "sample_size": 24,
+      "variant": "baseline"
+    }
+  ],
+  "model_specific_effects": [],
+  "mutation_failure_analysis": [],
+  "observation_count": 72,
+  "real_observation_count": 72,
+  "variants": [
+    "baseline"
+  ]
+}
