@@ -1,6 +1,6 @@
 {
   "calibration_eligible_family_count": 28,
-  "candidate_manifest_sha256": "cf95f94fb8bfcc3f8e2286dfbf0f92302a4eeda8b870f805709e8804d78de914",
+  "candidate_manifest_sha256": "0c00a9f3b2298709ddc10bc86526028c46364ae305c24e691022df959f9ff50e",
   "category_distribution": {
     "clarification_not_required": 12,
     "clarification_required": 12,
@@ -24,7 +24,7 @@
     "ecommerce": 33
   },
   "evaluator_version": "phase15b-r2-deterministic-v1",
-  "git_commit": "bf80bd469881a216f5e99ba74840e4671e6cbdf6",
+  "git_commit": "92b52a72ea0354478c69b3141e1c96ebc123dd8f",
   "protocol": "PHASE15B_R2_HARD_BENCHMARK",
   "state": "UNSPLIT_CALIBRATION_CANDIDATE_POOL",
   "task_count": 120,
@@ -57,7 +57,7 @@
     {
       "category": "clarification_required",
       "difficulty": 7,
-      "initial_state_sha256": "5b42a5988ccf5d3615d16ee63e7c990c994abdf850779cf6cac25dff41538762",
+      "initial_state_sha256": "23db673df0d22b4429c3823c17b64988a44ed9f91f6e58dc29aee89a5a7e7ab0",
       "task_family": "ambiguous_subscription_cancellation",
       "task_id": "0b8dd39b-2bb9-5939-94cb-bce3d9afc5b4",
       "task_version": 1
@@ -97,7 +97,7 @@
     {
       "category": "error_recovery",
       "difficulty": 7,
-      "initial_state_sha256": "ccbd8a7c8aa66a623365bb6d035d33c5490771cc4dc31a703f99f0e1eacb640d",
+      "initial_state_sha256": "e5335802275bfd8b686222e6bd0b0302ca65f5d55ee99425577f214e6b051a53",
       "task_family": "terminal_invalid_invoice_refund",
       "task_id": "14b79d58-fb4f-5fc1-a1b2-658e1334c9ca",
       "task_version": 1
@@ -105,7 +105,7 @@
     {
       "category": "constraint_preservation",
       "difficulty": 7,
-      "initial_state_sha256": "b8cc7ea8643f4706276d20709b05af1c4cf8135de1a28b481b7e5a3d76dd5c13",
+      "initial_state_sha256": "05073ea7a19805eb046e22454e797c2baed596179c6d6d2cd539f8b21a73c01e",
       "task_family": "assignment_preserves_opportunity_state",
       "task_id": "1730efb4-919e-5eec-a368-603e5a80bf03",
       "task_version": 1
@@ -113,7 +113,7 @@
     {
       "category": "safety_destructive",
       "difficulty": 6,
-      "initial_state_sha256": "d27ca05519e074e0ab76507ef963c9f78f9c9734f2ff2d83d045bc9dd7ea0fe7",
+      "initial_state_sha256": "9a3e58ba9d8e53e44ab44cc13bc93bd85f199741d51039840dc760da11b75621",
       "task_family": "confirmed_unique_profile_deletion",
       "task_id": "1e316afb-cc49-5732-b726-79bc2046021d",
       "task_version": 1
@@ -129,7 +129,7 @@
     {
       "category": "error_recovery",
       "difficulty": 8,
-      "initial_state_sha256": "d79f12ff6fbfc5630d578286007702ce86f3821e7ac5d3cc37c6faa5677f9c91",
+      "initial_state_sha256": "74805714fe92e7477dc69a90aff1e73cc4f737036f27e3ddb19639fb461a06b7",
       "task_family": "stale_customer_replacement_subscription",
       "task_id": "224f8149-e361-508b-a5db-f538f07b28e6",
       "task_version": 1
@@ -153,7 +153,7 @@
     {
       "category": "clarification_not_required",
       "difficulty": 6,
-      "initial_state_sha256": "d7c1a52ca3974b572a7eb915a84e08909a1729748065d4dcfecc912c9e569a08",
+      "initial_state_sha256": "ffe24aa63a6d5ab6b62784f60b723035fed126380c8b28c424bfbdf86d812b06",
       "task_family": "exact_subscription_schedule",
       "task_id": "269ed62f-67de-506b-b1fc-41fa6060c69d",
       "task_version": 1
@@ -161,7 +161,7 @@
     {
       "category": "safety_destructive",
       "difficulty": 6,
-      "initial_state_sha256": "d27ca05519e074e0ab76507ef963c9f78f9c9734f2ff2d83d045bc9dd7ea0fe7",
+      "initial_state_sha256": "9a3e58ba9d8e53e44ab44cc13bc93bd85f199741d51039840dc760da11b75621",
       "task_family": "confirmed_unique_profile_deletion",
       "task_id": "29f1d5cf-8e88-5b20-82c4-d1097b49846f",
       "task_version": 1
@@ -177,7 +177,7 @@
     {
       "category": "constraint_preservation",
       "difficulty": 7,
-      "initial_state_sha256": "17e681662413d7d3df4d349af5c9f26e86169b6be9c468f28d19f50f3048c7a1",
+      "initial_state_sha256": "4a5a1043399ad6349b4ab4c705519a41101cfd490bf0079663a83ac04979b41c",
       "task_family": "subscription_cancellation_preserves_billing",
       "task_id": "2af86b42-a486-5373-a467-5d67da1081e2",
       "task_version": 1
@@ -185,7 +185,7 @@
     {
       "category": "safety_destructive",
       "difficulty": 7,
-      "initial_state_sha256": "a84fe7d3f9961992613814eacddabccc64894799d49ecc2321ec2c261b70c120",
+      "initial_state_sha256": "02387b8bf045ac6cfb5d0b557b09920c823ded1a5ff42fb2fe353aea82778471",
       "task_family": "tentative_account_termination",
       "task_id": "2bacca1c-83be-551d-a0f1-bb548d1211e5",
       "task_version": 1
@@ -289,7 +289,7 @@
     {
       "category": "unsupported_semantics",
       "difficulty": 7,
-      "initial_state_sha256": "25397ca87e1b85ca47a17be83411e15a479d65467c9dbcbb7e4769705ea19441",
+      "initial_state_sha256": "c6fece1ccdcbe3be3c7b5eefdc9c717fc5bedb27217174e8b0900728fa4395df",
       "task_family": "unsupported_stale_opportunity_filter",
       "task_id": "48f4219b-9e4a-51f0-93b3-80e4f6d79bbc",
       "task_version": 1
@@ -305,7 +305,7 @@
     {
       "category": "clarification_required",
       "difficulty": 8,
-      "initial_state_sha256": "232768d37a08034bbf955ce5ad5b264df68355443a192395429aceb89cb7cf66",
+      "initial_state_sha256": "caa972a31fa196b4f282b69de8c34e457f2da52d60482a1866dab2ce50b6d148",
       "task_family": "duplicate_shopper_conditional_refund",
       "task_id": "51648581-794b-532e-9ea7-2af09f355db6",
       "task_version": 1
@@ -313,7 +313,7 @@
     {
       "category": "tool_overlap",
       "difficulty": 6,
-      "initial_state_sha256": "c01623a39cbfc288e048bb100c9127f3eff539f96f72239db961662bb67ab46c",
+      "initial_state_sha256": "df6252a2e60474e3333d84450a78782f3f53c6eecfe353b52f720efcff426f6d",
       "task_family": "legacy_vs_flexible_customer_search",
       "task_id": "520191e8-5333-5a0c-b6b4-91938101cf5a",
       "task_version": 1
@@ -321,7 +321,7 @@
     {
       "category": "constraint_preservation",
       "difficulty": 7,
-      "initial_state_sha256": "b8cc7ea8643f4706276d20709b05af1c4cf8135de1a28b481b7e5a3d76dd5c13",
+      "initial_state_sha256": "05073ea7a19805eb046e22454e797c2baed596179c6d6d2cd539f8b21a73c01e",
       "task_family": "assignment_preserves_opportunity_state",
       "task_id": "52655e98-52cf-5353-9696-709235b64ead",
       "task_version": 1
@@ -361,7 +361,7 @@
     {
       "category": "post_success",
       "difficulty": 6,
-      "initial_state_sha256": "31aed44de5dfa0d5f02c2ac3eda6ba2bbb2db133493111f6a14ec3a1db9f4646",
+      "initial_state_sha256": "fb04f723b1c4f6a3448959ab22537ee3a815b8a2b1a23a4ee71ebe16d3bef023",
       "task_family": "invoice_refund_terminal_success",
       "task_id": "59bf911e-d749-51dd-aaae-35a97830310f",
       "task_version": 1
@@ -369,7 +369,7 @@
     {
       "category": "error_recovery",
       "difficulty": 7,
-      "initial_state_sha256": "ccbd8a7c8aa66a623365bb6d035d33c5490771cc4dc31a703f99f0e1eacb640d",
+      "initial_state_sha256": "e5335802275bfd8b686222e6bd0b0302ca65f5d55ee99425577f214e6b051a53",
       "task_family": "terminal_invalid_invoice_refund",
       "task_id": "5acd53ec-c5e1-59a1-9648-8a471f4f2860",
       "task_version": 1
@@ -377,7 +377,7 @@
     {
       "category": "post_success",
       "difficulty": 6,
-      "initial_state_sha256": "908896ebf943addfe1198efbc9b023ae88234fb32eebe31eedb7ed626a0f2a42",
+      "initial_state_sha256": "79046184969ec8eab1747397eb1020c4c2e5f9652b9442965545ea86b0e3a52a",
       "task_family": "subscription_cancel_terminal_success",
       "task_id": "5dae61a0-2b00-5627-8c6d-6d3ce7b7904a",
       "task_version": 1
@@ -385,7 +385,7 @@
     {
       "category": "clarification_required",
       "difficulty": 8,
-      "initial_state_sha256": "232768d37a08034bbf955ce5ad5b264df68355443a192395429aceb89cb7cf66",
+      "initial_state_sha256": "caa972a31fa196b4f282b69de8c34e457f2da52d60482a1866dab2ce50b6d148",
       "task_family": "duplicate_shopper_conditional_refund",
       "task_id": "5e18aa84-e5f2-57f7-a34e-bfaa553c9c85",
       "task_version": 1
@@ -393,7 +393,7 @@
     {
       "category": "safety_destructive",
       "difficulty": 6,
-      "initial_state_sha256": "d27ca05519e074e0ab76507ef963c9f78f9c9734f2ff2d83d045bc9dd7ea0fe7",
+      "initial_state_sha256": "9a3e58ba9d8e53e44ab44cc13bc93bd85f199741d51039840dc760da11b75621",
       "task_family": "confirmed_unique_profile_deletion",
       "task_id": "60b5cdc7-49f8-5deb-8820-5cf0434c2632",
       "task_version": 1
@@ -433,7 +433,7 @@
     {
       "category": "unsupported_semantics",
       "difficulty": 7,
-      "initial_state_sha256": "25397ca87e1b85ca47a17be83411e15a479d65467c9dbcbb7e4769705ea19441",
+      "initial_state_sha256": "c6fece1ccdcbe3be3c7b5eefdc9c717fc5bedb27217174e8b0900728fa4395df",
       "task_family": "unsupported_stale_opportunity_filter",
       "task_id": "6a9d65c4-24ac-5764-b84e-15b97f288e73",
       "task_version": 1
@@ -457,7 +457,7 @@
     {
       "category": "identifier_routing",
       "difficulty": 7,
-      "initial_state_sha256": "06bd9e06be8e8d09307d403a17bef082bc8b95b288279b8cea7284691f03af20",
+      "initial_state_sha256": "21695145b0c21923d24f7694c709b3217cb43f9a12f84d5165eb42c5772cb48c",
       "task_family": "invoice_identifier_invalid_state",
       "task_id": "7205080c-e451-52fe-b04f-13b689c5dc27",
       "task_version": 1
@@ -497,7 +497,7 @@
     {
       "category": "clarification_required",
       "difficulty": 7,
-      "initial_state_sha256": "5b42a5988ccf5d3615d16ee63e7c990c994abdf850779cf6cac25dff41538762",
+      "initial_state_sha256": "23db673df0d22b4429c3823c17b64988a44ed9f91f6e58dc29aee89a5a7e7ab0",
       "task_family": "ambiguous_subscription_cancellation",
       "task_id": "7ad3d44c-7e50-5c7f-af33-2a12c0e8daa9",
       "task_version": 1
@@ -521,7 +521,7 @@
     {
       "category": "safety_destructive",
       "difficulty": 7,
-      "initial_state_sha256": "a84fe7d3f9961992613814eacddabccc64894799d49ecc2321ec2c261b70c120",
+      "initial_state_sha256": "02387b8bf045ac6cfb5d0b557b09920c823ded1a5ff42fb2fe353aea82778471",
       "task_family": "tentative_account_termination",
       "task_id": "7e452177-9198-59e2-a6b0-4b0a7f4212e2",
       "task_version": 1
@@ -529,7 +529,7 @@
     {
       "category": "post_success",
       "difficulty": 6,
-      "initial_state_sha256": "908896ebf943addfe1198efbc9b023ae88234fb32eebe31eedb7ed626a0f2a42",
+      "initial_state_sha256": "79046184969ec8eab1747397eb1020c4c2e5f9652b9442965545ea86b0e3a52a",
       "task_family": "subscription_cancel_terminal_success",
       "task_id": "7f4ebab5-6703-5b51-808f-f0310b6cc51e",
       "task_version": 1
@@ -537,7 +537,7 @@
     {
       "category": "constraint_preservation",
       "difficulty": 7,
-      "initial_state_sha256": "17e681662413d7d3df4d349af5c9f26e86169b6be9c468f28d19f50f3048c7a1",
+      "initial_state_sha256": "4a5a1043399ad6349b4ab4c705519a41101cfd490bf0079663a83ac04979b41c",
       "task_family": "subscription_cancellation_preserves_billing",
       "task_id": "8158fabf-0ef8-5ac7-8191-61ad40c7ba00",
       "task_version": 1
@@ -553,7 +553,7 @@
     {
       "category": "clarification_not_required",
       "difficulty": 7,
-      "initial_state_sha256": "b181b52e1b7726cc5e1b28ac79f341e1d2dc618939c7c266bd0947da48456e41",
+      "initial_state_sha256": "46f385b322eac89eefbcec62b204948807946a2a9afe28b03b7ac91792837eef",
       "task_family": "exact_invoice_refund_without_confirmation",
       "task_id": "8588b394-2354-59fd-bf90-bc3b4ad8853a",
       "task_version": 1
@@ -561,7 +561,7 @@
     {
       "category": "identifier_routing",
       "difficulty": 7,
-      "initial_state_sha256": "06bd9e06be8e8d09307d403a17bef082bc8b95b288279b8cea7284691f03af20",
+      "initial_state_sha256": "21695145b0c21923d24f7694c709b3217cb43f9a12f84d5165eb42c5772cb48c",
       "task_family": "invoice_identifier_invalid_state",
       "task_id": "87d3e2f5-a5f8-5bb7-a936-8021fea9873e",
       "task_version": 1
@@ -577,7 +577,7 @@
     {
       "category": "tool_overlap",
       "difficulty": 6,
-      "initial_state_sha256": "c01623a39cbfc288e048bb100c9127f3eff539f96f72239db961662bb67ab46c",
+      "initial_state_sha256": "df6252a2e60474e3333d84450a78782f3f53c6eecfe353b52f720efcff426f6d",
       "task_family": "legacy_vs_flexible_customer_search",
       "task_id": "8c7f2f76-3a88-5099-975e-23d2052c8770",
       "task_version": 1
@@ -585,7 +585,7 @@
     {
       "category": "post_success",
       "difficulty": 6,
-      "initial_state_sha256": "908896ebf943addfe1198efbc9b023ae88234fb32eebe31eedb7ed626a0f2a42",
+      "initial_state_sha256": "79046184969ec8eab1747397eb1020c4c2e5f9652b9442965545ea86b0e3a52a",
       "task_family": "subscription_cancel_terminal_success",
       "task_id": "8ceb5c51-b7b0-5139-bd78-1b826a8c59dc",
       "task_version": 1
@@ -593,7 +593,7 @@
     {
       "category": "post_success",
       "difficulty": 6,
-      "initial_state_sha256": "31aed44de5dfa0d5f02c2ac3eda6ba2bbb2db133493111f6a14ec3a1db9f4646",
+      "initial_state_sha256": "fb04f723b1c4f6a3448959ab22537ee3a815b8a2b1a23a4ee71ebe16d3bef023",
       "task_family": "invoice_refund_terminal_success",
       "task_id": "8d5afdfd-0661-58e7-8acd-93c85845b01b",
       "task_version": 1
@@ -617,7 +617,7 @@
     {
       "category": "error_recovery",
       "difficulty": 8,
-      "initial_state_sha256": "d79f12ff6fbfc5630d578286007702ce86f3821e7ac5d3cc37c6faa5677f9c91",
+      "initial_state_sha256": "74805714fe92e7477dc69a90aff1e73cc4f737036f27e3ddb19639fb461a06b7",
       "task_family": "stale_customer_replacement_subscription",
       "task_id": "99637ff1-8071-52d3-a46b-e3660e0331d7",
       "task_version": 1
@@ -625,7 +625,7 @@
     {
       "category": "clarification_not_required",
       "difficulty": 7,
-      "initial_state_sha256": "b181b52e1b7726cc5e1b28ac79f341e1d2dc618939c7c266bd0947da48456e41",
+      "initial_state_sha256": "46f385b322eac89eefbcec62b204948807946a2a9afe28b03b7ac91792837eef",
       "task_family": "exact_invoice_refund_without_confirmation",
       "task_id": "9a1b5f08-b3e0-5ed7-992f-c29d44f9a9ba",
       "task_version": 1
@@ -657,7 +657,7 @@
     {
       "category": "clarification_required",
       "difficulty": 7,
-      "initial_state_sha256": "5b42a5988ccf5d3615d16ee63e7c990c994abdf850779cf6cac25dff41538762",
+      "initial_state_sha256": "23db673df0d22b4429c3823c17b64988a44ed9f91f6e58dc29aee89a5a7e7ab0",
       "task_family": "ambiguous_subscription_cancellation",
       "task_id": "a4395294-6334-5a2a-9192-00797bbbca5f",
       "task_version": 1
@@ -673,7 +673,7 @@
     {
       "category": "post_success",
       "difficulty": 6,
-      "initial_state_sha256": "31aed44de5dfa0d5f02c2ac3eda6ba2bbb2db133493111f6a14ec3a1db9f4646",
+      "initial_state_sha256": "fb04f723b1c4f6a3448959ab22537ee3a815b8a2b1a23a4ee71ebe16d3bef023",
       "task_family": "invoice_refund_terminal_success",
       "task_id": "a6782b78-804e-5823-96b9-7c4b369865c5",
       "task_version": 1
@@ -689,7 +689,7 @@
     {
       "category": "tool_overlap",
       "difficulty": 6,
-      "initial_state_sha256": "c01623a39cbfc288e048bb100c9127f3eff539f96f72239db961662bb67ab46c",
+      "initial_state_sha256": "df6252a2e60474e3333d84450a78782f3f53c6eecfe353b52f720efcff426f6d",
       "task_family": "legacy_vs_flexible_customer_search",
       "task_id": "a91f09ca-719b-5e7b-930b-8c834370a69e",
       "task_version": 1
@@ -713,7 +713,7 @@
     {
       "category": "clarification_not_required",
       "difficulty": 6,
-      "initial_state_sha256": "d7c1a52ca3974b572a7eb915a84e08909a1729748065d4dcfecc912c9e569a08",
+      "initial_state_sha256": "ffe24aa63a6d5ab6b62784f60b723035fed126380c8b28c424bfbdf86d812b06",
       "task_family": "exact_subscription_schedule",
       "task_id": "b0f3dea4-a13a-5152-b561-536a167a494c",
       "task_version": 1
@@ -721,7 +721,7 @@
     {
       "category": "safety_destructive",
       "difficulty": 7,
-      "initial_state_sha256": "a84fe7d3f9961992613814eacddabccc64894799d49ecc2321ec2c261b70c120",
+      "initial_state_sha256": "02387b8bf045ac6cfb5d0b557b09920c823ded1a5ff42fb2fe353aea82778471",
       "task_family": "tentative_account_termination",
       "task_id": "b202d63e-c41d-5764-a375-8f1a849b8e6a",
       "task_version": 1
@@ -729,7 +729,7 @@
     {
       "category": "clarification_not_required",
       "difficulty": 7,
-      "initial_state_sha256": "b181b52e1b7726cc5e1b28ac79f341e1d2dc618939c7c266bd0947da48456e41",
+      "initial_state_sha256": "46f385b322eac89eefbcec62b204948807946a2a9afe28b03b7ac91792837eef",
       "task_family": "exact_invoice_refund_without_confirmation",
       "task_id": "b300230d-f8a1-59f2-8202-0d515492662d",
       "task_version": 1
@@ -769,7 +769,7 @@
     {
       "category": "error_recovery",
       "difficulty": 8,
-      "initial_state_sha256": "d79f12ff6fbfc5630d578286007702ce86f3821e7ac5d3cc37c6faa5677f9c91",
+      "initial_state_sha256": "74805714fe92e7477dc69a90aff1e73cc4f737036f27e3ddb19639fb461a06b7",
       "task_family": "stale_customer_replacement_subscription",
       "task_id": "b840d847-82d0-5ce6-bea7-79105aa75244",
       "task_version": 1
@@ -777,7 +777,7 @@
     {
       "category": "clarification_not_required",
       "difficulty": 6,
-      "initial_state_sha256": "d7c1a52ca3974b572a7eb915a84e08909a1729748065d4dcfecc912c9e569a08",
+      "initial_state_sha256": "ffe24aa63a6d5ab6b62784f60b723035fed126380c8b28c424bfbdf86d812b06",
       "task_family": "exact_subscription_schedule",
       "task_id": "ba762725-7c9d-5c36-b2a2-1acbc327d8f3",
       "task_version": 1
@@ -793,7 +793,7 @@
     {
       "category": "constraint_preservation",
       "difficulty": 7,
-      "initial_state_sha256": "b8cc7ea8643f4706276d20709b05af1c4cf8135de1a28b481b7e5a3d76dd5c13",
+      "initial_state_sha256": "05073ea7a19805eb046e22454e797c2baed596179c6d6d2cd539f8b21a73c01e",
       "task_family": "assignment_preserves_opportunity_state",
       "task_id": "bcd00d32-27f9-5bcc-9ac0-92b079dc64d1",
       "task_version": 1
@@ -849,7 +849,7 @@
     {
       "category": "clarification_required",
       "difficulty": 8,
-      "initial_state_sha256": "232768d37a08034bbf955ce5ad5b264df68355443a192395429aceb89cb7cf66",
+      "initial_state_sha256": "caa972a31fa196b4f282b69de8c34e457f2da52d60482a1866dab2ce50b6d148",
       "task_family": "duplicate_shopper_conditional_refund",
       "task_id": "cab4dfa5-4091-52a9-b29a-1bde9a05c5cb",
       "task_version": 1
@@ -857,7 +857,7 @@
     {
       "category": "error_recovery",
       "difficulty": 7,
-      "initial_state_sha256": "ccbd8a7c8aa66a623365bb6d035d33c5490771cc4dc31a703f99f0e1eacb640d",
+      "initial_state_sha256": "e5335802275bfd8b686222e6bd0b0302ca65f5d55ee99425577f214e6b051a53",
       "task_family": "terminal_invalid_invoice_refund",
       "task_id": "cc0adc64-d50b-5116-a597-0d802aa3099d",
       "task_version": 1
@@ -897,7 +897,7 @@
     {
       "category": "constraint_preservation",
       "difficulty": 7,
-      "initial_state_sha256": "17e681662413d7d3df4d349af5c9f26e86169b6be9c468f28d19f50f3048c7a1",
+      "initial_state_sha256": "4a5a1043399ad6349b4ab4c705519a41101cfd490bf0079663a83ac04979b41c",
       "task_family": "subscription_cancellation_preserves_billing",
       "task_id": "d41186c0-2e0d-5503-bf1e-982362e79414",
       "task_version": 1
@@ -905,7 +905,7 @@
     {
       "category": "unsupported_semantics",
       "difficulty": 7,
-      "initial_state_sha256": "25397ca87e1b85ca47a17be83411e15a479d65467c9dbcbb7e4769705ea19441",
+      "initial_state_sha256": "c6fece1ccdcbe3be3c7b5eefdc9c717fc5bedb27217174e8b0900728fa4395df",
       "task_family": "unsupported_stale_opportunity_filter",
       "task_id": "d4329ed8-3a3e-5b80-862f-456911459862",
       "task_version": 1
@@ -953,7 +953,7 @@
     {
       "category": "identifier_routing",
       "difficulty": 7,
-      "initial_state_sha256": "06bd9e06be8e8d09307d403a17bef082bc8b95b288279b8cea7284691f03af20",
+      "initial_state_sha256": "21695145b0c21923d24f7694c709b3217cb43f9a12f84d5165eb42c5772cb48c",
       "task_family": "invoice_identifier_invalid_state",
       "task_id": "edb35dca-85fb-56a9-88e3-b0a8c5f45e6e",
       "task_version": 1
