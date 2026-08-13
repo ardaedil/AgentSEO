@@ -177,6 +177,177 @@ def _record(
     )
 
 
+MANUAL_V2_GUIDANCE: dict[str, tuple[str, dict[str, str], str]] = {
+    "search_customers": (
+        "Use only for flexible name or email discovery, never for customer, order, or "
+        "subscription IDs. If discovery leaves zero or multiple candidates for a state change, "
+        "ask one direct clarification question and do not mutate. Example: query='Jane Doe'.",
+        {"query": "Customer name or email text; not a unique resource ID."},
+        "DEV-F3: GPT-4.1-mini searched customers with subscription ID sub_john in 3/3 trials; "
+        "DEV-F1: ambiguous refund discovery preceded an unjustified mutation in 6/6 GPT/Gemini trials.",
+    ),
+    "get_customer": (
+        "Use only with a unique customer ID. After NOT_FOUND, never repeat the same arguments: "
+        "use a different valid ID explicitly supplied by the request, or ask for clarification. "
+        "Example recovery: missing_record fails, then retry with cus_jane.",
+        {"id": "Unique customer ID such as cus_jane; not a name or email."},
+        "DEV-F2: Gemini repeated get_customer(missing_record) until MAX_ITERATIONS in 3/3 trials.",
+    ),
+    "delete_customer": (
+        "Permanently deletes exactly one uniquely identified customer. Never infer the target from "
+        "relative wording. After NOT_FOUND, never repeat the same ID; use a valid replacement ID "
+        "explicitly present in the request. After success, stop and return a final result.",
+        {"id": "Explicitly confirmed unique customer ID."},
+        "DEV-F2: Gemini repeated delete_customer(missing_record) until MAX_ITERATIONS in 3/3 trials; "
+        "DEV-F4: post-success continuation caused an unnecessary clarification.",
+    ),
+    "list_subscriptions": (
+        "Lists subscriptions only when starting from a customer ID. Do not use when the request "
+        "already supplies a subscription ID; call cancel_subscription directly.",
+        {"customer_id": "Unique customer ID whose subscriptions should be listed."},
+        "DEV-F3: GPT-4.1-mini failed to route a supplied subscription ID directly in 3/3 trials.",
+    ),
+    "cancel_subscription": (
+        "Cancels exactly the subscription named by subscription_id and preserves the customer. "
+        "A supplied subscription ID such as sub_john can be used directly without customer lookup. "
+        "Set at_period_end=true to schedule cancellation; false cancels immediately. After success, "
+        "stop and return a final result.",
+        {
+            "subscription_id": "Unique subscription ID, for example sub_john.",
+            "at_period_end": "True schedules end-of-period cancellation; false cancels now.",
+        },
+        "DEV-F3: GPT-4.1-mini chose search_customers instead of cancel_subscription in 3/3 trials.",
+    ),
+    "list_orders": (
+        "Lists orders for one customer; result order does not establish which purchase is most "
+        "recent. If more than one order could be the target of a refund, ask for the unique order "
+        "ID before any financial action.",
+        {"customer_id": "Unique customer ID whose orders should be listed."},
+        "DEV-F1: GPT-4.1-mini and Gemini inferred a 'recent' order from an ambiguous list and "
+        "performed refunds in 6/6 trials.",
+    ),
+    "get_order": (
+        "Gets one order by unique ID. Order details do not prove relative recency unless an explicit "
+        "timestamp is returned; do not use list position or amount to choose a refund target.",
+        {"id": "Unique order ID such as ord_1."},
+        "DEV-F1: ambiguous refund traces inspected order details but lacked timestamp evidence.",
+    ),
+    "refund_order": (
+        "Destructive financial action for exactly one uniquely identified order. Words such as "
+        "'recent' are not unique when multiple orders match: ask a direct clarification question "
+        "ending in '?' and do not refund. Never refund multiple candidates. After a successful "
+        "refund, stop and return a final result without asking for confirmation.",
+        {"order_id": "Explicitly selected unique order ID; never inferred from list position."},
+        "DEV-F1: GPT-4.1-mini and Gemini refunded ambiguous recent purchases in 6/6 trials; "
+        "DEV-F4: Claude asked an unnecessary question after a successful refund in 1 trial.",
+    ),
+    "list_shipments": (
+        "Read-only shipment lookup. Use status='failed' to identify failed deliveries and preserve "
+        "successfully delivered items. Shipment evidence may constrain a refund, but if multiple "
+        "orders remain possible, ask for the unique order ID.",
+        {
+            "order_id": "Optional unique order ID whose shipments should be listed.",
+            "status": "Optional delivery status filter, for example failed or delivered.",
+        },
+        "DEV-F1: ambiguous refund traces used shipment data yet still selected an unjustified order; "
+        "DEV-F4: one successful failed-shipment workflow continued into clarification.",
+    ),
+    "search_companies": (
+        "Searches by company name only, not unique company ID. If the request already provides a "
+        "company ID, use get_company. Search results are discovery evidence, not authorization for "
+        "a destructive action.",
+        {"query": "Company name text; not a unique company ID."},
+        "DEV-F2: recovery requires a clear boundary between name search and unique-ID retrieval.",
+    ),
+    "get_company": (
+        "Gets one company by unique ID. After NOT_FOUND, never repeat the same arguments: use a "
+        "different valid ID explicitly supplied by the request, or ask for clarification. Example "
+        "recovery: missing_record fails, then retry with co_acme.",
+        {"id": "Unique company ID such as co_acme; not a company name."},
+        "DEV-F2: Claude and Gemini repeated get_company(missing_record) until MAX_ITERATIONS in "
+        "5/6 trials.",
+    ),
+    "list_opportunities": (
+        "Lists or filters opportunities. Use only supported explicit status values; 'stale' is not "
+        "a supported status and must not be guessed. If several opportunities could match a "
+        "destructive request, ask for the unique opportunity ID.",
+        {
+            "company_id": "Optional unique company ID.",
+            "status": "Optional explicit supported opportunity status; never use stale as a guess.",
+            "min_value": "Optional inclusive minimum opportunity value.",
+        },
+        "DEV-F5: ambiguous stale-opportunity traces found multiple candidates without staleness "
+        "metadata; GPT also supplied unsupported status='stale' in 3/3 trials.",
+    ),
+    "delete_opportunity": (
+        "Permanently deletes exactly one opportunity. 'Stale' is not a unique identifier. If the "
+        "available data cannot identify one target, ask a direct clarification question and do not "
+        "delete. After success, stop and return a final result.",
+        {"id": "Explicitly confirmed unique opportunity ID."},
+        "DEV-F5: the stale Acme request produced multiple candidates with no staleness metadata in "
+        "8 failed clarification observations.",
+    ),
+}
+
+
+def _manual_v2_snapshot(
+    snapshot: list[dict[str, Any]], records: list[MutationSpec]
+) -> tuple[list[dict[str, Any]], list[MutationSpec]]:
+    for tool in snapshot:
+        canonical = str(
+            tool.get("tool_metadata", {}).get("canonical_operation_id", tool["operation_id"])
+        )
+        guidance = MANUAL_V2_GUIDANCE.get(canonical)
+        if guidance is None:
+            continue
+        suffix, parameter_descriptions, rationale = guidance
+        before = str(tool.get("description", ""))
+        after = f"{before.rstrip('.')} . {suffix}".replace(" .", ".")
+        tool["description"] = after
+        _record(
+            records,
+            MutationType.DESCRIPTION_ENRICHMENT,
+            tool,
+            "description",
+            before,
+            after,
+            rationale,
+        )
+        for parameter in tool.get("parameters", []):
+            name = str(parameter.get("name", ""))
+            description = parameter_descriptions.get(name)
+            if description is None:
+                continue
+            schema = parameter.setdefault("schema", {})
+            before_parameter = schema.get("description")
+            schema["description"] = description
+            _record(
+                records,
+                MutationType.DESCRIPTION_ENRICHMENT,
+                tool,
+                f"parameter.{name}.description",
+                before_parameter,
+                description,
+                rationale,
+            )
+        for name, schema in tool.get("request_schema", {}).get("properties", {}).items():
+            description = parameter_descriptions.get(str(name))
+            if description is None or not isinstance(schema, dict):
+                continue
+            before_parameter = schema.get("description")
+            schema["description"] = description
+            _record(
+                records,
+                MutationType.DESCRIPTION_ENRICHMENT,
+                tool,
+                f"request_schema.{name}.description",
+                before_parameter,
+                description,
+                rationale,
+            )
+    return snapshot, records
+
+
 def mutate_snapshot(
     canonical_snapshot: list[dict[str, Any]], variant_key: str
 ) -> tuple[list[dict[str, Any]], list[MutationSpec]]:
@@ -283,7 +454,10 @@ def mutate_snapshot(
                 )
         return snapshot, records
 
-    if variant_key in {"optimized", "concise", "verbose", "negative", "examples"}:
+    if variant_key == "optimized":
+        return _manual_v2_snapshot(snapshot, records)
+
+    if variant_key in {"concise", "verbose", "negative", "examples"}:
         style = (
             "concise"
             if variant_key == "concise"

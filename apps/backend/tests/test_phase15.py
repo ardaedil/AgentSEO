@@ -15,6 +15,8 @@ from agentseo.experiments import (
     run_phase15_experiment,
 )
 from agentseo.interfaces import (
+    MANUAL_V2_GUIDANCE,
+    create_interface_variant,
     create_phase15_variants,
     interface_features,
     translate_tool_call,
@@ -24,6 +26,7 @@ from agentseo.models import (
     ExperimentStatus,
     InterfaceMutation,
     InterfaceVersion,
+    MutationGeneratedBy,
     Project,
     TaskRun,
     ToolDefinition,
@@ -119,6 +122,39 @@ def test_interface_mutation_variant_and_canonical_mapping():
             "EXAMPLE_REMOVAL",
             "TOOL_OVERLAP",
         }
+
+
+def test_manual_v2_is_trace_justified_and_preserves_canonical_mapping():
+    with SessionLocal() as session:
+        project, parent, _ = make_project(session)
+        optimized = create_interface_variant(
+            session,
+            project,
+            parent,
+            "optimized",
+            generated_by=MutationGeneratedBy.HUMAN,
+        )
+        session.commit()
+        tool = optimized.tool_definitions_snapshot[0]
+        assert tool["name"] == "get_customer"
+        assert "never repeat the same arguments" in tool["description"].lower()
+        assert tool["parameters"][0]["schema"]["description"].startswith("Unique customer ID")
+        canonical, arguments = translate_tool_call(optimized, "get_customer", {"id": "cus_jane"})
+        assert canonical == "get_customer"
+        assert arguments == {"id": "cus_jane"}
+        mutations = list(
+            session.scalars(
+                select(InterfaceMutation).where(
+                    InterfaceMutation.interface_version_id == optimized.id
+                )
+            )
+        )
+        assert mutations
+        assert all(
+            mutation.generated_by == MutationGeneratedBy.HUMAN.value for mutation in mutations
+        )
+        assert all("DEV-F" in mutation.rationale for mutation in mutations)
+        assert "get_customer" in MANUAL_V2_GUIDANCE
 
 
 def test_toolset_expansion_is_safe_and_feature_extraction_is_structured():

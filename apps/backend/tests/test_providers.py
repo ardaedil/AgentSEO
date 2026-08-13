@@ -3,7 +3,7 @@ from __future__ import annotations
 import httpx
 import pytest
 from agentseo.openapi_parser import NormalizedTool
-from agentseo.providers import AnthropicProvider, GeminiProvider
+from agentseo.providers import AnthropicProvider, GeminiProvider, OpenAIProvider, text_action_kind
 
 
 def sample_tool() -> NormalizedTool:
@@ -67,4 +67,39 @@ async def test_sonnet_5_omits_unsupported_temperature():
 
     assert captured is not None
     assert "temperature" not in captured.read().decode()
+    await provider.client.aclose()
+
+
+def test_text_action_kind_recognizes_nonterminal_clarification_language():
+    assert (
+        text_action_kind("Could you clarify which record? Details can follow.") == "clarification"
+    )
+    assert text_action_kind("Please specify the unique opportunity ID.") == "clarification"
+    assert text_action_kind("The requested operation is complete.") == "final"
+
+
+@pytest.mark.asyncio
+async def test_openai_extracts_text_from_responses_output_items():
+    def handler(_request: httpx.Request) -> httpx.Response:
+        return httpx.Response(
+            200,
+            json={
+                "output": [
+                    {
+                        "type": "message",
+                        "content": [
+                            {"type": "output_text", "text": "Please specify the unique ID."}
+                        ],
+                    }
+                ],
+                "usage": {"input_tokens": 10, "output_tokens": 5},
+            },
+        )
+
+    provider = OpenAIProvider("gpt-test", "secret-test-value")
+    await provider.client.aclose()
+    provider.client = httpx.AsyncClient(transport=httpx.MockTransport(handler))
+    action = await provider.next_action("Read it", [sample_tool()], [], {"temperature": 0.0})
+    assert action.kind == "clarification"
+    assert action.content == "Please specify the unique ID."
     await provider.client.aclose()

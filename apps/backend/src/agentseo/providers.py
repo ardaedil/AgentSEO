@@ -20,6 +20,27 @@ class AgentAction:
     token_usage: dict[str, int] | None = None
 
 
+CLARIFICATION_MARKERS = (
+    "could you clarify",
+    "could you confirm",
+    "could you provide",
+    "please clarify",
+    "please confirm",
+    "please specify",
+    "which one",
+    "which specific",
+)
+
+
+def text_action_kind(text: str) -> str:
+    normalized = " ".join(text.lower().split())
+    return (
+        "clarification"
+        if "?" in text or any(marker in normalized for marker in CLARIFICATION_MARKERS)
+        else "final"
+    )
+
+
 class AgentProvider(ABC):
     name: str
     model: str
@@ -215,7 +236,15 @@ class OpenAIProvider(HTTPProvider):
                     },
                 )
         text = data.get("output_text", "")
-        kind = "clarification" if text.rstrip().endswith("?") else "final"
+        if not text:
+            text = " ".join(
+                content.get("text", "")
+                for output in data.get("output", [])
+                if output.get("type") == "message"
+                for content in output.get("content", [])
+                if content.get("type") in {"output_text", "text"}
+            )
+        kind = text_action_kind(text)
         return AgentAction(
             kind,
             text,
@@ -279,7 +308,7 @@ class AnthropicProvider(HTTPProvider):
             if block.get("type") == "text"
         )
         return AgentAction(
-            "clarification" if text.rstrip().endswith("?") else "final",
+            text_action_kind(text),
             text,
             token_usage={
                 "input": usage.get("input_tokens", 0),
@@ -345,9 +374,7 @@ class GeminiProvider(HTTPProvider):
                     token_usage=usage,
                 )
         text = " ".join(part.get("text", "") for part in parts)
-        return AgentAction(
-            "clarification" if text.rstrip().endswith("?") else "final", text, token_usage=usage
-        )
+        return AgentAction(text_action_kind(text), text, token_usage=usage)
 
 
 def create_provider(identifier: str, settings: Settings) -> AgentProvider:
