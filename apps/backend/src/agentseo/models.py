@@ -44,6 +44,36 @@ class FailureCategory(StrEnum):
     UNKNOWN = "UNKNOWN"
 
 
+class ExperimentStatus(StrEnum):
+    PLANNED = "PLANNED"
+    READY = "READY"
+    RUNNING = "RUNNING"
+    COMPLETED = "COMPLETED"
+    BLOCKED_COST = "BLOCKED_COST"
+    FAILED = "FAILED"
+
+
+class MutationGeneratedBy(StrEnum):
+    HUMAN = "HUMAN"
+    SYSTEMATIC_EXPERIMENT = "SYSTEMATIC_EXPERIMENT"
+    AGENTSEO_OPTIMIZER = "AGENTSEO_OPTIMIZER"
+
+
+class MutationType(StrEnum):
+    TOOL_RENAME = "TOOL_RENAME"
+    DESCRIPTION_REDUCTION = "DESCRIPTION_REDUCTION"
+    DESCRIPTION_OVERLAP = "DESCRIPTION_OVERLAP"
+    NEGATIVE_INSTRUCTION_REMOVAL = "NEGATIVE_INSTRUCTION_REMOVAL"
+    PARAMETER_RENAME = "PARAMETER_RENAME"
+    PARAMETER_DESCRIPTION_REMOVAL = "PARAMETER_DESCRIPTION_REMOVAL"
+    EXAMPLE_REMOVAL = "EXAMPLE_REMOVAL"
+    EXAMPLE_ADDITION = "EXAMPLE_ADDITION"
+    TOOLSET_EXPANSION = "TOOLSET_EXPANSION"
+    TOOL_OVERLAP = "TOOL_OVERLAP"
+    DESCRIPTION_ENRICHMENT = "DESCRIPTION_ENRICHMENT"
+    TOOLSET_REDUCTION = "TOOLSET_REDUCTION"
+
+
 class Project(Base):
     __tablename__ = "projects"
 
@@ -58,6 +88,7 @@ class Project(Base):
     tools: Mapped[list[ToolDefinition]] = relationship(cascade="all, delete-orphan")
     tasks: Mapped[list[BenchmarkTask]] = relationship(cascade="all, delete-orphan")
     runs: Mapped[list[BenchmarkRun]] = relationship(cascade="all, delete-orphan")
+    experiments: Mapped[list[Experiment]] = relationship(cascade="all, delete-orphan")
 
 
 class APISpec(Base):
@@ -101,6 +132,32 @@ class InterfaceVersion(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now)
     parent_version_id: Mapped[str | None] = mapped_column(ForeignKey("interface_versions.id"))
     change_description: Mapped[str] = mapped_column(Text, default="Initial imported interface")
+    name: Mapped[str] = mapped_column(String(200), default="Canonical baseline")
+    variant_key: Mapped[str] = mapped_column(String(80), default="baseline")
+    frozen: Mapped[bool] = mapped_column(Boolean, default=False)
+
+
+class InterfaceMutation(Base):
+    __tablename__ = "interface_mutations"
+
+    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=new_id)
+    interface_version_id: Mapped[str] = mapped_column(
+        ForeignKey("interface_versions.id", ondelete="CASCADE")
+    )
+    parent_interface_version_id: Mapped[str | None] = mapped_column(
+        ForeignKey("interface_versions.id")
+    )
+    mutation_type: Mapped[str] = mapped_column(String(80))
+    target_tool_id: Mapped[str | None] = mapped_column(String(200))
+    target_field: Mapped[str] = mapped_column(String(200), default="")
+    before_value: Mapped[Any] = mapped_column(JSON, nullable=True)
+    after_value: Mapped[Any] = mapped_column(JSON, nullable=True)
+    rationale: Mapped[str] = mapped_column(Text, default="")
+    generated_by: Mapped[str] = mapped_column(
+        String(40), default=MutationGeneratedBy.SYSTEMATIC_EXPERIMENT.value
+    )
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now)
+    experiment_id: Mapped[str | None] = mapped_column(ForeignKey("experiments.id"))
 
 
 class BenchmarkTask(Base):
@@ -122,6 +179,7 @@ class BenchmarkTask(Base):
     generated_or_manual: Mapped[str] = mapped_column(String(20), default="generated")
     enabled: Mapped[bool] = mapped_column(Boolean, default=True)
     version: Mapped[int] = mapped_column(Integer, default=1)
+    phase15_split: Mapped[str | None] = mapped_column(String(20))
 
 
 class BenchmarkRun(Base):
@@ -138,6 +196,9 @@ class BenchmarkRun(Base):
     configuration: Mapped[dict[str, Any]] = mapped_column(JSON, default=dict)
     aggregate_metrics: Mapped[dict[str, Any]] = mapped_column(JSON, default=dict)
     synthetic: Mapped[bool] = mapped_column(Boolean, default=False)
+    experiment_id: Mapped[str | None] = mapped_column(ForeignKey("experiments.id"))
+    trial_number: Mapped[int] = mapped_column(Integer, default=1)
+    task_split: Mapped[str | None] = mapped_column(String(20))
 
     task_runs: Mapped[list[TaskRun]] = relationship(cascade="all, delete-orphan")
 
@@ -158,6 +219,14 @@ class TaskRun(Base):
     failure_category: Mapped[str | None] = mapped_column(String(60))
     failure_explanation: Mapped[str | None] = mapped_column(Text)
     evaluator_result: Mapped[dict[str, Any]] = mapped_column(JSON, default=dict)
+    experiment_id: Mapped[str | None] = mapped_column(ForeignKey("experiments.id"))
+    interface_version_id: Mapped[str | None] = mapped_column(ForeignKey("interface_versions.id"))
+    model_identifier: Mapped[str] = mapped_column(String(200), default="")
+    task_version: Mapped[int] = mapped_column(Integer, default=1)
+    trial_number: Mapped[int] = mapped_column(Integer, default=1)
+    task_split: Mapped[str | None] = mapped_column(String(20))
+    temperature: Mapped[float | None] = mapped_column(Float)
+    provider_seed: Mapped[int | None] = mapped_column(Integer)
 
     trace_events: Mapped[list[TraceEvent]] = relationship(
         cascade="all, delete-orphan", order_by="TraceEvent.sequence"
@@ -173,3 +242,46 @@ class TraceEvent(Base):
     sequence: Mapped[int] = mapped_column(Integer)
     timestamp: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now)
     payload: Mapped[dict[str, Any]] = mapped_column(JSON, default=dict)
+
+
+class Experiment(Base):
+    __tablename__ = "experiments"
+
+    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=new_id)
+    project_id: Mapped[str] = mapped_column(ForeignKey("projects.id", ondelete="CASCADE"))
+    name: Mapped[str] = mapped_column(String(250))
+    hypothesis: Mapped[str] = mapped_column(Text)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now)
+    started_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    completed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    status: Mapped[str] = mapped_column(String(30), default=ExperimentStatus.PLANNED.value)
+    task_split_seed: Mapped[int] = mapped_column(Integer, default=42)
+    configuration: Mapped[dict[str, Any]] = mapped_column(JSON, default=dict)
+    models: Mapped[list[str]] = mapped_column(JSON, default=list)
+    interface_versions: Mapped[list[str]] = mapped_column(JSON, default=list)
+    repetitions: Mapped[int] = mapped_column(Integer, default=3)
+    estimated_cost: Mapped[float] = mapped_column(Float, default=0.0)
+    actual_cost: Mapped[float] = mapped_column(Float, default=0.0)
+    notes: Mapped[str] = mapped_column(Text, default="")
+    manifest: Mapped[dict[str, Any]] = mapped_column(JSON, default=dict)
+
+    results: Mapped[list[ExperimentResult]] = relationship(cascade="all, delete-orphan")
+
+
+class ExperimentResult(Base):
+    __tablename__ = "experiment_results"
+
+    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=new_id)
+    experiment_id: Mapped[str] = mapped_column(ForeignKey("experiments.id", ondelete="CASCADE"))
+    result_type: Mapped[str] = mapped_column(String(80), default="AGGREGATE")
+    model: Mapped[str | None] = mapped_column(String(200))
+    interface_version_id: Mapped[str | None] = mapped_column(ForeignKey("interface_versions.id"))
+    task_split: Mapped[str | None] = mapped_column(String(20))
+    metric_name: Mapped[str] = mapped_column(String(100))
+    metric_value: Mapped[float | None] = mapped_column(Float)
+    sample_size: Mapped[int] = mapped_column(Integer, default=0)
+    confidence_low: Mapped[float | None] = mapped_column(Float)
+    confidence_high: Mapped[float | None] = mapped_column(Float)
+    p_value: Mapped[float | None] = mapped_column(Float)
+    details: Mapped[dict[str, Any]] = mapped_column(JSON, default=dict)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now)
