@@ -32,15 +32,6 @@ from agentseo.research_export import export_experiment_dataset
 from sqlalchemy import func, select
 
 
-def cell_key(run: BenchmarkRun) -> tuple[str, str | None, str, int]:
-    return (
-        run.project_id,
-        run.interface_version_id,
-        f"{run.provider}:{run.model}",
-        run.trial_number,
-    )
-
-
 async def main() -> None:
     for stream in (sys.stdout, sys.stderr):
         if hasattr(stream, "reconfigure"):
@@ -102,13 +93,18 @@ async def main() -> None:
         for run in interrupted:
             session.delete(run)
         session.commit()
-        completed = {
-            cell_key(run)
-            for run in session.scalars(
-                select(BenchmarkRun).where(
-                    BenchmarkRun.experiment_id == experiment.id,
-                    BenchmarkRun.status == "COMPLETED",
-                )
+        completed_task_keys = {
+            (
+                task.project_id,
+                task_run.interface_version_id,
+                task_run.model_identifier,
+                task_run.trial_number,
+                task_run.task_id,
+            )
+            for task_run, task in session.execute(
+                select(TaskRun, BenchmarkTask)
+                .join(BenchmarkTask, TaskRun.task_id == BenchmarkTask.id)
+                .where(TaskRun.experiment_id == experiment.id)
             )
         }
         by_project = {item.project_id: item for item in interfaces}
@@ -118,29 +114,40 @@ async def main() -> None:
             interface = by_project[project.id]
             for model in models:
                 for trial in (1, 2):
-                    expected.append(
-                        ExperimentCell(
-                            project_id=project.id,
-                            interface_id=interface.id,
-                            model=model,
-                            task_ids=[task.id for task in selected],
-                            split="development",
-                            trial=trial,
-                            label=f"{project.sandbox_domain}/{model}/baseline/development/{trial}",
+                    for task in selected:
+                        expected.append(
+                            ExperimentCell(
+                                project_id=project.id,
+                                interface_id=interface.id,
+                                model=model,
+                                task_ids=[task.id],
+                                split="development",
+                                trial=trial,
+                                label=(
+                                    f"{project.sandbox_domain}/{model}/baseline/development/"
+                                    f"{trial}/{task.id}"
+                                ),
+                            )
                         )
-                    )
         remaining = [
             cell
             for cell in expected
-            if (cell.project_id, cell.interface_id, cell.model, cell.trial) not in completed
+            if (
+                cell.project_id,
+                cell.interface_id,
+                cell.model,
+                cell.trial,
+                cell.task_ids[0],
+            )
+            not in completed_task_keys
         ]
         print(
             json.dumps(
                 {
                     "event": "RESUME",
-                    "completed_cells_preserved": len(completed),
+                    "completed_task_runs_preserved": len(completed_task_keys),
                     "interrupted_cells_removed": len(interrupted),
-                    "remaining_cells": len(remaining),
+                    "remaining_task_runs": len(remaining),
                 }
             )
         )
@@ -199,7 +206,7 @@ async def main() -> None:
                 json.dumps(
                     {
                         "event": "PROGRESS",
-                        "remaining_cells": f"{index}/{len(remaining)}",
+                        "remaining_task_runs": f"{index}/{len(remaining)}",
                         "task_runs": task_runs,
                         "expected_task_runs": 480,
                         "actual_cost_usd": round(cost, 6),
@@ -235,7 +242,7 @@ async def main() -> None:
         manifest.update(
             {
                 "resumed": True,
-                "completed_cells_preserved": len(completed),
+                "completed_task_runs_preserved": len(completed_task_keys),
                 "interrupted_cells_removed": len(interrupted),
                 "task_runs": task_run_count,
                 "actual_cost_usd": experiment.actual_cost,
