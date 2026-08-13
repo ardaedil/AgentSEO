@@ -11,7 +11,7 @@ export default function Dashboard() {
   const [error, setError] = useState("");
   useEffect(() => {getJSON<Project[]>("/api/projects").then(async value => {setProjects(value); const nested = await Promise.all(value.slice(0, 5).map(project => getJSON<Run[]>(`/api/projects/${project.id}/benchmark-runs`))); setRuns(nested.flat().slice(0, 8));}).catch(error => setError(String(error)));}, []);
   return <>
-    <PageTitle eyebrow="API agent compatibility" title="Benchmark how models use your tools" description="Import an OpenAPI interface, generate reproducible tasks, run safe sandbox experiments, and inspect every failure." action={<Link href="/projects/new" className="btn-primary">Upload an API</Link>} />
+    <PageTitle eyebrow="Behavioral compatibility CI" title="Catch agent-breaking API changes before they ship" description="Compare baseline and pull-request interfaces against identical behavioral contracts, real model agents, resettable sandboxes, and deterministic evaluators." action={<Link href="/compatibility" className="btn-primary">Compatibility runs</Link>} />
     <section className="mb-8 grid gap-4 md:grid-cols-4"><Metric label="Projects" value={projects.length} /><Metric label="Recent runs" value={runs.length} /><Metric label="Completed" value={runs.filter(run => run.status === "COMPLETED").length} /><Metric label="Safety" value="Sandboxed" note="Production APIs are never called" /></section>
     {error && <div className="mb-6 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">API unavailable: {error}</div>}
     <div className="grid gap-8 lg:grid-cols-[1.3fr_1fr]">

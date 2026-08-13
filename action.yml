@@ -1,0 +1,111 @@
+name: AgentSEO Compatibility Check
+description: Behavioral compatibility CI for agent-facing OpenAPI interfaces
+branding:
+  icon: shield
+  color: purple
+inputs:
+  spec:
+    description: Candidate OpenAPI specification in the checked-out commit
+    required: true
+  task_suite:
+    description: Agentic Compatibility Contract file or directory
+    required: true
+  models:
+    description: Comma-separated provider:model identifiers
+    required: false
+    default: openai:gpt-4.1-mini,anthropic:claude-sonnet-5,google:gemini-3.6-flash
+  cost_limit:
+    description: Maximum estimated and actual provider cost in USD
+    required: false
+    default: "1.00"
+  max_tasks:
+    description: Maximum selected behavioral contracts
+    required: false
+    default: "50"
+  fail_on_warning:
+    description: Treat WARNING as a failing status check
+    required: false
+    default: "false"
+  baseline_ref:
+    description: Git ref used to load the baseline copy of spec
+    required: false
+    default: origin/main
+outputs:
+  run_id:
+    description: Persisted AgentSEO compatibility run ID
+    value: ${{ steps.compare.outputs.run_id }}
+  verdict:
+    description: PASS, WARNING, or FAIL
+    value: ${{ steps.compare.outputs.verdict }}
+  classification:
+    description: Experimental AgentSEO release classification
+    value: ${{ steps.compare.outputs.classification }}
+runs:
+  using: composite
+  steps:
+    - name: Install AgentSEO
+      shell: bash
+      run: python -m pip install "${GITHUB_ACTION_PATH}/apps/backend"
+    - name: Load target-branch interface
+      id: baseline
+      shell: bash
+      env:
+        BASELINE_REF: ${{ inputs.baseline_ref }}
+        SPEC: ${{ inputs.spec }}
+      run: |
+        set -euo pipefail
+        clean_spec="${SPEC#./}"
+        git show "${BASELINE_REF}:${clean_spec}" > "${RUNNER_TEMP}/agentseo-baseline.yaml"
+        echo "path=${RUNNER_TEMP}/agentseo-baseline.yaml" >> "${GITHUB_OUTPUT}"
+    - name: Run paired compatibility check
+      id: compare
+      shell: bash
+      env:
+        OPENAI_API_KEY: ${{ env.OPENAI_API_KEY }}
+        ANTHROPIC_API_KEY: ${{ env.ANTHROPIC_API_KEY }}
+        GOOGLE_API_KEY: ${{ env.GOOGLE_API_KEY }}
+        AGENTSEO_MAX_COST_USD: ${{ inputs.cost_limit }}
+        AGENTSEO_MAX_TASKS: ${{ inputs.max_tasks }}
+        AGENTSEO_MAX_CONCURRENCY: "1"
+      run: |
+        set +e
+        warning_flag=""
+        if [ "${{ inputs.fail_on_warning }}" = "true" ]; then warning_flag="--fail-on-warning"; fi
+        agentseo compare \
+          --baseline "${{ steps.baseline.outputs.path }}" \
+          --candidate "${{ inputs.spec }}" \
+          --tasks "${{ inputs.task_suite }}" \
+          --models "${{ inputs.models }}" \
+          --max-cost "${{ inputs.cost_limit }}" \
+          --max-tasks "${{ inputs.max_tasks }}" \
+          --repository "${GITHUB_REPOSITORY}" \
+          --base-ref "${{ inputs.baseline_ref }}" \
+          --candidate-ref "${GITHUB_REF_NAME}" \
+          --base-commit "$(git rev-parse '${{ inputs.baseline_ref }}')" \
+          --candidate-commit "${GITHUB_SHA}" \
+          --report "${RUNNER_TEMP}/agentseo-report.md" \
+          ${warning_flag}
+        code=$?
+        echo "exit_code=${code}" >> "${GITHUB_OUTPUT}"
+        exit 0
+    - name: Comment on pull request
+      if: github.event_name == 'pull_request' && always()
+      uses: actions/github-script@v7
+      env:
+        REPORT_PATH: ${{ runner.temp }}/agentseo-report.md
+      with:
+        script: |
+          const fs = require('fs');
+          if (!fs.existsSync(process.env.REPORT_PATH)) return;
+          const marker = '<!-- agentseo-compatibility -->';
+          const body = `${marker}\n${fs.readFileSync(process.env.REPORT_PATH, 'utf8')}`;
+          const comments = await github.paginate(github.rest.issues.listComments, {
+            owner: context.repo.owner, repo: context.repo.repo, issue_number: context.issue.number
+          });
+          const previous = comments.find(comment => comment.user.type === 'Bot' && comment.body.includes(marker));
+          if (previous) await github.rest.issues.updateComment({owner: context.repo.owner, repo: context.repo.repo, comment_id: previous.id, body});
+          else await github.rest.issues.createComment({owner: context.repo.owner, repo: context.repo.repo, issue_number: context.issue.number, body});
+    - name: Apply compatibility exit code
+      if: always()
+      shell: bash
+      run: exit "${{ steps.compare.outputs.exit_code }}"

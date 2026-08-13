@@ -17,9 +17,9 @@ class Settings(BaseSettings):
     openai_api_key: str | None = None
     openai_model: str = "gpt-4.1-mini"
     anthropic_api_key: str | None = None
-    anthropic_model: str = "claude-sonnet-4-20250514"
+    anthropic_model: str = "claude-sonnet-5"
     google_api_key: str | None = None
-    gemini_model: str = "gemini-2.5-flash"
+    gemini_model: str = "gemini-3.6-flash"
     max_upload_bytes: int = 2_097_152
     max_tasks_per_run: int = 100
     max_parallelism: int = 4
@@ -32,6 +32,9 @@ class Settings(BaseSettings):
     phase15_task_split_seed: int = 42
     phase15_temperature: float = 0.0
     phase15_bootstrap_samples: int = 2000
+    agentseo_max_cost_usd: float = 1.0
+    agentseo_max_tasks: int = 50
+    agentseo_max_concurrency: int = 1
 
     @field_validator("cors_origins", mode="before")
     @classmethod

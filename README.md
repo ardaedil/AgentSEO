@@ -1,12 +1,11 @@
 # AgentSEO
 
-AgentSEO measures how reliably AI models operate an API. A developer imports an OpenAPI 3.x
-interface, reviews normalized tools and generated tasks, runs one or more agent providers against a
-resettable sandbox, then compares deterministic outcomes and inspects failed tool trajectories.
+AgentSEO is behavioral compatibility CI for agent-facing APIs.
 
-Phase 1 is a working research MVP for the question: **how does interface design affect AI-agent
-reliability?** It does not call arbitrary production APIs and does not automatically rewrite customer
-interfaces.
+It tests API/interface changes against real AI agents and detects reliability, safety, and cost
+regressions before they ship. The target-branch and pull-request interfaces run the same behavioral
+contracts, models, provider configuration, resettable sandbox state, and deterministic evaluators;
+only the agent-facing tool interface differs.
 
 ## What is included
 
@@ -21,26 +20,32 @@ interfaces.
 - Deterministic assertions, failure taxonomy, raw metrics, and experimental score
 - Cross-model report, task result drill-down, and full visible-event trace viewer
 - CLI, Docker Compose, structured logs, seed script, tests, and keyless CI
+- Semantic OpenAPI interface diffs and paired `CompatibilityRun` persistence
+- Versioned, model-independent Agentic Compatibility Contracts
+- Configurable PASS/WARNING/FAIL policy and experimental AGENT_COMPATIBLE/AGENT_WARNING/AGENT_BREAKING classification
+- Installable composite GitHub Action, PR Markdown report, and branch-protection exit codes
 
 The checked-in task catalog is [examples/benchmark_dataset.json](examples/benchmark_dataset.json).
-The architecture rationale is in [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md), scoring in
-[docs/SCORING.md](docs/SCORING.md), and prototype security posture in
-[docs/SECURITY.md](docs/SECURITY.md).
+Start with [Compatibility CI](docs/COMPATIBILITY_CI.md),
+[contracts](docs/AGENTIC_COMPATIBILITY_CONTRACTS.md), or the
+[GitHub Action](docs/GITHUB_ACTION.md). Historical research documentation remains reproducible under
+`docs/`, `data/`, `reports/`, and `artifacts/`.
 
 ## Architecture
 
 ```mermaid
 flowchart TD
-    Spec["OpenAPI 3.x"] --> Normalize["Normalized tools + interface version"]
-    Normalize --> Tasks["Template or validated LLM tasks"]
-    Tasks --> Runner["Bounded agent loop"]
-    Models["Mock / GPT / Claude / Gemini"] --> Runner
-    Runner <--> Sandbox["Resettable synthetic API state"]
-    Runner --> Trace["Messages, calls, results, errors"]
-    Sandbox --> Eval["Deterministic state assertions"]
-    Trace --> Failures["Failure classification"]
-    Eval --> Report["Raw metrics + experimental score"]
-    Failures --> Report
+    Base["Target-branch OpenAPI"] --> Diff["Semantic interface diff"]
+    PR["Pull-request OpenAPI"] --> Diff
+    Contracts["Agentic Compatibility Contracts"] --> Runner["Paired agent execution"]
+    Diff --> Runner
+    Models["GPT / Claude / Gemini"] --> Runner
+    Runner <--> Sandbox["Identical resettable sandbox state"]
+    Sandbox --> Eval["Deterministic final-state evaluator"]
+    Runner --> Trace["Calls, errors, tokens, latency, cost"]
+    Eval --> Policy["Transparent compatibility policy"]
+    Trace --> Policy
+    Policy --> GitHub["PR report + status check"]
 ```
 
 ## Quick start with Docker
@@ -86,19 +91,26 @@ To seed a billing project directly into the configured database:
 python scripts/seed_demo.py
 ```
 
-## Demo and CLI
+## Compatibility demo and CLI
 
 No paid provider key is needed:
 
 ```bash
-agentseo inspect examples/billing/openapi.yaml
-agentseo generate-tasks examples/billing/openapi.yaml --domain billing
-agentseo benchmark --spec examples/billing/openapi.yaml --models mock:reliable --models mock:fallible --domain billing
+agentseo diff \
+  --baseline examples/compatibility-ci-demo/baseline/openapi.yaml \
+  --candidate examples/compatibility-ci-demo/candidate-breaking/openapi.yaml
+
+agentseo compare \
+  --baseline examples/compatibility-ci-demo/baseline/openapi.yaml \
+  --candidate examples/compatibility-ci-demo/candidate-safe/openapi.yaml \
+  --tasks examples/compatibility-ci-demo/contracts \
+  --models mock:reliable --max-cost 0
 ```
 
-The polished demo task finds `john@example.com`, schedules cancellation at period end, preserves the
-customer, and issues no refund. `mock:fallible` intentionally demonstrates a classified unsafe tool
-choice; it is not presented as a real model result.
+The breaking candidate keeps the same HTTP paths and schemas but weakens agent-facing names and
+description boundaries between subscription cancellation, customer deletion, and refunds. Real
+providers decide which tool to call; deterministic contracts detect any regression. Mock mode
+validates infrastructure only and is never presented as real compatibility evidence.
 
 For real providers, populate one or more keys in `.env`, leave unused keys blank, and select only
 configured providers:
@@ -112,9 +124,11 @@ GOOGLE_API_KEY=...
 Provider identifiers use `openai:model`, `anthropic:model`, and `google:model`. API calls and costs
 are bounded but can still incur provider charges.
 
-## Phase 1.5 experimental validation
+## Historical Phase 1 / 1.5 research
 
-Phase 1.5 is a controlled research framework, not the Phase 2 optimizer. It mutates frozen agent-facing interface snapshots while translating every call back to the same canonical sandbox operation.
+The controlled Phase 1.5 interface experiments, frozen manifests, raw observations, analysis scripts,
+and reports remain in the repository for reproducibility. They are historical research infrastructure,
+not an advertised optimizer or current product capability.
 
 ```bash
 # Uses configured real-provider keys; unavailable providers are skipped.
@@ -180,10 +194,9 @@ scripts/            Local demo seed utility
   included in this prototype.
 - LLM task generation has a validated service boundary but no UI switch in Phase 1 demo mode.
 
-## Toward Phase 2
+## Product roadmap
 
-The next milestone should run repeated real-model trials, calibrate score weights, measure confidence
-intervals, and correlate failures with names/descriptions/schemas. After that evidence exists,
-AgentSEO can propose child `InterfaceVersion` snapshots (rename tools, clarify parameters, split unsafe
-operations), benchmark V1 against V2, and require explicit human approval before any external change.
+Phase 2A focuses on dependable behavioral compatibility CI. Future work includes statistically
+validated impact-directed test selection, durable workers, broader sandbox adapters, and MCP server
+support. Automated interface optimization remains future research and is not a current capability.
 

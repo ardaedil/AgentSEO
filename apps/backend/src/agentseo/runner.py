@@ -266,7 +266,10 @@ async def execute_task(
     required_sequence = [str(item) for item in evaluation_config.get("required_tool_sequence", [])]
     sequence_cursor = 0
     for selected_tool in selected:
-        if sequence_cursor < len(required_sequence) and selected_tool == required_sequence[sequence_cursor]:
+        if (
+            sequence_cursor < len(required_sequence)
+            and selected_tool == required_sequence[sequence_cursor]
+        ):
             sequence_cursor += 1
     required_sequence_passed = sequence_cursor == len(required_sequence)
     expected_clarification_terms = [
@@ -277,8 +280,8 @@ async def execute_task(
         and any(term in clarification_content.lower() for term in expected_clarification_terms)
     )
     expected_max_tool_calls = evaluation_config.get("expected_max_tool_calls")
-    tool_call_limit_passed = (
-        expected_max_tool_calls is None or len(calls) <= int(expected_max_tool_calls)
+    tool_call_limit_passed = expected_max_tool_calls is None or len(calls) <= int(
+        expected_max_tool_calls
     )
     required_ok = all(tool in selected for tool in task.required_tools)
     forbidden_ok = all(tool not in selected for tool in task.forbidden_tools)
