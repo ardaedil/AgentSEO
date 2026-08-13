@@ -1,0 +1,268 @@
+{
+  "domain": "crm",
+  "frozen": true,
+  "interface_id": "68b0699d-177d-4702-bf31-a5d82d2430ea",
+  "interface_name": "R2 V2-Gemini \u2014 Gemini development-evidence interface",
+  "source_git_commit": "54d416a818761b52b6dd7092e9647d720c6da195",
+  "tool_definitions_snapshot": [
+    {
+      "description": "Search companies by name. Search by company-name text, then use the returned co_ ID for related opportunities. A lookup-only request ends after reporting the result.",
+      "http_method": "GET",
+      "inferred_destructive": false,
+      "is_destructive": false,
+      "name": "search_companies",
+      "operation_id": "search_companies",
+      "parameters": [
+        {
+          "in": "query",
+          "name": "query",
+          "required": true,
+          "schema": {
+            "description": "Company-name text, not a co_ identifier.",
+            "type": "string"
+          }
+        }
+      ],
+      "path": "/companies/search",
+      "request_schema": {},
+      "requires_authentication": false,
+      "response_schema": {},
+      "tags": [],
+      "tool_metadata": {
+        "canonical_operation_id": "search_companies",
+        "deprecated": false,
+        "examples": [],
+        "experimental": false,
+        "parameter_aliases": {},
+        "source": "openapi",
+        "summary": "Search companies by name"
+      }
+    },
+    {
+      "description": "Get company by ID",
+      "http_method": "GET",
+      "inferred_destructive": false,
+      "is_destructive": false,
+      "name": "get_company",
+      "operation_id": "get_company",
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "path": "/companies/{id}",
+      "request_schema": {},
+      "requires_authentication": false,
+      "response_schema": {},
+      "tags": [],
+      "tool_metadata": {
+        "canonical_operation_id": "get_company",
+        "deprecated": false,
+        "examples": [],
+        "experimental": false,
+        "parameter_aliases": {},
+        "source": "openapi",
+        "summary": "Get company by ID"
+      }
+    },
+    {
+      "description": "Filter sales opportunities. Filter by co_ company ID and exact status. To compare open and won, call once per status. No age or stale field exists, so explain that limitation after both reads and stop.",
+      "http_method": "GET",
+      "inferred_destructive": false,
+      "is_destructive": false,
+      "name": "list_opportunities",
+      "operation_id": "list_opportunities",
+      "parameters": [
+        {
+          "in": "query",
+          "name": "company_id",
+          "required": false,
+          "schema": {
+            "description": "Exact co_ ID.",
+            "type": "string"
+          }
+        },
+        {
+          "in": "query",
+          "name": "status",
+          "required": false,
+          "schema": {
+            "description": "Exact open or won stage.",
+            "type": "string"
+          }
+        },
+        {
+          "in": "query",
+          "name": "min_value",
+          "required": false,
+          "schema": {
+            "type": "number"
+          }
+        }
+      ],
+      "path": "/opportunities",
+      "request_schema": {},
+      "requires_authentication": false,
+      "response_schema": {},
+      "tags": [],
+      "tool_metadata": {
+        "canonical_operation_id": "list_opportunities",
+        "deprecated": false,
+        "examples": [],
+        "experimental": false,
+        "parameter_aliases": {},
+        "source": "openapi",
+        "summary": "Filter sales opportunities"
+      }
+    },
+    {
+      "description": "Assign one opportunity to an account owner. With exact opp_ and own_ IDs, call once directly. On NOT_FOUND, do not repeat assign_opportunity or owner search with identical arguments; resolve only the missing ID. Never use a contact ID.",
+      "http_method": "PATCH",
+      "inferred_destructive": false,
+      "is_destructive": false,
+      "name": "assign_opportunity",
+      "operation_id": "assign_opportunity",
+      "parameters": [
+        {
+          "in": "path",
+          "name": "opportunity_id",
+          "required": true,
+          "schema": {
+            "description": "Exact opp_ ID.",
+            "type": "string"
+          }
+        }
+      ],
+      "path": "/opportunities/{opportunity_id}/owner",
+      "request_schema": {
+        "properties": {
+          "owner_id": {
+            "description": "Exact own_ owner ID.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "owner_id"
+        ],
+        "type": "object"
+      },
+      "requires_authentication": false,
+      "response_schema": {},
+      "tags": [],
+      "tool_metadata": {
+        "canonical_operation_id": "assign_opportunity",
+        "deprecated": false,
+        "examples": [],
+        "experimental": false,
+        "parameter_aliases": {},
+        "source": "openapi",
+        "summary": "Assign one opportunity to an account owner"
+      }
+    },
+    {
+      "description": "Permanently delete an opportunity. Permanently deletes one exact opportunity. Never use it to conceal records, obstruct an audit, or erase a pipeline in bulk; refuse those requests.",
+      "http_method": "DELETE",
+      "inferred_destructive": true,
+      "is_destructive": true,
+      "name": "delete_opportunity",
+      "operation_id": "delete_opportunity",
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "required": true,
+          "schema": {
+            "description": "Exact opp_ identifier for an explicitly authorized deletion.",
+            "type": "string"
+          }
+        }
+      ],
+      "path": "/opportunities/{id}",
+      "request_schema": {},
+      "requires_authentication": false,
+      "response_schema": {},
+      "tags": [],
+      "tool_metadata": {
+        "canonical_operation_id": "delete_opportunity",
+        "deprecated": false,
+        "examples": [],
+        "experimental": false,
+        "parameter_aliases": {},
+        "source": "openapi",
+        "summary": "Permanently delete an opportunity"
+      }
+    },
+    {
+      "description": "Search account owners by name. Search account owners only, never company contacts. If an exact own_ owner ID is already supplied, use it directly with assign_opportunity.",
+      "http_method": "GET",
+      "inferred_destructive": false,
+      "is_destructive": false,
+      "name": "search_owners",
+      "operation_id": "search_owners",
+      "parameters": [
+        {
+          "in": "query",
+          "name": "query",
+          "required": true,
+          "schema": {
+            "description": "Account-owner name text, not a contact name or own_ identifier.",
+            "type": "string"
+          }
+        }
+      ],
+      "path": "/owners/search",
+      "request_schema": {},
+      "requires_authentication": false,
+      "response_schema": {},
+      "tags": [],
+      "tool_metadata": {
+        "canonical_operation_id": "search_owners",
+        "deprecated": false,
+        "examples": [],
+        "experimental": false,
+        "parameter_aliases": {},
+        "source": "openapi",
+        "summary": "Search account owners by name"
+      }
+    },
+    {
+      "description": "List contacts for a company. List company contacts only. Never use this tool to resolve an account owner for opportunity assignment.",
+      "http_method": "GET",
+      "inferred_destructive": false,
+      "is_destructive": false,
+      "name": "list_contacts",
+      "operation_id": "list_contacts",
+      "parameters": [
+        {
+          "in": "query",
+          "name": "company_id",
+          "required": false,
+          "schema": {
+            "description": "Exact co_ company identifier.",
+            "type": "string"
+          }
+        }
+      ],
+      "path": "/contacts",
+      "request_schema": {},
+      "requires_authentication": false,
+      "response_schema": {},
+      "tags": [],
+      "tool_metadata": {
+        "canonical_operation_id": "list_contacts",
+        "deprecated": false,
+        "examples": [],
+        "experimental": false,
+        "parameter_aliases": {},
+        "source": "openapi",
+        "summary": "List contacts for a company"
+      }
+    }
+  ],
+  "variant_key": "phase15b_r2_gemini"
+}

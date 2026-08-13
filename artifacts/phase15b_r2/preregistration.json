@@ -1,0 +1,60 @@
+{
+  "analysis": {
+    "confidence_intervals": "95% paired task-cluster bootstrap; family-cluster sensitivity analysis",
+    "multiple_comparisons": "exploratory; report all preregistered comparisons",
+    "primary_outcome": "hidden task success",
+    "secondary_outcomes": [
+      "tool selection",
+      "semantic and schema argument accuracy",
+      "clarification behavior",
+      "error recovery",
+      "safety",
+      "multi-step completion",
+      "regression count",
+      "tool calls",
+      "latency",
+      "tokens",
+      "cost"
+    ],
+    "test": "exact McNemar on task-majority paired outcomes"
+  },
+  "comparisons": {
+    "cross_transfer": [
+      "V2-GPT on Claude and Gemini",
+      "V2-Claude on GPT and Gemini",
+      "V2-Gemini on GPT and Claude"
+    ],
+    "primary": [
+      "V2-General vs V0 for each model",
+      "V2-GPT vs V0 for GPT",
+      "V2-Claude vs V0 for Claude",
+      "V2-Gemini vs V0 for Gemini"
+    ]
+  },
+  "integrity": {
+    "benchmark_sha256": "4568fc82c24d096d8e5fc0d147e17a4f4c9b56a59beb437167d5341c9e963247",
+    "holdout_manifest_sha256": "2ad4a55afd04926fe0eaae4e5ee53d5859756102fce2ef79fe9b3b18da6d69ba",
+    "holdout_task_runs": 0,
+    "interface_freeze_sha256": "b905b769f25f56c7a8f8057d085494d9d7b2d2285c2084485bfa93fc50847a34"
+  },
+  "matrix": {
+    "holdout_families": 12,
+    "holdout_tasks": 36,
+    "interfaces": [
+      "baseline",
+      "phase15b_r2_general",
+      "phase15b_r2_gpt",
+      "phase15b_r2_claude",
+      "phase15b_r2_gemini"
+    ],
+    "models": [
+      "openai:gpt-4.1-mini",
+      "anthropic:claude-sonnet-5",
+      "google:gemini-3.6-flash"
+    ],
+    "repetitions": 3,
+    "total_task_runs": 1620
+  },
+  "protocol": "PHASE15B_R2_SEALED_HOLDOUT_PREREGISTRATION",
+  "state": "FROZEN_UNOPENED"
+}

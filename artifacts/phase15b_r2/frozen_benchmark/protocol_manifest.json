@@ -1,0 +1,136 @@
+{
+  "benchmark_sha256": "4568fc82c24d096d8e5fc0d147e17a4f4c9b56a59beb437167d5341c9e963247",
+  "calibration_experiment_id": "3efaa755-bb11-4261-9209-66519a8d5d99",
+  "calibration_results": [
+    {
+      "average_tokens": 4770.511904761905,
+      "category_success": {
+        "clarification_not_required": 0.7777777777777778,
+        "clarification_required": 0.8888888888888888,
+        "constraint_preservation": 0.6666666666666666,
+        "error_recovery": 0.8333333333333334,
+        "identifier_routing": 1.0,
+        "multi_step": 1.0,
+        "post_success": 1.0,
+        "safety_destructive": 0.8888888888888888,
+        "tool_overlap": 1.0,
+        "unsupported_semantics": 0.5555555555555556
+      },
+      "cost_usd": 1.263998,
+      "model": "anthropic:claude-sonnet-5",
+      "success_rate": 0.8571428571428571,
+      "successes": 72,
+      "tasks": 84
+    },
+    {
+      "average_tokens": 2276.714285714286,
+      "category_success": {
+        "clarification_not_required": 0.7777777777777778,
+        "clarification_required": 0.7777777777777778,
+        "constraint_preservation": 0.7777777777777778,
+        "error_recovery": 0.5,
+        "identifier_routing": 0.7777777777777778,
+        "multi_step": 1.0,
+        "post_success": 1.0,
+        "safety_destructive": 1.0,
+        "tool_overlap": 0.8888888888888888,
+        "unsupported_semantics": 0.4444444444444444
+      },
+      "cost_usd": 0.36729,
+      "model": "google:gemini-3.6-flash",
+      "success_rate": 0.7976190476190477,
+      "successes": 67,
+      "tasks": 84
+    },
+    {
+      "average_tokens": 1146.2261904761904,
+      "category_success": {
+        "clarification_not_required": 0.8888888888888888,
+        "clarification_required": 0.7777777777777778,
+        "constraint_preservation": 0.3333333333333333,
+        "error_recovery": 0.5,
+        "identifier_routing": 0.8888888888888888,
+        "multi_step": 0.8333333333333334,
+        "post_success": 0.4444444444444444,
+        "safety_destructive": 0.7777777777777778,
+        "tool_overlap": 0.4444444444444444,
+        "unsupported_semantics": 0.5555555555555556
+      },
+      "cost_usd": 0.0494416,
+      "model": "openai:gpt-4.1-mini",
+      "success_rate": 0.6428571428571429,
+      "successes": 54,
+      "tasks": 84
+    }
+  ],
+  "category_distribution": {
+    "clarification_not_required": 12,
+    "clarification_required": 12,
+    "constraint_preservation": 12,
+    "error_recovery": 12,
+    "identifier_routing": 12,
+    "multi_step": 12,
+    "post_success": 12,
+    "safety_destructive": 12,
+    "tool_overlap": 12,
+    "unsupported_semantics": 12
+  },
+  "development_category_distribution": {
+    "clarification_not_required": 9,
+    "clarification_required": 9,
+    "constraint_preservation": 9,
+    "error_recovery": 6,
+    "identifier_routing": 9,
+    "multi_step": 6,
+    "post_success": 9,
+    "safety_destructive": 9,
+    "tool_overlap": 9,
+    "unsupported_semantics": 9
+  },
+  "development_task_families": 28,
+  "development_tasks": 84,
+  "difficulty_distribution": {
+    "6": 33,
+    "7": 51,
+    "8": 36
+  },
+  "domain_distribution": {
+    "billing": 57,
+    "crm": 30,
+    "ecommerce": 33
+  },
+  "evaluator_bundle_sha256": "8022a9e6b2bd0555515f7b5d7f5894df33f2db9fcdefc0d2b148c41a4c9946a6",
+  "evaluator_files": {
+    "apps/backend/src/agentseo/evaluation.py": "d9f6323f0ef36b98920c077e9c5af77993090e8ebd7d9012abcafcb9394678fe",
+    "apps/backend/src/agentseo/phase15b_r2_benchmark.py": "5fecb00a40ade0fbb86e073671afea7c46cdaa4631735d5efa31f018875e35af",
+    "apps/backend/src/agentseo/providers.py": "60fd775cfc80517641756b06c722f998618d8e7b2783fc124ced3f644d35c806",
+    "apps/backend/src/agentseo/runner.py": "19ae9e2eae07937da0bd5f24a7432da400d2a614ffda77e19c8b52bfaa939750",
+    "apps/backend/src/agentseo/sandboxes.py": "a4c82f43e28eeef56934693d64a5b8c704dcb60c93732b60aec382bc19ad4d23"
+  },
+  "evaluator_version": "phase15b-r2-deterministic-v2",
+  "family_overlap_count": 0,
+  "holdout_category_distribution": {
+    "clarification_not_required": 3,
+    "clarification_required": 3,
+    "constraint_preservation": 3,
+    "error_recovery": 6,
+    "identifier_routing": 3,
+    "multi_step": 6,
+    "post_success": 3,
+    "safety_destructive": 3,
+    "tool_overlap": 3,
+    "unsupported_semantics": 3
+  },
+  "holdout_manifest_sha256": "2ad4a55afd04926fe0eaae4e5ee53d5859756102fce2ef79fe9b3b18da6d69ba",
+  "holdout_task_families": 12,
+  "holdout_task_runs_at_freeze": 0,
+  "holdout_tasks": 36,
+  "protocol": "PHASE15B_R2_HARD_BENCHMARK",
+  "protocol_manifest_sha256": "88887232e95c8eb2aae518d16829949c912da6ad601ab9ff46552b17748963b6",
+  "source_git_commit": "54d416a818761b52b6dd7092e9647d720c6da195",
+  "split_method": "twelve complete uncalibrated families held out; no task-level overlap",
+  "split_seed": 1503,
+  "state": "FROZEN_PRE_HOLDOUT",
+  "total_task_families": 40,
+  "total_tasks": 120
+}

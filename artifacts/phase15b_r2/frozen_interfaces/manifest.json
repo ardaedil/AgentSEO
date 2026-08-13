@@ -1,0 +1,309 @@
+{
+  "benchmark_sha256": "4568fc82c24d096d8e5fc0d147e17a4f4c9b56a59beb437167d5341c9e963247",
+  "calibration_experiment_id": "3efaa755-bb11-4261-9209-66519a8d5d99",
+  "development_evidence_only": true,
+  "holdout_manifest_sha256": "2ad4a55afd04926fe0eaae4e5ee53d5859756102fce2ef79fe9b3b18da6d69ba",
+  "holdout_task_runs_at_freeze": 0,
+  "immutable": true,
+  "interface_freeze_sha256": "b905b769f25f56c7a8f8057d085494d9d7b2d2285c2084485bfa93fc50847a34",
+  "interfaces": [
+    {
+      "complexity": {
+        "average_description_length": 43.333333333333336,
+        "max_semantic_overlap_jaccard": 0.23076923076923078,
+        "mean_semantic_overlap_jaccard": 0.05585903294236627,
+        "number_of_clarification_instructions": 0,
+        "number_of_examples": 1,
+        "number_of_negative_instructions": 1,
+        "number_of_recovery_instructions": 0,
+        "number_of_tools": 9,
+        "total_description_tokens": 58
+      },
+      "domain": "billing",
+      "interface_id": "9d840b88-6154-478a-938b-72026ad68b04",
+      "snapshot_path": "artifacts/phase15b_r2/frozen_interfaces/billing/baseline.json",
+      "snapshot_sha256": "82d05b84d4afeea98701d4a597ebb31e757a5c0f620b966908e2a3b8199bb49c",
+      "variant_key": "baseline"
+    },
+    {
+      "complexity": {
+        "average_description_length": 198.33333333333334,
+        "max_semantic_overlap_jaccard": 0.3488372093023256,
+        "mean_semantic_overlap_jaccard": 0.12582248576184418,
+        "number_of_clarification_instructions": 2,
+        "number_of_examples": 1,
+        "number_of_negative_instructions": 9,
+        "number_of_recovery_instructions": 4,
+        "number_of_tools": 9,
+        "total_description_tokens": 267
+      },
+      "domain": "billing",
+      "interface_id": "8b64677f-7ec8-4526-bb91-e15a56d41bf5",
+      "snapshot_path": "artifacts/phase15b_r2/frozen_interfaces/billing/phase15b_r2_general.json",
+      "snapshot_sha256": "21b3f7dea2ca6eeb1594688b5b21ee3805b2fb567bc180e0156cc1506fe2a30d",
+      "variant_key": "phase15b_r2_general"
+    },
+    {
+      "complexity": {
+        "average_description_length": 187.33333333333334,
+        "max_semantic_overlap_jaccard": 0.3488372093023256,
+        "mean_semantic_overlap_jaccard": 0.12441036487114115,
+        "number_of_clarification_instructions": 2,
+        "number_of_examples": 1,
+        "number_of_negative_instructions": 10,
+        "number_of_recovery_instructions": 3,
+        "number_of_tools": 9,
+        "total_description_tokens": 258
+      },
+      "domain": "billing",
+      "interface_id": "3063c13d-8cae-447c-80c9-7c0f82478858",
+      "snapshot_path": "artifacts/phase15b_r2/frozen_interfaces/billing/phase15b_r2_gpt.json",
+      "snapshot_sha256": "168befb0e4b0ce5ce947bf239b7975bf16f1c5a9711df9b3625e81e0d9aaa2bf",
+      "variant_key": "phase15b_r2_gpt"
+    },
+    {
+      "complexity": {
+        "average_description_length": 209.88888888888889,
+        "max_semantic_overlap_jaccard": 0.3488372093023256,
+        "mean_semantic_overlap_jaccard": 0.1382618384965663,
+        "number_of_clarification_instructions": 4,
+        "number_of_examples": 1,
+        "number_of_negative_instructions": 10,
+        "number_of_recovery_instructions": 3,
+        "number_of_tools": 9,
+        "total_description_tokens": 285
+      },
+      "domain": "billing",
+      "interface_id": "c3ed9728-5f8e-456f-b746-cd4d00a16144",
+      "snapshot_path": "artifacts/phase15b_r2/frozen_interfaces/billing/phase15b_r2_claude.json",
+      "snapshot_sha256": "d23b54d976855c8dce59e8a3a8bbefd1944fbcf7975844bc8fc55adabcdceeee",
+      "variant_key": "phase15b_r2_claude"
+    },
+    {
+      "complexity": {
+        "average_description_length": 194.22222222222223,
+        "max_semantic_overlap_jaccard": 0.3488372093023256,
+        "mean_semantic_overlap_jaccard": 0.12194892574127802,
+        "number_of_clarification_instructions": 2,
+        "number_of_examples": 1,
+        "number_of_negative_instructions": 10,
+        "number_of_recovery_instructions": 3,
+        "number_of_tools": 9,
+        "total_description_tokens": 261
+      },
+      "domain": "billing",
+      "interface_id": "1b76c0d4-f665-400b-b4f2-8f7545194881",
+      "snapshot_path": "artifacts/phase15b_r2/frozen_interfaces/billing/phase15b_r2_gemini.json",
+      "snapshot_sha256": "a55710208b098db64d218cbda7341cee7481e08be93dbea925d890a1f0dfe457",
+      "variant_key": "phase15b_r2_gemini"
+    },
+    {
+      "complexity": {
+        "average_description_length": 28.285714285714285,
+        "max_semantic_overlap_jaccard": 0.5,
+        "mean_semantic_overlap_jaccard": 0.057428021713736,
+        "number_of_clarification_instructions": 0,
+        "number_of_examples": 0,
+        "number_of_negative_instructions": 0,
+        "number_of_recovery_instructions": 0,
+        "number_of_tools": 7,
+        "total_description_tokens": 31
+      },
+      "domain": "crm",
+      "interface_id": "aee0b389-bb58-483c-a6f6-f653e8fa50ef",
+      "snapshot_path": "artifacts/phase15b_r2/frozen_interfaces/crm/baseline.json",
+      "snapshot_sha256": "2f275e6a8b76d662978a3b92bfe472ba19fde31f98c180d8956c793fe0a606c7",
+      "variant_key": "baseline"
+    },
+    {
+      "complexity": {
+        "average_description_length": 161.85714285714286,
+        "max_semantic_overlap_jaccard": 0.28125,
+        "mean_semantic_overlap_jaccard": 0.10779648280462469,
+        "number_of_clarification_instructions": 0,
+        "number_of_examples": 0,
+        "number_of_negative_instructions": 5,
+        "number_of_recovery_instructions": 0,
+        "number_of_tools": 7,
+        "total_description_tokens": 172
+      },
+      "domain": "crm",
+      "interface_id": "ae6a6006-4186-4448-849e-0b5fc6deee5a",
+      "snapshot_path": "artifacts/phase15b_r2/frozen_interfaces/crm/phase15b_r2_general.json",
+      "snapshot_sha256": "093a60ed0eba9e406f586aa327574fb341a3cf5dd794cb8f24d6d45dd4c733be",
+      "variant_key": "phase15b_r2_general"
+    },
+    {
+      "complexity": {
+        "average_description_length": 161.85714285714286,
+        "max_semantic_overlap_jaccard": 0.28125,
+        "mean_semantic_overlap_jaccard": 0.10779648280462469,
+        "number_of_clarification_instructions": 0,
+        "number_of_examples": 0,
+        "number_of_negative_instructions": 5,
+        "number_of_recovery_instructions": 0,
+        "number_of_tools": 7,
+        "total_description_tokens": 172
+      },
+      "domain": "crm",
+      "interface_id": "6885895c-2444-4494-9833-de868f1564a5",
+      "snapshot_path": "artifacts/phase15b_r2/frozen_interfaces/crm/phase15b_r2_gpt.json",
+      "snapshot_sha256": "0d4f806cde7635348fe41f21f3552c40279e4e85ae2bb208ad6e491ba1dfb449",
+      "variant_key": "phase15b_r2_gpt"
+    },
+    {
+      "complexity": {
+        "average_description_length": 161.85714285714286,
+        "max_semantic_overlap_jaccard": 0.28125,
+        "mean_semantic_overlap_jaccard": 0.10779648280462469,
+        "number_of_clarification_instructions": 0,
+        "number_of_examples": 0,
+        "number_of_negative_instructions": 5,
+        "number_of_recovery_instructions": 0,
+        "number_of_tools": 7,
+        "total_description_tokens": 172
+      },
+      "domain": "crm",
+      "interface_id": "3a202b58-bfb5-4b45-868e-4c81bfc3b975",
+      "snapshot_path": "artifacts/phase15b_r2/frozen_interfaces/crm/phase15b_r2_claude.json",
+      "snapshot_sha256": "edf37fc08f174587a84a9a87e8c0b76784576560003c4cdcb5a7c22474676fdc",
+      "variant_key": "phase15b_r2_claude"
+    },
+    {
+      "complexity": {
+        "average_description_length": 157.28571428571428,
+        "max_semantic_overlap_jaccard": 0.3181818181818182,
+        "mean_semantic_overlap_jaccard": 0.12677670049119655,
+        "number_of_clarification_instructions": 0,
+        "number_of_examples": 0,
+        "number_of_negative_instructions": 5,
+        "number_of_recovery_instructions": 0,
+        "number_of_tools": 7,
+        "total_description_tokens": 172
+      },
+      "domain": "crm",
+      "interface_id": "68b0699d-177d-4702-bf31-a5d82d2430ea",
+      "snapshot_path": "artifacts/phase15b_r2/frozen_interfaces/crm/phase15b_r2_gemini.json",
+      "snapshot_sha256": "393332636e312b04f86593ab88338a02fee9f41c16289fea08b032047b0db2ab",
+      "variant_key": "phase15b_r2_gemini"
+    },
+    {
+      "complexity": {
+        "average_description_length": 33.42857142857143,
+        "max_semantic_overlap_jaccard": 0.5,
+        "mean_semantic_overlap_jaccard": 0.07740156668728097,
+        "number_of_clarification_instructions": 0,
+        "number_of_examples": 0,
+        "number_of_negative_instructions": 0,
+        "number_of_recovery_instructions": 0,
+        "number_of_tools": 7,
+        "total_description_tokens": 36
+      },
+      "domain": "ecommerce",
+      "interface_id": "fecc7a59-f706-4657-b1d8-5e724189e213",
+      "snapshot_path": "artifacts/phase15b_r2/frozen_interfaces/ecommerce/baseline.json",
+      "snapshot_sha256": "d1cd92f2dece79daac729502f9668d445a4402d2b1b2cc5818d4a4e85a7bb0a7",
+      "variant_key": "baseline"
+    },
+    {
+      "complexity": {
+        "average_description_length": 191.71428571428572,
+        "max_semantic_overlap_jaccard": 0.32558139534883723,
+        "mean_semantic_overlap_jaccard": 0.13138609571278584,
+        "number_of_clarification_instructions": 4,
+        "number_of_examples": 0,
+        "number_of_negative_instructions": 4,
+        "number_of_recovery_instructions": 5,
+        "number_of_tools": 7,
+        "total_description_tokens": 205
+      },
+      "domain": "ecommerce",
+      "interface_id": "24fb9b5c-04bd-44a9-8af8-d458b5b71a6d",
+      "snapshot_path": "artifacts/phase15b_r2/frozen_interfaces/ecommerce/phase15b_r2_general.json",
+      "snapshot_sha256": "494ed4872154faaf8ba25c4e38335e60dd14f4a61018b92a65fe807ff8a8fbc2",
+      "variant_key": "phase15b_r2_general"
+    },
+    {
+      "complexity": {
+        "average_description_length": 179.57142857142858,
+        "max_semantic_overlap_jaccard": 0.23076923076923078,
+        "mean_semantic_overlap_jaccard": 0.12202325230499515,
+        "number_of_clarification_instructions": 4,
+        "number_of_examples": 0,
+        "number_of_negative_instructions": 5,
+        "number_of_recovery_instructions": 4,
+        "number_of_tools": 7,
+        "total_description_tokens": 199
+      },
+      "domain": "ecommerce",
+      "interface_id": "890b2028-945a-467a-af3c-42fcb854ff25",
+      "snapshot_path": "artifacts/phase15b_r2/frozen_interfaces/ecommerce/phase15b_r2_gpt.json",
+      "snapshot_sha256": "caf9214bb3ef49424ca7ccf91bf64f5bdf025734f40ade0b8f1e2074b7cbb88a",
+      "variant_key": "phase15b_r2_gpt"
+    },
+    {
+      "complexity": {
+        "average_description_length": 203.71428571428572,
+        "max_semantic_overlap_jaccard": 0.32558139534883723,
+        "mean_semantic_overlap_jaccard": 0.1406440215454199,
+        "number_of_clarification_instructions": 4,
+        "number_of_examples": 0,
+        "number_of_negative_instructions": 5,
+        "number_of_recovery_instructions": 5,
+        "number_of_tools": 7,
+        "total_description_tokens": 218
+      },
+      "domain": "ecommerce",
+      "interface_id": "676df53c-369d-46d5-bedc-9eadc4b22022",
+      "snapshot_path": "artifacts/phase15b_r2/frozen_interfaces/ecommerce/phase15b_r2_claude.json",
+      "snapshot_sha256": "30f7b08755fbd9260a69536724cf6b1e88ab458626976fe7fe1440a4f02060b8",
+      "variant_key": "phase15b_r2_claude"
+    },
+    {
+      "complexity": {
+        "average_description_length": 186.28571428571428,
+        "max_semantic_overlap_jaccard": 0.32558139534883723,
+        "mean_semantic_overlap_jaccard": 0.12641316657609786,
+        "number_of_clarification_instructions": 4,
+        "number_of_examples": 0,
+        "number_of_negative_instructions": 5,
+        "number_of_recovery_instructions": 5,
+        "number_of_tools": 7,
+        "total_description_tokens": 197
+      },
+      "domain": "ecommerce",
+      "interface_id": "c91d5660-c5e2-4ca9-9525-9532eb0cea85",
+      "snapshot_path": "artifacts/phase15b_r2/frozen_interfaces/ecommerce/phase15b_r2_gemini.json",
+      "snapshot_sha256": "c69ae1438c31c093527538a7a1e69829a27364288946043bb6f64e83b8340498",
+      "variant_key": "phase15b_r2_gemini"
+    }
+  ],
+  "models": [
+    "openai:gpt-4.1-mini",
+    "anthropic:claude-sonnet-5",
+    "google:gemini-3.6-flash"
+  ],
+  "protocol": "PHASE15B_R2_HARD_BENCHMARK_PRE_HOLDOUT_INTERFACE_FREEZE",
+  "request_configuration": {
+    "anthropic_sampling_note": "temperature omitted for claude-sonnet-5",
+    "max_iterations": 16,
+    "max_tool_calls": 12,
+    "provider_seed": null,
+    "temperature": 0.0
+  },
+  "source_git_commit": "54d416a818761b52b6dd7092e9647d720c6da195",
+  "variant_sha256": {
+    "baseline": "1b62b7783efca19e57659ecb5223e5b9a1f541ca94f7d36de8d9dc6c67458489",
+    "phase15b_r2_claude": "01a62187f63ebdc48f9ebc14fb8e855347e18da65c45755775b420068b7e6148",
+    "phase15b_r2_gemini": "62640b081fd2379f66b193d008be6e956a12d554ff790647181db02ac9fc92cc",
+    "phase15b_r2_general": "5114f2c431b137d794f96f59dab7184604ea6dece2d8e6ba5bfdcaf2d8b88fea",
+    "phase15b_r2_gpt": "0fd981a634b6c1d3233f0e6923d17bdee5ca1f97be41153a104b74b2db7f7418"
+  },
+  "variants": [
+    "baseline",
+    "phase15b_r2_general",
+    "phase15b_r2_gpt",
+    "phase15b_r2_claude",
+    "phase15b_r2_gemini"
+  ]
+}

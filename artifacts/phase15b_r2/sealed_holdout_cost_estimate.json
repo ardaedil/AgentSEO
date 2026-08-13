@@ -1,0 +1,98 @@
+{
+  "automatic_launch_allowed": false,
+  "configured_cost_cap_usd": 5.0,
+  "conservative_model_requests": 6480,
+  "estimated_input_tokens": 4659699.428571429,
+  "estimated_output_tokens": 516407.14285714284,
+  "estimated_total_cost_usd": 11.80569257142857,
+  "estimated_total_tokens": 5176106.571428572,
+  "expected_model_requests": 5425.714285714285,
+  "guarded_total_cost_usd": 14.757115714285714,
+  "holdout_manifest_sha256": "2ad4a55afd04926fe0eaae4e5ee53d5859756102fce2ef79fe9b3b18da6d69ba",
+  "holdout_state": "SEALED_UNOPENED",
+  "holdout_task_families": 12,
+  "holdout_tasks": 36,
+  "interface_freeze_sha256": "b905b769f25f56c7a8f8057d085494d9d7b2d2285c2084485bfa93fc50847a34",
+  "interfaces": [
+    "baseline",
+    "phase15b_r2_general",
+    "phase15b_r2_gpt",
+    "phase15b_r2_claude",
+    "phase15b_r2_gemini"
+  ],
+  "method": "Calibration-B input/output and tool-call averages, plus per-request frozen-interface description-token deltas; 25% guard band.",
+  "models": [
+    "openai:gpt-4.1-mini",
+    "anthropic:claude-sonnet-5",
+    "google:gemini-3.6-flash"
+  ],
+  "pricing": {
+    "checked_at": "2026-08-13",
+    "currency": "USD",
+    "models": {
+      "anthropic:claude-sonnet-5": {
+        "basis": "Anthropic introductory API pricing through 2026-08-31, checked 2026-08-13",
+        "input": 2.0,
+        "output": 10.0
+      },
+      "google:gemini-3.6-flash": {
+        "basis": "Google Gemini API standard pricing checked 2026-08-13",
+        "input": 1.5,
+        "output": 7.5
+      },
+      "openai:gpt-4.1-mini": {
+        "basis": "OpenAI standard API pricing checked 2026-08-13",
+        "input": 0.4,
+        "output": 1.6
+      }
+    },
+    "unit": "per_million_tokens"
+  },
+  "protocol": "PHASE15B_R2_SEALED_HOLDOUT_COST_GATE",
+  "providers": [
+    {
+      "calibration_average_input_tokens": 1037.8095238095239,
+      "calibration_average_output_tokens": 108.41666666666667,
+      "calibration_average_tool_calls": 2.0357142857142856,
+      "conservative_model_requests": 2160,
+      "estimated_cost_usd": 0.4086771428571429,
+      "estimated_input_tokens": 787512.8571428572,
+      "estimated_output_tokens": 58545.0,
+      "estimated_total_tokens": 846057.8571428572,
+      "expected_model_requests": 1639.2857142857142,
+      "guarded_cost_usd": 0.5108464285714286,
+      "model": "openai:gpt-4.1-mini",
+      "task_runs": 540
+    },
+    {
+      "calibration_average_input_tokens": 4082.190476190476,
+      "calibration_average_output_tokens": 688.3214285714286,
+      "calibration_average_tool_calls": 2.2976190476190474,
+      "conservative_model_requests": 2160,
+      "estimated_cost_usd": 8.619078,
+      "estimated_input_tokens": 2451071.142857143,
+      "estimated_output_tokens": 371693.5714285714,
+      "estimated_total_tokens": 2822764.7142857146,
+      "expected_model_requests": 1780.7142857142856,
+      "guarded_cost_usd": 10.7738475,
+      "model": "anthropic:claude-sonnet-5",
+      "task_runs": 540
+    },
+    {
+      "calibration_average_input_tokens": 2117.1428571428573,
+      "calibration_average_output_tokens": 159.57142857142858,
+      "calibration_average_tool_calls": 2.7142857142857144,
+      "conservative_model_requests": 2160,
+      "estimated_cost_usd": 2.7779374285714287,
+      "estimated_input_tokens": 1421115.4285714286,
+      "estimated_output_tokens": 86168.57142857143,
+      "estimated_total_tokens": 1507284.0,
+      "expected_model_requests": 2005.7142857142858,
+      "guarded_cost_usd": 3.472421785714286,
+      "model": "google:gemini-3.6-flash",
+      "task_runs": 540
+    }
+  ],
+  "repetitions": 3,
+  "total_task_runs": 1620
+}

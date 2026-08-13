@@ -1,5 +1,8 @@
 from collections import Counter
+from pathlib import Path
 
+from agentseo.interfaces import mutate_snapshot
+from agentseo.openapi_parser import parse_openapi
 from agentseo.phase15b_r2_benchmark import (
     PHASE15B_R2_EVALUATOR_VERSION,
     R2_UNCALIBRATED_FAMILIES,
@@ -32,8 +35,7 @@ def test_r2_candidate_pool_has_first_class_families_and_hard_distribution():
     assert Counter(task.difficulty for task in tasks) == {6: 33, 7: 51, 8: 36}
     assert len(R2_UNCALIBRATED_FAMILIES) == 12
     assert all(
-        task.initial_state["_evaluation"]["evaluator_version"]
-        == PHASE15B_R2_EVALUATOR_VERSION
+        task.initial_state["_evaluation"]["evaluator_version"] == PHASE15B_R2_EVALUATOR_VERSION
         for task in tasks
     )
 
@@ -84,3 +86,29 @@ def test_minimum_value_filter_is_inclusive_for_conditional_routing():
         {"company_id": "co_acme", "status": "open", "min_value": 25000},
     )
     assert [row["id"] for row in rows] == ["opp_1"]
+
+
+def test_r2_interfaces_are_development_evidence_mutations_without_new_examples():
+    root = Path(__file__).resolve().parents[3]
+    _, tools = parse_openapi((root / "examples" / "billing" / "openapi.yaml").read_bytes())
+    canonical = [tool.to_dict() for tool in tools]
+    baseline, _ = mutate_snapshot(canonical, "baseline")
+    baseline_examples = sum(
+        len(tool.get("tool_metadata", {}).get("examples", [])) for tool in baseline
+    )
+    for variant in (
+        "phase15b_r2_general",
+        "phase15b_r2_gpt",
+        "phase15b_r2_claude",
+        "phase15b_r2_gemini",
+    ):
+        snapshot, mutations = mutate_snapshot(canonical, variant)
+        assert mutations
+        assert all("R2" in mutation.rationale for mutation in mutations)
+        assert sum(len(tool.get("description", "")) for tool in snapshot) > sum(
+            len(tool.get("description", "")) for tool in baseline
+        )
+        assert (
+            sum(len(tool.get("tool_metadata", {}).get("examples", [])) for tool in snapshot)
+            == baseline_examples
+        )
