@@ -11,7 +11,9 @@ import argparse
 import asyncio
 import hashlib
 import json
+import os
 import shutil
+import sqlite3
 import subprocess
 from dataclasses import dataclass
 from datetime import UTC, datetime
@@ -39,7 +41,9 @@ from sqlalchemy import func, select
 ROOT = Path(__file__).resolve().parents[1]
 R2_ROOT = ROOT / "artifacts" / "phase15b_r2"
 RUNTIME_ROOT = R2_ROOT / "sealed_holdout_runtime"
-STATE_PATH = RUNTIME_ROOT / "execution_state.json"
+STATE_PATH = Path(
+    os.environ.get("PHASE15B_R2_STATE_PATH", RUNTIME_ROOT / "execution_state.json")
+)
 SOURCE_DB = Path.home() / "AppData" / "Local" / "Temp" / "agentseo-phase15b-r2-92b52a7.db"
 RUNTIME_DB = RUNTIME_ROOT / "phase15b_r2_holdout.db"
 VARIANTS = (
@@ -469,11 +473,24 @@ def _expected_for_launch(launch: Launch) -> int:
     return 36 * len(VARIANTS) * len(launch.trials)
 
 
-async def execute_launch(launch_id: str) -> None:
+async def execute_launch(launch_id: str, trial_override: tuple[int, ...] = ()) -> None:
     state = json.loads(STATE_PATH.read_text(encoding="utf-8"))
     launch = next((item for item in LAUNCHES if item.launch_id == launch_id), None)
     if launch is None:
         raise RuntimeError(f"Unknown launch: {launch_id}")
+    if trial_override:
+        if not set(trial_override).issubset(launch.trials):
+            raise RuntimeError(
+                f"Trial override {trial_override} is outside frozen launch {launch.trials}"
+            )
+        fraction = len(trial_override) / len(launch.trials)
+        launch = Launch(
+            launch.launch_id,
+            launch.model,
+            trial_override,
+            launch.estimated_cost_usd * fraction,
+            launch.guarded_cost_usd * fraction,
+        )
     settings = get_settings()
     verify_frozen_state(allow_existing_holdout=True)
     experiment_id = str(state["experiment_id"])
@@ -660,6 +677,126 @@ async def execute_launch(launch_id: str) -> None:
         _write_state(state)
 
 
+def create_worker_database(
+    worker_id: str, launch_id: str, trials: tuple[int, ...]
+) -> dict[str, str]:
+    """Create a transactionally consistent execution shard without opening outcomes."""
+    if not worker_id.replace("_", "").replace("-", "").isalnum():
+        raise RuntimeError("Worker id may contain only letters, digits, hyphens, and underscores")
+    launch = next((item for item in LAUNCHES if item.launch_id == launch_id), None)
+    if launch is None or not trials or not set(trials).issubset(launch.trials):
+        raise RuntimeError("Worker scope is outside the frozen deterministic launch")
+    worker_root = RUNTIME_ROOT / "workers"
+    worker_root.mkdir(parents=True, exist_ok=True)
+    worker_db = worker_root / f"{worker_id}.db"
+    worker_state = worker_root / f"{worker_id}.state.json"
+    if worker_db.exists() or worker_state.exists():
+        raise RuntimeError(f"Worker already exists: {worker_id}")
+    with sqlite3.connect(RUNTIME_DB, timeout=60) as source:
+        with sqlite3.connect(worker_db, timeout=60) as target:
+            source.backup(target)
+    state = json.loads(STATE_PATH.read_text(encoding="utf-8"))
+    state["worker_scope"] = {
+        "worker_id": worker_id,
+        "launch_id": launch_id,
+        "model": launch.model,
+        "trials": list(trials),
+        "created_at": datetime.now(UTC).isoformat(),
+    }
+    state["launches"][launch_id]["status"] = "PENDING"
+    worker_state.write_text(json.dumps(state, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    return {"database": str(worker_db), "state": str(worker_state)}
+
+
+def _sync_master_launch_state() -> dict[str, Any]:
+    state = json.loads(STATE_PATH.read_text(encoding="utf-8"))
+    experiment_id = str(state["experiment_id"])
+    with SessionLocal() as session:
+        for launch in LAUNCHES:
+            completed = _completed_for_launch(session, experiment_id, launch)
+            launch_state = state["launches"][launch.launch_id]
+            launch_state["completed_observations"] = completed
+            launch_state["actual_cost_usd"] = _launch_cost(session, experiment_id, launch)
+            if completed == _expected_for_launch(launch):
+                launch_state["status"] = "COMPLETED_UNINSPECTED"
+                launch_state.setdefault("completed_at", datetime.now(UTC).isoformat())
+        total = int(
+            session.scalar(
+                select(func.count(TaskRun.id)).where(
+                    TaskRun.experiment_id == experiment_id,
+                    TaskRun.status == RunStatus.COMPLETED.value,
+                )
+            )
+            or 0
+        )
+    state["status"] = (
+        "COMPLETED_UNINSPECTED" if total == EXPECTED_OBSERVATIONS else "RUNNING_UNINSPECTED"
+    )
+    _write_state(state)
+    return cast(dict[str, Any], state)
+
+
+def merge_worker_database(
+    worker_db: Path,
+    worker_state_path: Path,
+    model: str,
+    trials: tuple[int, ...],
+) -> dict[str, Any]:
+    """Merge only completed assigned observations; never query outcome columns."""
+    if model not in MODELS or not trials or not set(trials).issubset({1, 2, 3}):
+        raise RuntimeError("Worker merge scope is outside the frozen matrix")
+    master_state = json.loads(STATE_PATH.read_text(encoding="utf-8"))
+    experiment_id = str(master_state["experiment_id"])
+    placeholders = ",".join("?" for _ in trials)
+    predicate = (
+        "tr.experiment_id = ? AND tr.model_identifier = ? "
+        f"AND tr.trial_number IN ({placeholders}) AND tr.status = ?"
+    )
+    params: tuple[Any, ...] = (
+        experiment_id,
+        model,
+        *trials,
+        RunStatus.COMPLETED.value,
+    )
+    with sqlite3.connect(RUNTIME_DB, timeout=60) as connection:
+        connection.execute("PRAGMA busy_timeout=60000")
+        connection.execute("ATTACH DATABASE ? AS worker", (str(worker_db),))
+        connection.execute(
+            "INSERT OR IGNORE INTO benchmark_runs SELECT br.* FROM worker.benchmark_runs br "
+            "WHERE br.id IN (SELECT DISTINCT tr.benchmark_run_id FROM worker.task_runs tr "
+            f"WHERE {predicate})",
+            params,
+        )
+        connection.execute(
+            "INSERT OR IGNORE INTO task_runs SELECT tr.* FROM worker.task_runs tr "
+            f"WHERE {predicate}",
+            params,
+        )
+        connection.execute(
+            "INSERT OR IGNORE INTO trace_events SELECT te.* FROM worker.trace_events te "
+            "WHERE te.task_run_id IN (SELECT tr.id FROM worker.task_runs tr "
+            f"WHERE {predicate})",
+            params,
+        )
+        connection.commit()
+        connection.execute("DETACH DATABASE worker")
+    if worker_state_path.exists():
+        worker_state = json.loads(worker_state_path.read_text(encoding="utf-8"))
+        for launch_id, launch_state in worker_state.get("launches", {}).items():
+            master_errors = master_state["launches"][launch_id]["infrastructure_errors"]
+            for error in launch_state.get("infrastructure_errors", []):
+                if error not in master_errors:
+                    master_errors.append(error)
+        _write_state(master_state)
+    state = _sync_master_launch_state()
+    return {
+        "model": model,
+        "trials": list(trials),
+        "state": state["status"],
+        "outcomes_inspected": False,
+    }
+
+
 def operational_status() -> dict[str, Any]:
     state = json.loads(STATE_PATH.read_text(encoding="utf-8"))
     experiment_id = str(state["experiment_id"])
@@ -768,8 +905,24 @@ def finalize_execution() -> dict[str, Any]:
 
 async def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("command", choices=("prepare", "preflight", "launch", "status", "finalize"))
+    parser.add_argument(
+        "command",
+        choices=(
+            "prepare",
+            "preflight",
+            "launch",
+            "make-worker",
+            "merge-worker",
+            "status",
+            "finalize",
+        ),
+    )
     parser.add_argument("--launch-id")
+    parser.add_argument("--trials", type=int, nargs="*")
+    parser.add_argument("--worker-id")
+    parser.add_argument("--worker-db")
+    parser.add_argument("--worker-state")
+    parser.add_argument("--model")
     args = parser.parse_args()
     if args.command == "prepare":
         prepare_runtime_database()
@@ -798,8 +951,35 @@ async def main() -> None:
     if args.command == "launch":
         if not args.launch_id:
             raise RuntimeError("--launch-id is required")
-        await execute_launch(args.launch_id)
+        await execute_launch(args.launch_id, tuple(args.trials or ()))
         print(json.dumps(operational_status(), sort_keys=True))
+        return
+    if args.command == "make-worker":
+        if not args.worker_id or not args.launch_id or not args.trials:
+            raise RuntimeError("--worker-id, --launch-id, and --trials are required")
+        print(
+            json.dumps(
+                create_worker_database(args.worker_id, args.launch_id, tuple(args.trials)),
+                sort_keys=True,
+            )
+        )
+        return
+    if args.command == "merge-worker":
+        if not args.worker_db or not args.worker_state or not args.model or not args.trials:
+            raise RuntimeError(
+                "--worker-db, --worker-state, --model, and --trials are required"
+            )
+        print(
+            json.dumps(
+                merge_worker_database(
+                    Path(args.worker_db),
+                    Path(args.worker_state),
+                    args.model,
+                    tuple(args.trials),
+                ),
+                sort_keys=True,
+            )
+        )
         return
     if args.command == "status":
         print(json.dumps(operational_status(), sort_keys=True))
