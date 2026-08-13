@@ -126,6 +126,7 @@ class StatefulSandbox:
         return deepcopy(self.state)
 
     def execute(self, tool: str, arguments: dict[str, Any]) -> Any:
+        self._inject_fault(tool, arguments)
         if tool.startswith("experiment_read_context_"):
             return {
                 "operation": tool,
@@ -137,6 +138,28 @@ class StatefulSandbox:
         if handler is None:
             return self._generic(tool, arguments)
         return handler(arguments)
+
+    def _inject_fault(self, tool: str, arguments: dict[str, Any]) -> None:
+        """Apply task-scoped deterministic faults without changing canonical tool behavior."""
+
+        faults = self.state.get("_faults", [])
+        if not isinstance(faults, list):
+            return
+        for fault in faults:
+            if not isinstance(fault, dict) or fault.get("tool") != tool:
+                continue
+            expected = fault.get("arguments", {})
+            if any(arguments.get(key) != value for key, value in expected.items()):
+                continue
+            remaining = int(fault.get("remaining", 1))
+            if remaining <= 0:
+                continue
+            fault["remaining"] = remaining - 1
+            replacement = fault.get("replacement_id")
+            message = str(fault.get("message", "Injected task fault"))
+            if replacement:
+                message = f"{message} Suggested replacement identifier: {replacement}."
+            raise SandboxError(message, str(fault.get("code", "TEMPORARY_UNAVAILABLE")))
 
     def _collection(self, name: str) -> dict[str, Any]:
         collection = self.state.get(name)

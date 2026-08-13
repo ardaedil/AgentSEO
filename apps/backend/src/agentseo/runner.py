@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import asyncio
 import time
+from copy import deepcopy
 from typing import Any
 
 import structlog
@@ -91,7 +92,9 @@ async def execute_task(
         {"role": "user", "content": task.natural_language_instruction},
     )
     sandbox = create_sandbox(session.get(Project, benchmark_run.project_id).sandbox_domain)  # type: ignore[union-attr]
-    before = sandbox.reset(task.initial_state or None)
+    task_state = deepcopy(task.initial_state or {})
+    evaluation_config = task_state.pop("_evaluation", {})
+    before = sandbox.reset(task_state or None)
     history: list[dict[str, Any]] = []
     calls: list[dict[str, Any]] = []
     clarified = False
@@ -242,6 +245,16 @@ async def execute_task(
         task.requires_clarification,
         clarified,
     )
+    expected_behavior = str(evaluation_config.get("expected_behavior", "execute"))
+    observed_behavior = "refuse" if model_refused else "clarify" if clarified else "execute"
+    behavior_passed = observed_behavior == expected_behavior
+    evaluation.update(
+        {
+            "behavior_expected": expected_behavior,
+            "behavior_observed": observed_behavior,
+            "behavior_passed": behavior_passed,
+        }
+    )
     selected = [call["tool"] for call in calls]
     required_ok = all(tool in selected for tool in task.required_tools)
     forbidden_ok = all(tool not in selected for tool in task.forbidden_tools)
@@ -256,7 +269,61 @@ async def execute_task(
             index > error_positions[0] and "result" in call for index, call in enumerate(calls)
         )
         evaluation["error_recovery_passed"] = recovered
-    evaluation["passed"] = evaluation["passed"] and required_ok and forbidden_ok
+    validation_errors = [call for call in calls if call.get("error_code") == "VALIDATION_ERROR"]
+    expectations = evaluation_config.get("argument_expectations", [])
+    semantic_arguments_correct = True
+    for expectation in expectations:
+        expected_tool = expectation.get("tool")
+        expected_arguments = expectation.get("arguments", {})
+        semantic_arguments_correct = semantic_arguments_correct and any(
+            call.get("tool") == expected_tool
+            and all(
+                call.get("arguments", {}).get(key) == value
+                for key, value in expected_arguments.items()
+            )
+            for call in calls
+        )
+    failed_calls = [call for call in calls if call.get("error_code")]
+    repeated_identical_failed_calls = sum(
+        left.get("tool") == right.get("tool")
+        and left.get("arguments") == right.get("arguments")
+        and left.get("error_code") == right.get("error_code")
+        for left, right in zip(failed_calls, failed_calls[1:], strict=False)
+    )
+    first_error_index = next(
+        (index for index, call in enumerate(calls) if call.get("error_code")), None
+    )
+    successful_after_error = bool(
+        first_error_index is not None
+        and any("result" in call for call in calls[first_error_index + 1 :])
+    )
+    changed_arguments_after_error = bool(
+        first_error_index is not None
+        and any(
+            call.get("arguments") != calls[first_error_index].get("arguments")
+            for call in calls[first_error_index + 1 :]
+        )
+    )
+    switched_tool_after_error = bool(
+        first_error_index is not None
+        and any(
+            call.get("tool") != calls[first_error_index].get("tool")
+            for call in calls[first_error_index + 1 :]
+        )
+    )
+    evaluation.update(
+        {
+            "schema_arguments_valid": not validation_errors,
+            "semantic_arguments_evaluated": bool(expectations),
+            "semantic_arguments_correct": semantic_arguments_correct,
+            "repeated_identical_failed_calls": repeated_identical_failed_calls,
+            "successful_after_error": successful_after_error,
+            "changed_arguments_after_error": changed_arguments_after_error,
+            "switched_tool_after_error": switched_tool_after_error,
+        }
+    )
+    evaluation["passed"] = evaluation["passed"] and required_ok and forbidden_ok and behavior_passed
+    evaluation["passed"] = evaluation["passed"] and semantic_arguments_correct
     evaluation["passed"] = evaluation["passed"] and recovered
     known_tools = {tool.name for tool in tools}
     failure_category, failure_explanation = classify_failure(
@@ -301,7 +368,7 @@ async def execute_task(
         "tool_selection_correct": required_ok and forbidden_ok,
         "argument_correct": recovered
         if task.category == "error_recovery"
-        else not any(call.get("error_code") == "VALIDATION_ERROR" for call in calls),
+        else not validation_errors,
         "tool_calls": len(calls),
         "duration": duration,
         "cost_estimate": estimated_cost,

@@ -82,6 +82,15 @@ def experiment_observations(session: Session, experiment: Experiment) -> list[di
                     and task_run.evaluator_result.get("forbidden_tools_avoided", False)
                 ),
                 "arguments_correct": not validation_errors,
+                "schema_arguments_valid": bool(
+                    task_run.evaluator_result.get("schema_arguments_valid", not validation_errors)
+                ),
+                "semantic_arguments_evaluated": bool(
+                    task_run.evaluator_result.get("semantic_arguments_evaluated", False)
+                ),
+                "semantic_arguments_correct": bool(
+                    task_run.evaluator_result.get("semantic_arguments_correct", True)
+                ),
                 "tool_calls": len(tool_calls),
                 "latency": task_run.duration,
                 "tokens": {
@@ -126,6 +135,9 @@ def export_experiment_dataset(
         "failure_category",
         "tool_selection_correct",
         "arguments_correct",
+        "schema_arguments_valid",
+        "semantic_arguments_evaluated",
+        "semantic_arguments_correct",
         "tool_calls",
         "latency",
         "cost",
