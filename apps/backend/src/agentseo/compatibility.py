@@ -219,6 +219,7 @@ def _pair(
     candidate: TaskRun,
     contract: AgenticCompatibilityContract,
 ) -> dict[str, Any]:
+    synthetic = model.startswith("mock:")
     value: dict[str, Any] = {
         "model": model,
         "task_id": task.id,
@@ -230,12 +231,14 @@ def _pair(
         "candidate_success": candidate.success,
         "baseline_failure": baseline.failure_category,
         "candidate_failure": candidate.failure_category,
+        "baseline_failure_explanation": baseline.failure_explanation,
+        "candidate_failure_explanation": candidate.failure_explanation,
         "baseline_tool_calls": _tool_call_count(session, baseline.id),
         "candidate_tool_calls": _tool_call_count(session, candidate.id),
         "baseline_tokens": _tokens(baseline),
         "candidate_tokens": _tokens(candidate),
-        "baseline_latency": baseline.duration,
-        "candidate_latency": candidate.duration,
+        "baseline_latency": 0.0 if synthetic else baseline.duration,
+        "candidate_latency": 0.0 if synthetic else candidate.duration,
         "baseline_cost": baseline.cost_estimate,
         "candidate_cost": candidate.cost_estimate,
         "safety_baseline": _safe(baseline),
@@ -494,10 +497,32 @@ def compatibility_report(run: CompatibilityRun, results: list[CompatibilityResul
     metadata = run.run_metadata
     metrics = metadata.get("metrics", {})
     diff = metadata.get("interface_diff_summary", {})
+    change_types = set(diff.get("by_type", {}))
+    protocol_compatibility = (
+        "FAIL" if change_types.intersection({"TOOL_ADDED", "TOOL_REMOVED"}) else "PASS"
+    )
+    schema_compatibility = (
+        "FAIL"
+        if change_types.intersection(
+            {
+                "PARAMETER_ADDED",
+                "PARAMETER_REMOVED",
+                "PARAMETER_RENAMED",
+                "PARAMETER_REQUIREDNESS_CHANGED",
+                "ENUM_CHANGED",
+                "REQUEST_SCHEMA_CHANGED",
+                "RESPONSE_SCHEMA_CHANGED",
+            }
+        )
+        else "PASS"
+    )
     lines = [
-        "## AgentSEO Compatibility",
+        "## AgentSEO Compatibility Check",
         "",
         f"> {metadata.get('mode', 'REAL AGENT COMPATIBILITY')}",
+        "",
+        f"- Traditional protocol compatibility: **{protocol_compatibility}**",
+        f"- Traditional schema compatibility: **{schema_compatibility}**",
         "",
         "### Interface changes",
         "",
@@ -519,15 +544,16 @@ def compatibility_report(run: CompatibilityRun, results: list[CompatibilityResul
             "",
             "### Compatibility",
             "",
-            "| Model | Base | PR | Delta | Safety delta | Tokens delta | Latency delta | Cost delta |",
-            "|---|---:|---:|---:|---:|---:|---:|---:|",
+            "| Model | Base | PR | Delta | Safety delta | Tool calls delta | Tokens delta | Latency delta | Cost delta |",
+            "|---|---:|---:|---:|---:|---:|---:|---:|---:|",
         ]
     )
     for model, row in metrics.get("per_model", {}).items():
         base, candidate, delta = row["baseline"], row["candidate"], row["delta"]
         lines.append(
             f"| {model} | {base['task_success_rate']:.1%} | {candidate['task_success_rate']:.1%} | "
-            f"{delta['reliability']:+.1%} | {delta['safety']:+.1%} | {delta['tokens']:+.0f} | "
+            f"{delta['reliability']:+.1%} | {delta['safety']:+.1%} | "
+            f"{delta['tool_calls']:+.2f} | {delta['tokens']:+.0f} | "
             f"{delta['latency']:+.2f}s | ${delta['cost']:+.4f} |"
         )
     regressions = [
@@ -539,11 +565,13 @@ def compatibility_report(run: CompatibilityRun, results: list[CompatibilityResul
     if regressions:
         for result in regressions:
             observed = ", ".join(result.details.get("candidate_selected_tools", [])) or "none"
+            explanation = result.details.get("candidate_failure_explanation") or "Metric threshold"
             lines.extend(
                 [
                     f"- **{result.details.get('task_name', result.task_id)}** ({result.model}): "
                     f"{result.regression_type}; baseline={result.baseline_failure or 'PASS'}, "
-                    f"candidate={result.candidate_failure or 'PASS'}; candidate tools={observed}",
+                    f"candidate={result.candidate_failure or 'PASS'}; candidate tools={observed}; "
+                    f"explanation={explanation}",
                 ]
             )
     else:
@@ -579,7 +607,10 @@ def compatibility_report(run: CompatibilityRun, results: list[CompatibilityResul
             "",
             "### Verdict",
             "",
-            f"**{run.release_classification}** - AGENT COMPATIBILITY: **{run.verdict}**",
+            f"Protocol compatibility: **{protocol_compatibility}**",
+            f"Schema compatibility: **{schema_compatibility}**",
+            f"Agent behavioral compatibility: **{run.verdict}**",
+            f"Classification: **{run.release_classification}**",
             "",
             f"Estimated: ${run.estimated_cost:.4f}; actual: ${run.actual_cost:.4f}",
             "",

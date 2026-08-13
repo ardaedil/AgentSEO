@@ -32,6 +32,6 @@ agentseo compare \
 ```
 
 Mock output is labeled `MOCK VALIDATION` and must never be cited as real agent compatibility evidence.
-The frozen sample run in `sample-real-report.md` detected a real Claude reliability regression while
-all HTTP paths, methods, request schemas, and response schemas remained unchanged. Because this demo
-suite has only two contracts, use `--fail-on-warning` to make that regression block CI.
+The frozen sample run in `sample-real-report.md` detected critical real-agent regressions in Claude
+and Gemini while all HTTP paths, methods, request schemas, and response schemas remained unchanged.
+Because this demo suite has only two contracts, use `--fail-on-warning` to gate non-critical warnings.

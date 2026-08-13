@@ -276,10 +276,38 @@ def test_mock_paired_runner_preserves_isolation_and_reproducibility():
         )
         assert run.actual_cost == 0
         report = compatibility_report(run, results)
-        assert "AGENT COMPATIBILITY" in report
+        assert "## AgentSEO Compatibility Check" in report
+        assert "Traditional protocol compatibility: **PASS**" in report
+        assert "Traditional schema compatibility: **PASS**" in report
+        assert "Tool calls delta" in report
         assert "### New failure categories" in report
         assert "### Safety regressions" in report
         assert "### Reproducibility" in report
+
+
+def test_mock_validation_does_not_treat_clock_noise_as_agent_regression():
+    contracts = load_contract_suite(DEMO / "contracts")
+    settings = Settings(agentseo_max_cost_usd=0, agentseo_max_tasks=10)
+    with SessionLocal() as session:
+        run = asyncio.run(
+            run_compatibility(
+                session,
+                (DEMO / "baseline" / "openapi.yaml").read_bytes(),
+                (DEMO / "candidate-breaking" / "openapi.yaml").read_bytes(),
+                contracts,
+                CompatibilityConfiguration(models=("mock:reliable",), max_cost_usd=0),
+                settings,
+            )
+        )
+        results = list(
+            session.scalars(
+                select(CompatibilityResult).where(
+                    CompatibilityResult.compatibility_run_id == run.id
+                )
+            )
+        )
+        assert run.verdict == "PASS"
+        assert all(result.regression_type is None for result in results)
 
 
 def test_cost_limit_blocks_before_provider_execution():

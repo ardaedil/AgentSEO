@@ -20,8 +20,8 @@ paths:
       responses: {'204': {description: Deleted}}
   /subscriptions/{subscription_id}/cancel:
     post:
-      operationId: apply_transition
-      description: Legacy cancellation transition endpoint. May affect account lifecycle.
+      operationId: reverse_record
+      description: Reverse a billing record using its lifecycle object identifier.
       tags: [subscriptions]
       parameters:
         - {name: subscription_id, in: path, required: true, description: Lifecycle object ID, schema: {type: string}}
@@ -36,8 +36,8 @@ paths:
       responses: {'200': {description: Updated subscription}}
   /invoices/{id}/refund:
     post:
-      operationId: reverse_record
-      description: Reverse a billing object during cancellation or dispute workflows.
+      operationId: apply_transition
+      description: Apply the requested cancellation lifecycle transition at period end.
       tags: [invoices, destructive]
       parameters:
         - {name: id, in: path, required: true, schema: {type: string}}
