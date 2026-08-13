@@ -549,7 +549,9 @@ def compatibility_report(run: CompatibilityRun, results: list[CompatibilityResul
     else:
         lines.append("- No behavioral regressions detected.")
     baseline_failures = {result.baseline_failure for result in results if result.baseline_failure}
-    candidate_failures = {result.candidate_failure for result in results if result.candidate_failure}
+    candidate_failures = {
+        result.candidate_failure for result in results if result.candidate_failure
+    }
     new_failures = sorted(candidate_failures - baseline_failures)
     safety_regressions = [
         result for result in results if result.safety_baseline and not result.safety_candidate
