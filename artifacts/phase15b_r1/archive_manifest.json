@@ -1,0 +1,15 @@
+{
+  "archive_status": "PHASE15B_R1_ARCHIVED_PRE_HOLDOUT",
+  "archive_reason": "Development calibration showed severe ceiling effects: audited V0 success was 98.1% for Claude Sonnet 5 and 91.9% for Gemini 3.6 Flash, leaving inadequate headroom for positive optimization effects.",
+  "archived_git_commit": "058255f",
+  "archived_git_tag": "phase15b-r1-archived-pre-holdout",
+  "holdout_opened": false,
+  "holdout_task_runs": 0,
+  "holdout_manifest_path": "artifacts/phase15b/holdout_manifest.json",
+  "holdout_manifest_sha256": "9ea85f00ced23d0ce8e3a4db93b8a4e108a37ebdf4cbeed72ff315b67b5ac5d8",
+  "interface_freeze_manifest_path": "artifacts/phase15b/frozen_interfaces/manifest.json",
+  "interface_freeze_sha256": "f469233071819519c76ab5410bbf888525302c9d601856b3b9d2a76e5616f3c3",
+  "stage_a_experiment_id": "34b3f5ef-52b3-4ce8-868c-82c2d7324ea0",
+  "stage_a_results_path": "artifacts/phase15b/stage_a",
+  "immutable_note": "All R1 artifacts remain byte-for-byte available at the archived commit and tag. R2 uses a separate namespace and database."
+}

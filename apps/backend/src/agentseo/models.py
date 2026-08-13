@@ -171,6 +171,7 @@ class BenchmarkTask(Base):
     natural_language_instruction: Mapped[str] = mapped_column(Text)
     difficulty: Mapped[int] = mapped_column(Integer, default=1)
     category: Mapped[str] = mapped_column(String(80), default="single_tool")
+    task_family: Mapped[str] = mapped_column(String(120), default="unassigned", index=True)
     required_tools: Mapped[list[str]] = mapped_column(JSON, default=list)
     forbidden_tools: Mapped[list[str]] = mapped_column(JSON, default=list)
     initial_state: Mapped[dict[str, Any]] = mapped_column(JSON, default=dict)

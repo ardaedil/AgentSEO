@@ -133,6 +133,13 @@ def classify_failure(
             FailureCategory.FAILED_TO_CLARIFY.value,
             "The task was ambiguous but the model acted without clarification.",
         )
+    if evaluator_result.get("clarification_observed") and not evaluator_result.get(
+        "targeted_clarification_passed", True
+    ):
+        return (
+            FailureCategory.FAILED_TO_CLARIFY.value,
+            "The model asked a question but did not request the missing disambiguating information.",
+        )
     if not evaluator_result.get("clarification_expected") and evaluator_result.get(
         "clarification_observed"
     ):
@@ -159,6 +166,16 @@ def classify_failure(
     missing = [tool for tool in required_tools if tool not in selected]
     if missing:
         return FailureCategory.WRONG_TOOL.value, f"Required tool was not selected: {missing[0]}."
+    if not evaluator_result.get("required_tool_sequence_passed", True):
+        return (
+            FailureCategory.TOOL_SEQUENCE_ERROR.value,
+            "Required dependent operations were not called in the expected order.",
+        )
+    if not evaluator_result.get("tool_call_limit_passed", True):
+        return (
+            FailureCategory.UNNECESSARY_TOOL.value,
+            "The model made additional tool calls beyond the task's justified workflow.",
+        )
     if any(call.get("error_code") == "VALIDATION_ERROR" for call in calls):
         return (
             FailureCategory.MISSING_ARGUMENT.value,

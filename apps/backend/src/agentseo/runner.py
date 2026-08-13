@@ -98,6 +98,7 @@ async def execute_task(
     history: list[dict[str, Any]] = []
     calls: list[dict[str, Any]] = []
     clarified = False
+    clarification_content = ""
     max_iterations_hit = False
     model_refused = False
     total_tokens = {"input": 0, "output": 0}
@@ -107,7 +108,7 @@ async def execute_task(
     log.info("task_started", run_id=benchmark_run.id, task_id=task.id, model=benchmark_run.model)
 
     async def loop() -> None:
-        nonlocal sequence, clarified, max_iterations_hit, model_refused
+        nonlocal sequence, clarified, clarification_content, max_iterations_hit, model_refused
         for _iteration in range(max_iterations):
             context = {
                 "required_tools": task.required_tools,
@@ -126,6 +127,7 @@ async def execute_task(
             sequence += 1
             if action.kind == "clarification":
                 clarified = True
+                clarification_content = action.content
                 _trace(session, task_run, sequence, "CLARIFICATION", {"content": action.content})
                 return
             if action.kind == "final":
@@ -253,18 +255,51 @@ async def execute_task(
         }
     )
     selected = [call["tool"] for call in calls]
+    required_sequence = [str(item) for item in evaluation_config.get("required_tool_sequence", [])]
+    sequence_cursor = 0
+    for selected_tool in selected:
+        if sequence_cursor < len(required_sequence) and selected_tool == required_sequence[sequence_cursor]:
+            sequence_cursor += 1
+    required_sequence_passed = sequence_cursor == len(required_sequence)
+    expected_clarification_terms = [
+        str(term).lower() for term in evaluation_config.get("clarification_terms", [])
+    ]
+    targeted_clarification_passed = not expected_clarification_terms or (
+        clarified
+        and any(term in clarification_content.lower() for term in expected_clarification_terms)
+    )
+    expected_max_tool_calls = evaluation_config.get("expected_max_tool_calls")
+    tool_call_limit_passed = (
+        expected_max_tool_calls is None or len(calls) <= int(expected_max_tool_calls)
+    )
     required_ok = all(tool in selected for tool in task.required_tools)
     forbidden_ok = all(tool not in selected for tool in task.forbidden_tools)
     if task.requires_clarification:
-        required_ok = clarified
+        required_ok = clarified and targeted_clarification_passed
+    evaluation.update(
+        {
+            "required_tool_sequence": required_sequence,
+            "required_tool_sequence_passed": required_sequence_passed,
+            "clarification_terms": expected_clarification_terms,
+            "targeted_clarification_passed": targeted_clarification_passed,
+            "expected_max_tool_calls": expected_max_tool_calls,
+            "tool_call_limit_passed": tool_call_limit_passed,
+        }
+    )
     evaluation["tool_requirements_passed"] = required_ok
     evaluation["forbidden_tools_avoided"] = forbidden_ok
     recovered = True
     if task.category == "error_recovery":
         error_positions = [index for index, call in enumerate(calls) if call.get("error_code")]
-        recovered = bool(error_positions) and any(
-            index > error_positions[0] and "result" in call for index, call in enumerate(calls)
-        )
+        recovery_mode = str(evaluation_config.get("recovery_mode", "recover"))
+        if recovery_mode == "stop":
+            recovered = bool(error_positions) and not any(
+                "result" in call for call in calls[error_positions[0] + 1 :]
+            )
+        else:
+            recovered = bool(error_positions) and any(
+                index > error_positions[0] and "result" in call for index, call in enumerate(calls)
+            )
         evaluation["error_recovery_passed"] = recovered
     validation_errors = [call for call in calls if call.get("error_code") == "VALIDATION_ERROR"]
     expectations = evaluation_config.get("argument_expectations", [])
@@ -319,7 +354,15 @@ async def execute_task(
             "switched_tool_after_error": switched_tool_after_error,
         }
     )
-    evaluation["passed"] = evaluation["passed"] and required_ok and forbidden_ok and behavior_passed
+    evaluation["passed"] = (
+        evaluation["passed"]
+        and required_ok
+        and forbidden_ok
+        and behavior_passed
+        and required_sequence_passed
+        and targeted_clarification_passed
+        and tool_call_limit_passed
+    )
     evaluation["passed"] = evaluation["passed"] and semantic_arguments_correct
     evaluation["passed"] = evaluation["passed"] and recovered
     known_tools = {tool.name for tool in tools}

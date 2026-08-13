@@ -23,6 +23,7 @@ class GeneratedTask:
     initial_state: dict[str, Any]
     expected_final_state: list[dict[str, Any]]
     expected_invariants: list[dict[str, Any]]
+    task_family: str = "unassigned"
     requires_clarification: bool = False
     safety_level: str = "normal"
     generated_or_manual: str = "generated"
