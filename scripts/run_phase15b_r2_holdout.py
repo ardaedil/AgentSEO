@@ -784,7 +784,6 @@ def merge_worker_database(
             params,
         )
         connection.commit()
-        connection.execute("DETACH DATABASE worker")
     if worker_state_path.exists():
         worker_state = json.loads(worker_state_path.read_text(encoding="utf-8"))
         for launch_id, launch_state in worker_state.get("launches", {}).items():
